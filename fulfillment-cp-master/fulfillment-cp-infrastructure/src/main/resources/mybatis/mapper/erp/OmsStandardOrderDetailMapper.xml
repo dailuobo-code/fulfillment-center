@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.erp.OmsStandardOrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+    <result column="product_no" property="productNo" jdbcType="INTEGER" />
+    <result column="city_product_id" property="cityProductId" jdbcType="INTEGER" />
+    <result column="product_num" property="productNum" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updater_id" property="updaterId" jdbcType="INTEGER" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="inventory_status" property="inventoryStatus" jdbcType="BIT" />
+    <result column="outbound_num" property="outboundNum" jdbcType="INTEGER" />
+    <result column="goods_quantity" property="goodsQuantity" jdbcType="DECIMAL" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, invoice_no, product_no, city_product_id, product_num, product_name, gmt_create, 
+    creator_id, creator, updater_id, updater, gmt_modified, inventory_status, outbound_num, 
+    goods_quantity, is_delete
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderDetailCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oms_standard_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_standard_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oms_standard_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderDetailCriteria" >
+    delete from oms_standard_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oms_standard_order_detail (invoice_no, product_no, city_product_id, 
+      product_num, product_name, gmt_create, 
+      creator_id, creator, updater_id, 
+      updater, gmt_modified, inventory_status, 
+      outbound_num, goods_quantity, is_delete
+      )
+    values (#{invoiceNo,jdbcType=VARCHAR}, #{productNo,jdbcType=INTEGER}, #{cityProductId,jdbcType=INTEGER}, 
+      #{productNum,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{creatorId,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{updaterId,jdbcType=INTEGER}, 
+      #{updater,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{inventoryStatus,jdbcType=BIT}, 
+      #{outboundNum,jdbcType=INTEGER}, #{goodsQuantity,jdbcType=DECIMAL}, #{isDelete,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oms_standard_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invoiceNo != null" >
+        invoice_no,
+      </if>
+      <if test="productNo != null" >
+        product_no,
+      </if>
+      <if test="cityProductId != null" >
+        city_product_id,
+      </if>
+      <if test="productNum != null" >
+        product_num,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="inventoryStatus != null" >
+        inventory_status,
+      </if>
+      <if test="outboundNum != null" >
+        outbound_num,
+      </if>
+      <if test="goodsQuantity != null" >
+        goods_quantity,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invoiceNo != null" >
+        #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        #{productNo,jdbcType=INTEGER},
+      </if>
+      <if test="cityProductId != null" >
+        #{cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="productNum != null" >
+        #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inventoryStatus != null" >
+        #{inventoryStatus,jdbcType=BIT},
+      </if>
+      <if test="outboundNum != null" >
+        #{outboundNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsQuantity != null" >
+        #{goodsQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderDetailCriteria" resultType="java.lang.Integer" >
+    select count(*) from oms_standard_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update oms_standard_order_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceNo != null" >
+        invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productNo != null" >
+        product_no = #{record.productNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityProductId != null" >
+        city_product_id = #{record.cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productNum != null" >
+        product_num = #{record.productNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null" >
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreate != null" >
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatorId != null" >
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updaterId != null" >
+        updater_id = #{record.updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updater != null" >
+        updater = #{record.updater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtModified != null" >
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.inventoryStatus != null" >
+        inventory_status = #{record.inventoryStatus,jdbcType=BIT},
+      </if>
+      <if test="record.outboundNum != null" >
+        outbound_num = #{record.outboundNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsQuantity != null" >
+        goods_quantity = #{record.goodsQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isDelete != null" >
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update oms_standard_order_detail
+    set id = #{record.id,jdbcType=INTEGER},
+      invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
+      product_no = #{record.productNo,jdbcType=INTEGER},
+      city_product_id = #{record.cityProductId,jdbcType=INTEGER},
+      product_num = #{record.productNum,jdbcType=INTEGER},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      updater_id = #{record.updaterId,jdbcType=INTEGER},
+      updater = #{record.updater,jdbcType=VARCHAR},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      inventory_status = #{record.inventoryStatus,jdbcType=BIT},
+      outbound_num = #{record.outboundNum,jdbcType=INTEGER},
+      goods_quantity = #{record.goodsQuantity,jdbcType=DECIMAL},
+      is_delete = #{record.isDelete,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderDetail" >
+    update oms_standard_order_detail
+    <set >
+      <if test="invoiceNo != null" >
+        invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        product_no = #{productNo,jdbcType=INTEGER},
+      </if>
+      <if test="cityProductId != null" >
+        city_product_id = #{cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="productNum != null" >
+        product_num = #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null" >
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inventoryStatus != null" >
+        inventory_status = #{inventoryStatus,jdbcType=BIT},
+      </if>
+      <if test="outboundNum != null" >
+        outbound_num = #{outboundNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsQuantity != null" >
+        goods_quantity = #{goodsQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderDetail" >
+    update oms_standard_order_detail
+    set invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      product_no = #{productNo,jdbcType=INTEGER},
+      city_product_id = #{cityProductId,jdbcType=INTEGER},
+      product_num = #{productNum,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      updater = #{updater,jdbcType=VARCHAR},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      inventory_status = #{inventoryStatus,jdbcType=BIT},
+      outbound_num = #{outboundNum,jdbcType=INTEGER},
+      goods_quantity = #{goodsQuantity,jdbcType=DECIMAL},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderDetailCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oms_standard_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    select invoice_no, product_no, city_product_id, product_num, goods_quantity
+    from oms_standard_order_detail
+    where invoice_no in
+    <foreach collection="invoiceNos" item="invoiceNo" open="(" close=")" separator=",">
+      #{invoiceNo}
+    </foreach>
+    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+</mapper>

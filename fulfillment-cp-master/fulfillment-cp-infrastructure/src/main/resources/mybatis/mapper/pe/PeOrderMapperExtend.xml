@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.pe.PeOrderMapperExtend">
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.pe.PeOrder">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="trans_order_id" property="transOrderId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="order_type" property="orderType" jdbcType="INTEGER"/>
+        <result column="city_product_id" property="cityProductId" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+        <result column="product_no" property="productNo" jdbcType="VARCHAR"/>
+        <result column="order_source" property="orderSource" jdbcType="TINYINT"/>
+        <result column="group_type" property="groupType" jdbcType="TINYINT"/>
+        <result column="group_value" property="groupValue" jdbcType="VARCHAR"/>
+        <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER"/>
+        <result column="commodity_info_ext" property="commodityInfoExt" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="expect_push_time" property="expectPushTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="pickup_time" property="pickupTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="BaseExtendResultMap" type="com.mallcai.fulfillment.infrastructure.object.pe.PeOrderExtend" extends="BaseResultMap">
+        <result column="cal_count" property="calCount" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, trans_order_id, status, order_type, city_product_id, store_id, user_id, city_id, 
+    product_no, order_source, group_type, group_value, warehouse_id, commodity_info_ext, 
+    version, expect_push_time, create_time, update_time, pickup_time
+  </sql>
+
+
+    <select id="calFrozenTotalNumByCondition" resultMap="BaseExtendResultMap">
+        select city_id,count(city_id) as cal_count from (select city_id,store_id,product_no,pickup_time,sum(REPLACE
+        (
+        SUBSTRING(
+        REPLACE(commodity_info_ext,'}',','),
+        LOCATE('productNum":',REPLACE(commodity_info_ext,'}',','))+CHAR_LENGTH('productNum":'),
+        LOCATE(
+        ',',
+        REPLACE(commodity_info_ext,'}',','),
+        LOCATE('productNum":',REPLACE(commodity_info_ext,'}',',')) + CHAR_LENGTH('productNum":')
+        ) - (LOCATE('productNum":',REPLACE(commodity_info_ext,'}',',')) + CHAR_LENGTH('productNum":'))
+        ),'"',''
+        ) * IFNULL(REPLACE
+        (
+        SUBSTRING(
+        REPLACE(commodity_info_ext,'}',','),
+        LOCATE('packageQuantity":',REPLACE(commodity_info_ext,'}',','))+CHAR_LENGTH('packageQuantity":'),
+        LOCATE(
+        ',',
+        REPLACE(commodity_info_ext,'}',','),
+        LOCATE('packageQuantity":',REPLACE(commodity_info_ext,'}',',')) + CHAR_LENGTH('packageQuantity":')
+        ) - (LOCATE('packageQuantity":',REPLACE(commodity_info_ext,'}',',')) + CHAR_LENGTH('packageQuantity":'))
+        ),'"',''
+        ),1))  AS 'productNum' from pe_order where group_value = #{groupValue,jdbcType=VARCHAR} and expect_push_time = #{expectPushTime,jdbcType=TIMESTAMP} and status = #{status,jdbcType=TINYINT}
+        <if test="cities != null" >
+            and city_id in
+            <foreach collection="cities" item="cityId" open="(" separator="," close=")">
+                #{cityId}
+            </foreach>
+        </if>
+        group by city_id,store_id) m group by m.city_id
+    </select>
+
+    <select id="calFreshTotalNumByCondition" resultMap="BaseExtendResultMap">
+        select city_id,warehouse_id,count(*) as cal_count from (select * from pe_order where group_value = #{groupValue,jdbcType=VARCHAR} and status =#{status,jdbcType=TINYINT} and
+        expect_push_time=#{expectPushTime,jdbcType=TIMESTAMP}
+        <if test="cities != null" >
+            and city_id in
+            <foreach collection="cities" item="cityId" open="(" separator="," close=")">
+                #{cityId}
+            </foreach>
+        </if>
+         group by store_id, substring_index(substring_index(commodity_info_ext,'goodsId":"',-1),'","relNum',1)) a
+        group by city_id,warehouse_id;
+    </select>
+
+</mapper>

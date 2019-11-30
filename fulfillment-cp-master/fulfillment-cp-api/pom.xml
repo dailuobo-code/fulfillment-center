@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-cp</artifactId>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>fulfillment-cp-api</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.mallcai.fulfillment</groupId>
+            <artifactId>fulfillment-cp-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.commons</groupId>
+            <artifactId>commons-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.backend</groupId>
+            <artifactId>backend-common-framework</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.backend</groupId>
+            <artifactId>backend-common</artifactId>
+        </dependency>
+    </dependencies>
+
+
+</project>

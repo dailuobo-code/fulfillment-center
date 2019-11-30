@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.wms.OubDeliveryOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+    <result column="wave_number" property="waveNumber" jdbcType="VARCHAR" />
+    <result column="delivery_order" property="deliveryOrder" jdbcType="VARCHAR" />
+    <result column="pickup_date" property="pickupDate" jdbcType="DATE" />
+    <result column="push_tms_status" property="pushTmsStatus" jdbcType="TINYINT" />
+    <result column="push_store_status" property="pushStoreStatus" jdbcType="TINYINT" />
+    <result column="sku_group_code" property="skuGroupCode" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="store_no" property="storeNo" jdbcType="INTEGER" />
+    <result column="store_name" property="storeName" jdbcType="VARCHAR" />
+    <result column="traffic_srl_number" property="trafficSrlNumber" jdbcType="INTEGER" />
+    <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="sold_count" property="soldCount" jdbcType="DECIMAL" />
+    <result column="delivery_count" property="deliveryCount" jdbcType="DECIMAL" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+    <result column="total_volume" property="totalVolume" jdbcType="DECIMAL" />
+    <result column="location_code" property="locationCode" jdbcType="VARCHAR" />
+    <result column="delivery_user_id" property="deliveryUserId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="created_user_id" property="createdUserId" jdbcType="INTEGER" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="updated_user_id" property="updatedUserId" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="source_order_no" property="sourceOrderNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, warehouse_code, wave_number, delivery_order, pickup_date, push_tms_status, push_store_status, 
+    sku_group_code, store_id, store_no, store_name, traffic_srl_number, serial_number, 
+    city_id, area_id, address, receiver, tel, sold_count, delivery_count, total_weight, 
+    total_volume, location_code, delivery_user_id, status, type, created_time, created_user_id, 
+    updated_time, updated_user_id, version, source_order_no
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oub_delivery_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from oub_delivery_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from oub_delivery_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderCriteria" >
+    delete from oub_delivery_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrder" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oub_delivery_order (warehouse_code, wave_number, delivery_order, 
+      pickup_date, push_tms_status, push_store_status, 
+      sku_group_code, store_id, store_no, 
+      store_name, traffic_srl_number, serial_number, 
+      city_id, area_id, address, 
+      receiver, tel, sold_count, 
+      delivery_count, total_weight, total_volume, 
+      location_code, delivery_user_id, status, 
+      type, created_time, created_user_id, 
+      updated_time, updated_user_id, version, 
+      source_order_no)
+    values (#{warehouseCode,jdbcType=VARCHAR}, #{waveNumber,jdbcType=VARCHAR}, #{deliveryOrder,jdbcType=VARCHAR}, 
+      #{pickupDate,jdbcType=DATE}, #{pushTmsStatus,jdbcType=TINYINT}, #{pushStoreStatus,jdbcType=TINYINT}, 
+      #{skuGroupCode,jdbcType=VARCHAR}, #{storeId,jdbcType=INTEGER}, #{storeNo,jdbcType=INTEGER}, 
+      #{storeName,jdbcType=VARCHAR}, #{trafficSrlNumber,jdbcType=INTEGER}, #{serialNumber,jdbcType=INTEGER}, 
+      #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{receiver,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{soldCount,jdbcType=DECIMAL}, 
+      #{deliveryCount,jdbcType=DECIMAL}, #{totalWeight,jdbcType=DECIMAL}, #{totalVolume,jdbcType=DECIMAL}, 
+      #{locationCode,jdbcType=VARCHAR}, #{deliveryUserId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{type,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=INTEGER}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{updatedUserId,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, 
+      #{sourceOrderNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrder" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oub_delivery_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="warehouseCode != null" >
+        warehouse_code,
+      </if>
+      <if test="waveNumber != null" >
+        wave_number,
+      </if>
+      <if test="deliveryOrder != null" >
+        delivery_order,
+      </if>
+      <if test="pickupDate != null" >
+        pickup_date,
+      </if>
+      <if test="pushTmsStatus != null" >
+        push_tms_status,
+      </if>
+      <if test="pushStoreStatus != null" >
+        push_store_status,
+      </if>
+      <if test="skuGroupCode != null" >
+        sku_group_code,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="storeNo != null" >
+        store_no,
+      </if>
+      <if test="storeName != null" >
+        store_name,
+      </if>
+      <if test="trafficSrlNumber != null" >
+        traffic_srl_number,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="soldCount != null" >
+        sold_count,
+      </if>
+      <if test="deliveryCount != null" >
+        delivery_count,
+      </if>
+      <if test="totalWeight != null" >
+        total_weight,
+      </if>
+      <if test="totalVolume != null" >
+        total_volume,
+      </if>
+      <if test="locationCode != null" >
+        location_code,
+      </if>
+      <if test="deliveryUserId != null" >
+        delivery_user_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="createdUserId != null" >
+        created_user_id,
+      </if>
+      <if test="updatedTime != null" >
+        updated_time,
+      </if>
+      <if test="updatedUserId != null" >
+        updated_user_id,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="sourceOrderNo != null" >
+        source_order_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="warehouseCode != null" >
+        #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="waveNumber != null" >
+        #{waveNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryOrder != null" >
+        #{deliveryOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupDate != null" >
+        #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="pushTmsStatus != null" >
+        #{pushTmsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="pushStoreStatus != null" >
+        #{pushStoreStatus,jdbcType=TINYINT},
+      </if>
+      <if test="skuGroupCode != null" >
+        #{skuGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="storeNo != null" >
+        #{storeNo,jdbcType=INTEGER},
+      </if>
+      <if test="storeName != null" >
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficSrlNumber != null" >
+        #{trafficSrlNumber,jdbcType=INTEGER},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="soldCount != null" >
+        #{soldCount,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryCount != null" >
+        #{deliveryCount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalWeight != null" >
+        #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="totalVolume != null" >
+        #{totalVolume,jdbcType=DECIMAL},
+      </if>
+      <if test="locationCode != null" >
+        #{locationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryUserId != null" >
+        #{deliveryUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null" >
+        #{createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updatedTime != null" >
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUserId != null" >
+        #{updatedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="sourceOrderNo != null" >
+        #{sourceOrderNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderCriteria" resultType="java.lang.Integer" >
+    select count(*) from oub_delivery_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update oub_delivery_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.warehouseCode != null" >
+        warehouse_code = #{record.warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.waveNumber != null" >
+        wave_number = #{record.waveNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryOrder != null" >
+        delivery_order = #{record.deliveryOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pickupDate != null" >
+        pickup_date = #{record.pickupDate,jdbcType=DATE},
+      </if>
+      <if test="record.pushTmsStatus != null" >
+        push_tms_status = #{record.pushTmsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.pushStoreStatus != null" >
+        push_store_status = #{record.pushStoreStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.skuGroupCode != null" >
+        sku_group_code = #{record.skuGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeNo != null" >
+        store_no = #{record.storeNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeName != null" >
+        store_name = #{record.storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trafficSrlNumber != null" >
+        traffic_srl_number = #{record.trafficSrlNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.serialNumber != null" >
+        serial_number = #{record.serialNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityId != null" >
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaId != null" >
+        area_id = #{record.areaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiver != null" >
+        receiver = #{record.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soldCount != null" >
+        sold_count = #{record.soldCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deliveryCount != null" >
+        delivery_count = #{record.deliveryCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalWeight != null" >
+        total_weight = #{record.totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalVolume != null" >
+        total_volume = #{record.totalVolume,jdbcType=DECIMAL},
+      </if>
+      <if test="record.locationCode != null" >
+        location_code = #{record.locationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryUserId != null" >
+        delivery_user_id = #{record.deliveryUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.createdTime != null" >
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdUserId != null" >
+        created_user_id = #{record.createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updatedTime != null" >
+        updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedUserId != null" >
+        updated_user_id = #{record.updatedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.sourceOrderNo != null" >
+        source_order_no = #{record.sourceOrderNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update oub_delivery_order
+    set id = #{record.id,jdbcType=BIGINT},
+      warehouse_code = #{record.warehouseCode,jdbcType=VARCHAR},
+      wave_number = #{record.waveNumber,jdbcType=VARCHAR},
+      delivery_order = #{record.deliveryOrder,jdbcType=VARCHAR},
+      pickup_date = #{record.pickupDate,jdbcType=DATE},
+      push_tms_status = #{record.pushTmsStatus,jdbcType=TINYINT},
+      push_store_status = #{record.pushStoreStatus,jdbcType=TINYINT},
+      sku_group_code = #{record.skuGroupCode,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=INTEGER},
+      store_no = #{record.storeNo,jdbcType=INTEGER},
+      store_name = #{record.storeName,jdbcType=VARCHAR},
+      traffic_srl_number = #{record.trafficSrlNumber,jdbcType=INTEGER},
+      serial_number = #{record.serialNumber,jdbcType=INTEGER},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      area_id = #{record.areaId,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      receiver = #{record.receiver,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      sold_count = #{record.soldCount,jdbcType=DECIMAL},
+      delivery_count = #{record.deliveryCount,jdbcType=DECIMAL},
+      total_weight = #{record.totalWeight,jdbcType=DECIMAL},
+      total_volume = #{record.totalVolume,jdbcType=DECIMAL},
+      location_code = #{record.locationCode,jdbcType=VARCHAR},
+      delivery_user_id = #{record.deliveryUserId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      type = #{record.type,jdbcType=TINYINT},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      created_user_id = #{record.createdUserId,jdbcType=INTEGER},
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      updated_user_id = #{record.updatedUserId,jdbcType=INTEGER},
+      version = #{record.version,jdbcType=INTEGER},
+      source_order_no = #{record.sourceOrderNo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrder" >
+    update oub_delivery_order
+    <set >
+      <if test="warehouseCode != null" >
+        warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="waveNumber != null" >
+        wave_number = #{waveNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryOrder != null" >
+        delivery_order = #{deliveryOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupDate != null" >
+        pickup_date = #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="pushTmsStatus != null" >
+        push_tms_status = #{pushTmsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="pushStoreStatus != null" >
+        push_store_status = #{pushStoreStatus,jdbcType=TINYINT},
+      </if>
+      <if test="skuGroupCode != null" >
+        sku_group_code = #{skuGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="storeNo != null" >
+        store_no = #{storeNo,jdbcType=INTEGER},
+      </if>
+      <if test="storeName != null" >
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficSrlNumber != null" >
+        traffic_srl_number = #{trafficSrlNumber,jdbcType=INTEGER},
+      </if>
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="soldCount != null" >
+        sold_count = #{soldCount,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryCount != null" >
+        delivery_count = #{deliveryCount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalWeight != null" >
+        total_weight = #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="totalVolume != null" >
+        total_volume = #{totalVolume,jdbcType=DECIMAL},
+      </if>
+      <if test="locationCode != null" >
+        location_code = #{locationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryUserId != null" >
+        delivery_user_id = #{deliveryUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null" >
+        created_user_id = #{createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updatedTime != null" >
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUserId != null" >
+        updated_user_id = #{updatedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="sourceOrderNo != null" >
+        source_order_no = #{sourceOrderNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrder" >
+    update oub_delivery_order
+    set warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      wave_number = #{waveNumber,jdbcType=VARCHAR},
+      delivery_order = #{deliveryOrder,jdbcType=VARCHAR},
+      pickup_date = #{pickupDate,jdbcType=DATE},
+      push_tms_status = #{pushTmsStatus,jdbcType=TINYINT},
+      push_store_status = #{pushStoreStatus,jdbcType=TINYINT},
+      sku_group_code = #{skuGroupCode,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=INTEGER},
+      store_no = #{storeNo,jdbcType=INTEGER},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      traffic_srl_number = #{trafficSrlNumber,jdbcType=INTEGER},
+      serial_number = #{serialNumber,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=INTEGER},
+      area_id = #{areaId,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      receiver = #{receiver,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      sold_count = #{soldCount,jdbcType=DECIMAL},
+      delivery_count = #{deliveryCount,jdbcType=DECIMAL},
+      total_weight = #{totalWeight,jdbcType=DECIMAL},
+      total_volume = #{totalVolume,jdbcType=DECIMAL},
+      location_code = #{locationCode,jdbcType=VARCHAR},
+      delivery_user_id = #{deliveryUserId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      created_user_id = #{createdUserId,jdbcType=INTEGER},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      updated_user_id = #{updatedUserId,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      source_order_no = #{sourceOrderNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oub_delivery_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectPageByExample" resultMap="BaseResultMap" parameterType="map">
+    select * from oms_standard_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.wms.OubDeliveryOrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+    <result column="delivery_order_no" property="deliveryOrderNo" jdbcType="VARCHAR" />
+    <result column="pickup_date" property="pickupDate" jdbcType="DATE" />
+    <result column="store_no" property="storeNo" jdbcType="INTEGER" />
+    <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+    <result column="sku_name" property="skuName" jdbcType="VARCHAR" />
+    <result column="sku_barcode" property="skuBarcode" jdbcType="VARCHAR" />
+    <result column="raw_sku_code" property="rawSkuCode" jdbcType="VARCHAR" />
+    <result column="raw_sku_name" property="rawSkuName" jdbcType="VARCHAR" />
+    <result column="raw_sku_barcode" property="rawSkuBarcode" jdbcType="VARCHAR" />
+    <result column="sold_unit" property="soldUnit" jdbcType="VARCHAR" />
+    <result column="sold_qty" property="soldQty" jdbcType="DECIMAL" />
+    <result column="sold_container_qty" property="soldContainerQty" jdbcType="SMALLINT" />
+    <result column="sold_left_weight" property="soldLeftWeight" jdbcType="DECIMAL" />
+    <result column="upward_floating_ratio" property="upwardFloatingRatio" jdbcType="DECIMAL" />
+    <result column="delivery_qty" property="deliveryQty" jdbcType="DECIMAL" />
+    <result column="delivery_container_qty" property="deliveryContainerQty" jdbcType="DECIMAL" />
+    <result column="pick_pro_qty" property="pickProQty" jdbcType="DECIMAL" />
+    <result column="pick_box_qty" property="pickBoxQty" jdbcType="DECIMAL" />
+    <result column="collect_qty" property="collectQty" jdbcType="DECIMAL" />
+    <result column="stockout_qty" property="stockoutQty" jdbcType="DECIMAL" />
+    <result column="delivery_container_unit" property="deliveryContainerUnit" jdbcType="VARCHAR" />
+    <result column="deliver_left_weight" property="deliverLeftWeight" jdbcType="DECIMAL" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="weighing_time" property="weighingTime" jdbcType="TIMESTAMP" />
+    <result column="weighting_user_id" property="weightingUserId" jdbcType="INTEGER" />
+    <result column="sorter_time" property="sorterTime" jdbcType="TIMESTAMP" />
+    <result column="sorter_user_id" property="sorterUserId" jdbcType="INTEGER" />
+    <result column="left_weight_qrcode" property="leftWeightQrcode" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="created_user_id" property="createdUserId" jdbcType="INTEGER" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="updated_user_id" property="updatedUserId" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="lack_status" property="lackStatus" jdbcType="TINYINT" />
+    <result column="weight_start_time" property="weightStartTime" jdbcType="TIMESTAMP" />
+    <result column="weight_confirm_time" property="weightConfirmTime" jdbcType="TIMESTAMP" />
+    <result column="weight_user_score" property="weightUserScore" jdbcType="INTEGER" />
+    <result column="sku_percent" property="skuPercent" jdbcType="DECIMAL" />
+    <result column="scan_status" property="scanStatus" jdbcType="TINYINT" />
+    <result column="accounting_unit" property="accountingUnit" jdbcType="VARCHAR" />
+    <result column="receiving_unit" property="receivingUnit" jdbcType="VARCHAR" />
+    <result column="inventory_unit" property="inventoryUnit" jdbcType="VARCHAR" />
+    <result column="delivery_unit" property="deliveryUnit" jdbcType="VARCHAR" />
+    <result column="weight_per_each" property="weightPerEach" jdbcType="DECIMAL" />
+    <result column="weight_per_each_unit" property="weightPerEachUnit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, warehouse_code, delivery_order_no, pickup_date, store_no, sku_code, sku_name, 
+    sku_barcode, raw_sku_code, raw_sku_name, raw_sku_barcode, sold_unit, sold_qty, sold_container_qty, 
+    sold_left_weight, upward_floating_ratio, delivery_qty, delivery_container_qty, pick_pro_qty, 
+    pick_box_qty, collect_qty, stockout_qty, delivery_container_unit, deliver_left_weight, 
+    type, status, weighing_time, weighting_user_id, sorter_time, sorter_user_id, left_weight_qrcode, 
+    created_time, created_user_id, updated_time, updated_user_id, version, lack_status, 
+    weight_start_time, weight_confirm_time, weight_user_score, sku_percent, scan_status, 
+    accounting_unit, receiving_unit, inventory_unit, delivery_unit, weight_per_each, 
+    weight_per_each_unit
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderDetailCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oub_delivery_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from oub_delivery_order_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from oub_delivery_order_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderDetailCriteria" >
+    delete from oub_delivery_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderDetail" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oub_delivery_order_detail (warehouse_code, delivery_order_no, pickup_date, 
+      store_no, sku_code, sku_name, 
+      sku_barcode, raw_sku_code, raw_sku_name, 
+      raw_sku_barcode, sold_unit, sold_qty, 
+      sold_container_qty, sold_left_weight, upward_floating_ratio, 
+      delivery_qty, delivery_container_qty, pick_pro_qty, 
+      pick_box_qty, collect_qty, stockout_qty, 
+      delivery_container_unit, deliver_left_weight, 
+      type, status, weighing_time, 
+      weighting_user_id, sorter_time, sorter_user_id, 
+      left_weight_qrcode, created_time, created_user_id, 
+      updated_time, updated_user_id, version, 
+      lack_status, weight_start_time, weight_confirm_time, 
+      weight_user_score, sku_percent, scan_status, 
+      accounting_unit, receiving_unit, inventory_unit, 
+      delivery_unit, weight_per_each, weight_per_each_unit
+      )
+    values (#{warehouseCode,jdbcType=VARCHAR}, #{deliveryOrderNo,jdbcType=VARCHAR}, #{pickupDate,jdbcType=DATE}, 
+      #{storeNo,jdbcType=INTEGER}, #{skuCode,jdbcType=VARCHAR}, #{skuName,jdbcType=VARCHAR}, 
+      #{skuBarcode,jdbcType=VARCHAR}, #{rawSkuCode,jdbcType=VARCHAR}, #{rawSkuName,jdbcType=VARCHAR}, 
+      #{rawSkuBarcode,jdbcType=VARCHAR}, #{soldUnit,jdbcType=VARCHAR}, #{soldQty,jdbcType=DECIMAL}, 
+      #{soldContainerQty,jdbcType=SMALLINT}, #{soldLeftWeight,jdbcType=DECIMAL}, #{upwardFloatingRatio,jdbcType=DECIMAL}, 
+      #{deliveryQty,jdbcType=DECIMAL}, #{deliveryContainerQty,jdbcType=DECIMAL}, #{pickProQty,jdbcType=DECIMAL}, 
+      #{pickBoxQty,jdbcType=DECIMAL}, #{collectQty,jdbcType=DECIMAL}, #{stockoutQty,jdbcType=DECIMAL}, 
+      #{deliveryContainerUnit,jdbcType=VARCHAR}, #{deliverLeftWeight,jdbcType=DECIMAL}, 
+      #{type,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{weighingTime,jdbcType=TIMESTAMP}, 
+      #{weightingUserId,jdbcType=INTEGER}, #{sorterTime,jdbcType=TIMESTAMP}, #{sorterUserId,jdbcType=INTEGER}, 
+      #{leftWeightQrcode,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=INTEGER}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{updatedUserId,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, 
+      #{lackStatus,jdbcType=TINYINT}, #{weightStartTime,jdbcType=TIMESTAMP}, #{weightConfirmTime,jdbcType=TIMESTAMP}, 
+      #{weightUserScore,jdbcType=INTEGER}, #{skuPercent,jdbcType=DECIMAL}, #{scanStatus,jdbcType=TINYINT}, 
+      #{accountingUnit,jdbcType=VARCHAR}, #{receivingUnit,jdbcType=VARCHAR}, #{inventoryUnit,jdbcType=VARCHAR}, 
+      #{deliveryUnit,jdbcType=VARCHAR}, #{weightPerEach,jdbcType=DECIMAL}, #{weightPerEachUnit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderDetail" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oub_delivery_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="warehouseCode != null" >
+        warehouse_code,
+      </if>
+      <if test="deliveryOrderNo != null" >
+        delivery_order_no,
+      </if>
+      <if test="pickupDate != null" >
+        pickup_date,
+      </if>
+      <if test="storeNo != null" >
+        store_no,
+      </if>
+      <if test="skuCode != null" >
+        sku_code,
+      </if>
+      <if test="skuName != null" >
+        sku_name,
+      </if>
+      <if test="skuBarcode != null" >
+        sku_barcode,
+      </if>
+      <if test="rawSkuCode != null" >
+        raw_sku_code,
+      </if>
+      <if test="rawSkuName != null" >
+        raw_sku_name,
+      </if>
+      <if test="rawSkuBarcode != null" >
+        raw_sku_barcode,
+      </if>
+      <if test="soldUnit != null" >
+        sold_unit,
+      </if>
+      <if test="soldQty != null" >
+        sold_qty,
+      </if>
+      <if test="soldContainerQty != null" >
+        sold_container_qty,
+      </if>
+      <if test="soldLeftWeight != null" >
+        sold_left_weight,
+      </if>
+      <if test="upwardFloatingRatio != null" >
+        upward_floating_ratio,
+      </if>
+      <if test="deliveryQty != null" >
+        delivery_qty,
+      </if>
+      <if test="deliveryContainerQty != null" >
+        delivery_container_qty,
+      </if>
+      <if test="pickProQty != null" >
+        pick_pro_qty,
+      </if>
+      <if test="pickBoxQty != null" >
+        pick_box_qty,
+      </if>
+      <if test="collectQty != null" >
+        collect_qty,
+      </if>
+      <if test="stockoutQty != null" >
+        stockout_qty,
+      </if>
+      <if test="deliveryContainerUnit != null" >
+        delivery_container_unit,
+      </if>
+      <if test="deliverLeftWeight != null" >
+        deliver_left_weight,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="weighingTime != null" >
+        weighing_time,
+      </if>
+      <if test="weightingUserId != null" >
+        weighting_user_id,
+      </if>
+      <if test="sorterTime != null" >
+        sorter_time,
+      </if>
+      <if test="sorterUserId != null" >
+        sorter_user_id,
+      </if>
+      <if test="leftWeightQrcode != null" >
+        left_weight_qrcode,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="createdUserId != null" >
+        created_user_id,
+      </if>
+      <if test="updatedTime != null" >
+        updated_time,
+      </if>
+      <if test="updatedUserId != null" >
+        updated_user_id,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="lackStatus != null" >
+        lack_status,
+      </if>
+      <if test="weightStartTime != null" >
+        weight_start_time,
+      </if>
+      <if test="weightConfirmTime != null" >
+        weight_confirm_time,
+      </if>
+      <if test="weightUserScore != null" >
+        weight_user_score,
+      </if>
+      <if test="skuPercent != null" >
+        sku_percent,
+      </if>
+      <if test="scanStatus != null" >
+        scan_status,
+      </if>
+      <if test="accountingUnit != null" >
+        accounting_unit,
+      </if>
+      <if test="receivingUnit != null" >
+        receiving_unit,
+      </if>
+      <if test="inventoryUnit != null" >
+        inventory_unit,
+      </if>
+      <if test="deliveryUnit != null" >
+        delivery_unit,
+      </if>
+      <if test="weightPerEach != null" >
+        weight_per_each,
+      </if>
+      <if test="weightPerEachUnit != null" >
+        weight_per_each_unit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="warehouseCode != null" >
+        #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryOrderNo != null" >
+        #{deliveryOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupDate != null" >
+        #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="storeNo != null" >
+        #{storeNo,jdbcType=INTEGER},
+      </if>
+      <if test="skuCode != null" >
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuName != null" >
+        #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuBarcode != null" >
+        #{skuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="rawSkuCode != null" >
+        #{rawSkuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="rawSkuName != null" >
+        #{rawSkuName,jdbcType=VARCHAR},
+      </if>
+      <if test="rawSkuBarcode != null" >
+        #{rawSkuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="soldUnit != null" >
+        #{soldUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="soldQty != null" >
+        #{soldQty,jdbcType=DECIMAL},
+      </if>
+      <if test="soldContainerQty != null" >
+        #{soldContainerQty,jdbcType=SMALLINT},
+      </if>
+      <if test="soldLeftWeight != null" >
+        #{soldLeftWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="upwardFloatingRatio != null" >
+        #{upwardFloatingRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryQty != null" >
+        #{deliveryQty,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryContainerQty != null" >
+        #{deliveryContainerQty,jdbcType=DECIMAL},
+      </if>
+      <if test="pickProQty != null" >
+        #{pickProQty,jdbcType=DECIMAL},
+      </if>
+      <if test="pickBoxQty != null" >
+        #{pickBoxQty,jdbcType=DECIMAL},
+      </if>
+      <if test="collectQty != null" >
+        #{collectQty,jdbcType=DECIMAL},
+      </if>
+      <if test="stockoutQty != null" >
+        #{stockoutQty,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryContainerUnit != null" >
+        #{deliveryContainerUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverLeftWeight != null" >
+        #{deliverLeftWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="weighingTime != null" >
+        #{weighingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weightingUserId != null" >
+        #{weightingUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sorterTime != null" >
+        #{sorterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sorterUserId != null" >
+        #{sorterUserId,jdbcType=INTEGER},
+      </if>
+      <if test="leftWeightQrcode != null" >
+        #{leftWeightQrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null" >
+        #{createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updatedTime != null" >
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUserId != null" >
+        #{updatedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="lackStatus != null" >
+        #{lackStatus,jdbcType=TINYINT},
+      </if>
+      <if test="weightStartTime != null" >
+        #{weightStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weightConfirmTime != null" >
+        #{weightConfirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weightUserScore != null" >
+        #{weightUserScore,jdbcType=INTEGER},
+      </if>
+      <if test="skuPercent != null" >
+        #{skuPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="scanStatus != null" >
+        #{scanStatus,jdbcType=TINYINT},
+      </if>
+      <if test="accountingUnit != null" >
+        #{accountingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingUnit != null" >
+        #{receivingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="inventoryUnit != null" >
+        #{inventoryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryUnit != null" >
+        #{deliveryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="weightPerEach != null" >
+        #{weightPerEach,jdbcType=DECIMAL},
+      </if>
+      <if test="weightPerEachUnit != null" >
+        #{weightPerEachUnit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderDetailCriteria" resultType="java.lang.Integer" >
+    select count(*) from oub_delivery_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update oub_delivery_order_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.warehouseCode != null" >
+        warehouse_code = #{record.warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryOrderNo != null" >
+        delivery_order_no = #{record.deliveryOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pickupDate != null" >
+        pickup_date = #{record.pickupDate,jdbcType=DATE},
+      </if>
+      <if test="record.storeNo != null" >
+        store_no = #{record.storeNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.skuCode != null" >
+        sku_code = #{record.skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skuName != null" >
+        sku_name = #{record.skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skuBarcode != null" >
+        sku_barcode = #{record.skuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rawSkuCode != null" >
+        raw_sku_code = #{record.rawSkuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rawSkuName != null" >
+        raw_sku_name = #{record.rawSkuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rawSkuBarcode != null" >
+        raw_sku_barcode = #{record.rawSkuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soldUnit != null" >
+        sold_unit = #{record.soldUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soldQty != null" >
+        sold_qty = #{record.soldQty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.soldContainerQty != null" >
+        sold_container_qty = #{record.soldContainerQty,jdbcType=SMALLINT},
+      </if>
+      <if test="record.soldLeftWeight != null" >
+        sold_left_weight = #{record.soldLeftWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.upwardFloatingRatio != null" >
+        upward_floating_ratio = #{record.upwardFloatingRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deliveryQty != null" >
+        delivery_qty = #{record.deliveryQty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deliveryContainerQty != null" >
+        delivery_container_qty = #{record.deliveryContainerQty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pickProQty != null" >
+        pick_pro_qty = #{record.pickProQty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pickBoxQty != null" >
+        pick_box_qty = #{record.pickBoxQty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.collectQty != null" >
+        collect_qty = #{record.collectQty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stockoutQty != null" >
+        stockout_qty = #{record.stockoutQty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deliveryContainerUnit != null" >
+        delivery_container_unit = #{record.deliveryContainerUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverLeftWeight != null" >
+        deliver_left_weight = #{record.deliverLeftWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.weighingTime != null" >
+        weighing_time = #{record.weighingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.weightingUserId != null" >
+        weighting_user_id = #{record.weightingUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sorterTime != null" >
+        sorter_time = #{record.sorterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sorterUserId != null" >
+        sorter_user_id = #{record.sorterUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.leftWeightQrcode != null" >
+        left_weight_qrcode = #{record.leftWeightQrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null" >
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdUserId != null" >
+        created_user_id = #{record.createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updatedTime != null" >
+        updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedUserId != null" >
+        updated_user_id = #{record.updatedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.lackStatus != null" >
+        lack_status = #{record.lackStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.weightStartTime != null" >
+        weight_start_time = #{record.weightStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.weightConfirmTime != null" >
+        weight_confirm_time = #{record.weightConfirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.weightUserScore != null" >
+        weight_user_score = #{record.weightUserScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.skuPercent != null" >
+        sku_percent = #{record.skuPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scanStatus != null" >
+        scan_status = #{record.scanStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.accountingUnit != null" >
+        accounting_unit = #{record.accountingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivingUnit != null" >
+        receiving_unit = #{record.receivingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inventoryUnit != null" >
+        inventory_unit = #{record.inventoryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryUnit != null" >
+        delivery_unit = #{record.deliveryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weightPerEach != null" >
+        weight_per_each = #{record.weightPerEach,jdbcType=DECIMAL},
+      </if>
+      <if test="record.weightPerEachUnit != null" >
+        weight_per_each_unit = #{record.weightPerEachUnit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update oub_delivery_order_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      warehouse_code = #{record.warehouseCode,jdbcType=VARCHAR},
+      delivery_order_no = #{record.deliveryOrderNo,jdbcType=VARCHAR},
+      pickup_date = #{record.pickupDate,jdbcType=DATE},
+      store_no = #{record.storeNo,jdbcType=INTEGER},
+      sku_code = #{record.skuCode,jdbcType=VARCHAR},
+      sku_name = #{record.skuName,jdbcType=VARCHAR},
+      sku_barcode = #{record.skuBarcode,jdbcType=VARCHAR},
+      raw_sku_code = #{record.rawSkuCode,jdbcType=VARCHAR},
+      raw_sku_name = #{record.rawSkuName,jdbcType=VARCHAR},
+      raw_sku_barcode = #{record.rawSkuBarcode,jdbcType=VARCHAR},
+      sold_unit = #{record.soldUnit,jdbcType=VARCHAR},
+      sold_qty = #{record.soldQty,jdbcType=DECIMAL},
+      sold_container_qty = #{record.soldContainerQty,jdbcType=SMALLINT},
+      sold_left_weight = #{record.soldLeftWeight,jdbcType=DECIMAL},
+      upward_floating_ratio = #{record.upwardFloatingRatio,jdbcType=DECIMAL},
+      delivery_qty = #{record.deliveryQty,jdbcType=DECIMAL},
+      delivery_container_qty = #{record.deliveryContainerQty,jdbcType=DECIMAL},
+      pick_pro_qty = #{record.pickProQty,jdbcType=DECIMAL},
+      pick_box_qty = #{record.pickBoxQty,jdbcType=DECIMAL},
+      collect_qty = #{record.collectQty,jdbcType=DECIMAL},
+      stockout_qty = #{record.stockoutQty,jdbcType=DECIMAL},
+      delivery_container_unit = #{record.deliveryContainerUnit,jdbcType=VARCHAR},
+      deliver_left_weight = #{record.deliverLeftWeight,jdbcType=DECIMAL},
+      type = #{record.type,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
+      weighing_time = #{record.weighingTime,jdbcType=TIMESTAMP},
+      weighting_user_id = #{record.weightingUserId,jdbcType=INTEGER},
+      sorter_time = #{record.sorterTime,jdbcType=TIMESTAMP},
+      sorter_user_id = #{record.sorterUserId,jdbcType=INTEGER},
+      left_weight_qrcode = #{record.leftWeightQrcode,jdbcType=VARCHAR},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      created_user_id = #{record.createdUserId,jdbcType=INTEGER},
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      updated_user_id = #{record.updatedUserId,jdbcType=INTEGER},
+      version = #{record.version,jdbcType=INTEGER},
+      lack_status = #{record.lackStatus,jdbcType=TINYINT},
+      weight_start_time = #{record.weightStartTime,jdbcType=TIMESTAMP},
+      weight_confirm_time = #{record.weightConfirmTime,jdbcType=TIMESTAMP},
+      weight_user_score = #{record.weightUserScore,jdbcType=INTEGER},
+      sku_percent = #{record.skuPercent,jdbcType=DECIMAL},
+      scan_status = #{record.scanStatus,jdbcType=TINYINT},
+      accounting_unit = #{record.accountingUnit,jdbcType=VARCHAR},
+      receiving_unit = #{record.receivingUnit,jdbcType=VARCHAR},
+      inventory_unit = #{record.inventoryUnit,jdbcType=VARCHAR},
+      delivery_unit = #{record.deliveryUnit,jdbcType=VARCHAR},
+      weight_per_each = #{record.weightPerEach,jdbcType=DECIMAL},
+      weight_per_each_unit = #{record.weightPerEachUnit,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderDetail" >
+    update oub_delivery_order_detail
+    <set >
+      <if test="warehouseCode != null" >
+        warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryOrderNo != null" >
+        delivery_order_no = #{deliveryOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupDate != null" >
+        pickup_date = #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="storeNo != null" >
+        store_no = #{storeNo,jdbcType=INTEGER},
+      </if>
+      <if test="skuCode != null" >
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuName != null" >
+        sku_name = #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuBarcode != null" >
+        sku_barcode = #{skuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="rawSkuCode != null" >
+        raw_sku_code = #{rawSkuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="rawSkuName != null" >
+        raw_sku_name = #{rawSkuName,jdbcType=VARCHAR},
+      </if>
+      <if test="rawSkuBarcode != null" >
+        raw_sku_barcode = #{rawSkuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="soldUnit != null" >
+        sold_unit = #{soldUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="soldQty != null" >
+        sold_qty = #{soldQty,jdbcType=DECIMAL},
+      </if>
+      <if test="soldContainerQty != null" >
+        sold_container_qty = #{soldContainerQty,jdbcType=SMALLINT},
+      </if>
+      <if test="soldLeftWeight != null" >
+        sold_left_weight = #{soldLeftWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="upwardFloatingRatio != null" >
+        upward_floating_ratio = #{upwardFloatingRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryQty != null" >
+        delivery_qty = #{deliveryQty,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryContainerQty != null" >
+        delivery_container_qty = #{deliveryContainerQty,jdbcType=DECIMAL},
+      </if>
+      <if test="pickProQty != null" >
+        pick_pro_qty = #{pickProQty,jdbcType=DECIMAL},
+      </if>
+      <if test="pickBoxQty != null" >
+        pick_box_qty = #{pickBoxQty,jdbcType=DECIMAL},
+      </if>
+      <if test="collectQty != null" >
+        collect_qty = #{collectQty,jdbcType=DECIMAL},
+      </if>
+      <if test="stockoutQty != null" >
+        stockout_qty = #{stockoutQty,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryContainerUnit != null" >
+        delivery_container_unit = #{deliveryContainerUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverLeftWeight != null" >
+        deliver_left_weight = #{deliverLeftWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="weighingTime != null" >
+        weighing_time = #{weighingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weightingUserId != null" >
+        weighting_user_id = #{weightingUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sorterTime != null" >
+        sorter_time = #{sorterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sorterUserId != null" >
+        sorter_user_id = #{sorterUserId,jdbcType=INTEGER},
+      </if>
+      <if test="leftWeightQrcode != null" >
+        left_weight_qrcode = #{leftWeightQrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null" >
+        created_user_id = #{createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updatedTime != null" >
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUserId != null" >
+        updated_user_id = #{updatedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="lackStatus != null" >
+        lack_status = #{lackStatus,jdbcType=TINYINT},
+      </if>
+      <if test="weightStartTime != null" >
+        weight_start_time = #{weightStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weightConfirmTime != null" >
+        weight_confirm_time = #{weightConfirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weightUserScore != null" >
+        weight_user_score = #{weightUserScore,jdbcType=INTEGER},
+      </if>
+      <if test="skuPercent != null" >
+        sku_percent = #{skuPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="scanStatus != null" >
+        scan_status = #{scanStatus,jdbcType=TINYINT},
+      </if>
+      <if test="accountingUnit != null" >
+        accounting_unit = #{accountingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingUnit != null" >
+        receiving_unit = #{receivingUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="inventoryUnit != null" >
+        inventory_unit = #{inventoryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryUnit != null" >
+        delivery_unit = #{deliveryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="weightPerEach != null" >
+        weight_per_each = #{weightPerEach,jdbcType=DECIMAL},
+      </if>
+      <if test="weightPerEachUnit != null" >
+        weight_per_each_unit = #{weightPerEachUnit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderDetail" >
+    update oub_delivery_order_detail
+    set warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      delivery_order_no = #{deliveryOrderNo,jdbcType=VARCHAR},
+      pickup_date = #{pickupDate,jdbcType=DATE},
+      store_no = #{storeNo,jdbcType=INTEGER},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      sku_name = #{skuName,jdbcType=VARCHAR},
+      sku_barcode = #{skuBarcode,jdbcType=VARCHAR},
+      raw_sku_code = #{rawSkuCode,jdbcType=VARCHAR},
+      raw_sku_name = #{rawSkuName,jdbcType=VARCHAR},
+      raw_sku_barcode = #{rawSkuBarcode,jdbcType=VARCHAR},
+      sold_unit = #{soldUnit,jdbcType=VARCHAR},
+      sold_qty = #{soldQty,jdbcType=DECIMAL},
+      sold_container_qty = #{soldContainerQty,jdbcType=SMALLINT},
+      sold_left_weight = #{soldLeftWeight,jdbcType=DECIMAL},
+      upward_floating_ratio = #{upwardFloatingRatio,jdbcType=DECIMAL},
+      delivery_qty = #{deliveryQty,jdbcType=DECIMAL},
+      delivery_container_qty = #{deliveryContainerQty,jdbcType=DECIMAL},
+      pick_pro_qty = #{pickProQty,jdbcType=DECIMAL},
+      pick_box_qty = #{pickBoxQty,jdbcType=DECIMAL},
+      collect_qty = #{collectQty,jdbcType=DECIMAL},
+      stockout_qty = #{stockoutQty,jdbcType=DECIMAL},
+      delivery_container_unit = #{deliveryContainerUnit,jdbcType=VARCHAR},
+      deliver_left_weight = #{deliverLeftWeight,jdbcType=DECIMAL},
+      type = #{type,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      weighing_time = #{weighingTime,jdbcType=TIMESTAMP},
+      weighting_user_id = #{weightingUserId,jdbcType=INTEGER},
+      sorter_time = #{sorterTime,jdbcType=TIMESTAMP},
+      sorter_user_id = #{sorterUserId,jdbcType=INTEGER},
+      left_weight_qrcode = #{leftWeightQrcode,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      created_user_id = #{createdUserId,jdbcType=INTEGER},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      updated_user_id = #{updatedUserId,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      lack_status = #{lackStatus,jdbcType=TINYINT},
+      weight_start_time = #{weightStartTime,jdbcType=TIMESTAMP},
+      weight_confirm_time = #{weightConfirmTime,jdbcType=TIMESTAMP},
+      weight_user_score = #{weightUserScore,jdbcType=INTEGER},
+      sku_percent = #{skuPercent,jdbcType=DECIMAL},
+      scan_status = #{scanStatus,jdbcType=TINYINT},
+      accounting_unit = #{accountingUnit,jdbcType=VARCHAR},
+      receiving_unit = #{receivingUnit,jdbcType=VARCHAR},
+      inventory_unit = #{inventoryUnit,jdbcType=VARCHAR},
+      delivery_unit = #{deliveryUnit,jdbcType=VARCHAR},
+      weight_per_each = #{weightPerEach,jdbcType=DECIMAL},
+      weight_per_each_unit = #{weightPerEachUnit,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.wms.OubDeliveryOrderDetailCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oub_delivery_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+
+    <select id="listAll" resultMap="BaseResultMap">
+        select warehouse_code,store_no,sku_code, sku_name, sold_left_weight,sold_qty
+        from oub_delivery_order_detail
+        where pickup_date = #{pickupDate};
+    </select>
+
+  <select id="selectByPage" resultMap="BaseResultMap">
+        select warehouse_code,store_no,sku_code, sku_name, sold_left_weight,sold_qty
+        from oub_delivery_order_detail
+        where pickup_date = #{pickupDate}
+        limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER};
+    </select>
+
+  <select id="countByPickupDate" resultType="java.lang.Integer">
+        select count(*)
+        from oub_delivery_order_detail
+        where pickup_date = #{pickupDate};
+    </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" parameterType="java.util.List">
+    select count(*) from oub_delivery_order_detail
+    where (warehouse_code,pickup_date, store_no,sku_code) in
+    <foreach collection="keys" item="keyObj" open="(" close=")" separator="," >
+      (#{keyObj.warehouseCode}, #{keyObj.pickupDate}, #{keyObj.storeNo}, #{keyObj.skuCode})
+    </foreach>
+  </select>
+
+  <select id="selectPageByCondition" resultMap="BaseResultMap" parameterType="map">
+    select warehouse_code,store_no,sku_code, sku_name, sold_left_weight,sold_qty from oub_delivery_order_detail
+    where (warehouse_code,pickup_date, store_no,sku_code) in
+    <foreach collection="keys" item="keyObj" open="(" close=")" separator="," >
+      (#{keyObj.warehouseCode}, #{keyObj.pickupDate}, #{keyObj.storeNo}, #{keyObj.skuCode})
+    </foreach>
+    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+</mapper>

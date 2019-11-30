@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>fulfillment-cp</artifactId>
+    <groupId>com.mallcai.fulfillment</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>fulfillment-cp-biz</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.mallcai.fulfillment</groupId>
+      <artifactId>fulfillment-cp-domain</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mallcai.fulfillment</groupId>
+      <artifactId>fulfillment-cp-denpendency</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mallcai.fulfillment</groupId>
+      <artifactId>fulfillment-cp-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mallcai</groupId>
+      <artifactId>app-order-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mallcai.fulfillment</groupId>
+      <artifactId>fulfillment-cp-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mallcai.fulfillment</groupId>
+      <artifactId>fulfillment-cp-infrastructure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.zookeeper</groupId>
+      <artifactId>zookeeper</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- jjwt，Java Web Token签名工具包 -->
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>mallcai-mq-springboot-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mallcai.framework</groupId>
+      <artifactId>mallcai-config-plugin</artifactId>
+    </dependency>
+    <dependency>
+    <groupId>com.mallcai.backend</groupId>
+    <artifactId>backend-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mallcai.backend</groupId>
+      <artifactId>backend-common-framework</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mallcai.framework</groupId>
+      <artifactId>mallcai-job-starter</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>

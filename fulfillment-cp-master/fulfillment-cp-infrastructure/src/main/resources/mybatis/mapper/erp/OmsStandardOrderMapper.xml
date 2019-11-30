@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.erp.OmsStandardOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="pickup_time" property="pickupTime" jdbcType="VARCHAR" />
+    <result column="recipients" property="recipients" jdbcType="VARCHAR" />
+    <result column="recipients_phone" property="recipientsPhone" jdbcType="VARCHAR" />
+    <result column="standard_warehouse_id" property="standardWarehouseId" jdbcType="INTEGER" />
+    <result column="fresh_warehouse_id" property="freshWarehouseId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_post_back" property="gmtPostBack" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updater_id" property="updaterId" jdbcType="INTEGER" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER" />
+    <result column="group_type" property="groupType" jdbcType="INTEGER" />
+    <result column="inventory_status" property="inventoryStatus" jdbcType="BIT" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+    <result column="item_num" property="itemNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, invoice_no, store_id, city_id, pickup_time, recipients, recipients_phone, standard_warehouse_id, 
+    fresh_warehouse_id, status, result, gmt_create, gmt_post_back, creator_id, creator, 
+    updater_id, updater, gmt_modified, order_type, group_type, inventory_status, is_delete, 
+    item_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oms_standard_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_standard_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oms_standard_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderCriteria" >
+    delete from oms_standard_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrder" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oms_standard_order (invoice_no, store_id, city_id, 
+      pickup_time, recipients, recipients_phone, 
+      standard_warehouse_id, fresh_warehouse_id, 
+      status, result, gmt_create, 
+      gmt_post_back, creator_id, creator, 
+      updater_id, updater, gmt_modified, 
+      order_type, group_type, inventory_status, 
+      is_delete, item_num)
+    values (#{invoiceNo,jdbcType=VARCHAR}, #{storeId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, 
+      #{pickupTime,jdbcType=VARCHAR}, #{recipients,jdbcType=VARCHAR}, #{recipientsPhone,jdbcType=VARCHAR}, 
+      #{standardWarehouseId,jdbcType=INTEGER}, #{freshWarehouseId,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{result,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtPostBack,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
+      #{updaterId,jdbcType=INTEGER}, #{updater,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{orderType,jdbcType=INTEGER}, #{groupType,jdbcType=INTEGER}, #{inventoryStatus,jdbcType=BIT}, 
+      #{isDelete,jdbcType=BIT}, #{itemNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrder" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into oms_standard_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invoiceNo != null" >
+        invoice_no,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="pickupTime != null" >
+        pickup_time,
+      </if>
+      <if test="recipients != null" >
+        recipients,
+      </if>
+      <if test="recipientsPhone != null" >
+        recipients_phone,
+      </if>
+      <if test="standardWarehouseId != null" >
+        standard_warehouse_id,
+      </if>
+      <if test="freshWarehouseId != null" >
+        fresh_warehouse_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtPostBack != null" >
+        gmt_post_back,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="groupType != null" >
+        group_type,
+      </if>
+      <if test="inventoryStatus != null" >
+        inventory_status,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="itemNum != null" >
+        item_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invoiceNo != null" >
+        #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupTime != null" >
+        #{pickupTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recipients != null" >
+        #{recipients,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientsPhone != null" >
+        #{recipientsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="standardWarehouseId != null" >
+        #{standardWarehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="freshWarehouseId != null" >
+        #{freshWarehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtPostBack != null" >
+        #{gmtPostBack,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="groupType != null" >
+        #{groupType,jdbcType=INTEGER},
+      </if>
+      <if test="inventoryStatus != null" >
+        #{inventoryStatus,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="itemNum != null" >
+        #{itemNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderCriteria" resultType="java.lang.Integer" >
+    select count(*) from oms_standard_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update oms_standard_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceNo != null" >
+        invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityId != null" >
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pickupTime != null" >
+        pickup_time = #{record.pickupTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipients != null" >
+        recipients = #{record.recipients,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipientsPhone != null" >
+        recipients_phone = #{record.recipientsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standardWarehouseId != null" >
+        standard_warehouse_id = #{record.standardWarehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.freshWarehouseId != null" >
+        fresh_warehouse_id = #{record.freshWarehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.result != null" >
+        result = #{record.result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreate != null" >
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtPostBack != null" >
+        gmt_post_back = #{record.gmtPostBack,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatorId != null" >
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updaterId != null" >
+        updater_id = #{record.updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updater != null" >
+        updater = #{record.updater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtModified != null" >
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderType != null" >
+        order_type = #{record.orderType,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupType != null" >
+        group_type = #{record.groupType,jdbcType=INTEGER},
+      </if>
+      <if test="record.inventoryStatus != null" >
+        inventory_status = #{record.inventoryStatus,jdbcType=BIT},
+      </if>
+      <if test="record.isDelete != null" >
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+      <if test="record.itemNum != null" >
+        item_num = #{record.itemNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update oms_standard_order
+    set id = #{record.id,jdbcType=INTEGER},
+      invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=INTEGER},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      pickup_time = #{record.pickupTime,jdbcType=VARCHAR},
+      recipients = #{record.recipients,jdbcType=VARCHAR},
+      recipients_phone = #{record.recipientsPhone,jdbcType=VARCHAR},
+      standard_warehouse_id = #{record.standardWarehouseId,jdbcType=INTEGER},
+      fresh_warehouse_id = #{record.freshWarehouseId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      result = #{record.result,jdbcType=VARCHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_post_back = #{record.gmtPostBack,jdbcType=TIMESTAMP},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      updater_id = #{record.updaterId,jdbcType=INTEGER},
+      updater = #{record.updater,jdbcType=VARCHAR},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      order_type = #{record.orderType,jdbcType=INTEGER},
+      group_type = #{record.groupType,jdbcType=INTEGER},
+      inventory_status = #{record.inventoryStatus,jdbcType=BIT},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      item_num = #{record.itemNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrder" >
+    update oms_standard_order
+    <set >
+      <if test="invoiceNo != null" >
+        invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupTime != null" >
+        pickup_time = #{pickupTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recipients != null" >
+        recipients = #{recipients,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientsPhone != null" >
+        recipients_phone = #{recipientsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="standardWarehouseId != null" >
+        standard_warehouse_id = #{standardWarehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="freshWarehouseId != null" >
+        fresh_warehouse_id = #{freshWarehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtPostBack != null" >
+        gmt_post_back = #{gmtPostBack,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null" >
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="groupType != null" >
+        group_type = #{groupType,jdbcType=INTEGER},
+      </if>
+      <if test="inventoryStatus != null" >
+        inventory_status = #{inventoryStatus,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="itemNum != null" >
+        item_num = #{itemNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrder" >
+    update oms_standard_order
+    set invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=INTEGER},
+      pickup_time = #{pickupTime,jdbcType=VARCHAR},
+      recipients = #{recipients,jdbcType=VARCHAR},
+      recipients_phone = #{recipientsPhone,jdbcType=VARCHAR},
+      standard_warehouse_id = #{standardWarehouseId,jdbcType=INTEGER},
+      fresh_warehouse_id = #{freshWarehouseId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      result = #{result,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_post_back = #{gmtPostBack,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      updater = #{updater,jdbcType=VARCHAR},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      order_type = #{orderType,jdbcType=INTEGER},
+      group_type = #{groupType,jdbcType=INTEGER},
+      inventory_status = #{inventoryStatus,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT},
+      item_num = #{itemNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oms_standard_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

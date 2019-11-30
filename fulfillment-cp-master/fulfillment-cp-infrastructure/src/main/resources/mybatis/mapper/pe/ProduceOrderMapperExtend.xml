@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.pe.ProduceOrderMapperExtend" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.pe.ProduceOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="produce_order_no" property="produceOrderNo" jdbcType="VARCHAR" />
+    <result column="expect_push_time" property="expectPushTime" jdbcType="TIMESTAMP" />
+    <result column="aggregate_type" property="aggregateType" jdbcType="TINYINT" />
+    <result column="aggregate_value" property="aggregateValue" jdbcType="VARCHAR" />
+    <result column="group_type" property="groupType" jdbcType="TINYINT" />
+    <result column="group_value" property="groupValue" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="order_count" property="orderCount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="suc_time" property="sucTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, produce_order_no, expect_push_time, aggregate_type, aggregate_value, group_type, 
+    group_value, store_id, city_id, warehouse_id, order_count, status, create_time, update_time, 
+    suc_time
+  </sql>
+
+  <select id="countByCondition" resultType="java.lang.Integer" >
+    select count(*) from produce_order where create_time>=#{beginTime,jdbcType=TIMESTAMP} and create_time &lt; #{endTime,jdbcType=TIMESTAMP}
+    <if test="cityIdList != null" >
+    and city_id in
+    <foreach collection="cityIdList" item="cityId" open="(" separator="," close=")">
+      #{cityId}
+    </foreach>
+  </if>
+   and group_value=#{groupValue,jdbcType=VARCHAR} and status=#{status,jdbcType=TINYINT}
+  </select>
+
+  <select id="getByCondition" resultMap="BaseResultMap" >
+    select id,produce_order_no,group_value,store_id,city_id,warehouse_id,order_count from produce_order where create_time>=#{beginTime,jdbcType=TIMESTAMP}
+    and create_time &lt; #{endTime,jdbcType=TIMESTAMP}
+    <if test="cityIdList != null" >
+      and city_id in
+      <foreach collection="cityIdList" item="cityId" open="(" separator="," close=")">
+        #{cityId}
+      </foreach>
+    </if>
+    and group_value=#{groupValue,jdbcType=VARCHAR} and status=#{status,jdbcType=TINYINT}
+    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+
+</mapper>

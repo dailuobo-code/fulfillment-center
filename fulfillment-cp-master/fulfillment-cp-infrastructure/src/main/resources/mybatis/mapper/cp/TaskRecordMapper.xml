@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.cp.TaskRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.cp.TaskRecord" >
+    <id column="check_no" property="checkNo" jdbcType="VARCHAR" />
+    <result column="biz_tag" property="bizTag" jdbcType="VARCHAR" />
+    <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="check_param" property="checkParam" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="index_size" property="indexSize" jdbcType="INTEGER" />
+    <result column="check_size" property="checkSize" jdbcType="INTEGER" />
+    <result column="match_cnt" property="matchCnt" jdbcType="INTEGER" />
+    <result column="dismatch_cnt" property="dismatchCnt" jdbcType="INTEGER" />
+    <result column="cost_time" property="costTime" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    check_no, biz_tag, check_time, check_param, status, index_size, check_size, match_cnt, 
+    dismatch_cnt, cost_time, create_by, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskRecordCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cp_task_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_task_record
+    where check_no = #{checkNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cp_task_record
+    where check_no = #{checkNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskRecordCriteria" >
+    delete from cp_task_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskRecord" >
+    insert into cp_task_record (check_no, biz_tag, check_time, 
+      check_param, status, index_size, 
+      check_size, match_cnt, dismatch_cnt, 
+      cost_time, create_by, create_time, 
+      update_time)
+    values (#{checkNo,jdbcType=VARCHAR}, #{bizTag,jdbcType=VARCHAR}, #{checkTime,jdbcType=TIMESTAMP}, 
+      #{checkParam,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{indexSize,jdbcType=INTEGER}, 
+      #{checkSize,jdbcType=INTEGER}, #{matchCnt,jdbcType=INTEGER}, #{dismatchCnt,jdbcType=INTEGER}, 
+      #{costTime,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskRecord" >
+    insert into cp_task_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="checkNo != null" >
+        check_no,
+      </if>
+      <if test="bizTag != null" >
+        biz_tag,
+      </if>
+      <if test="checkTime != null" >
+        check_time,
+      </if>
+      <if test="checkParam != null" >
+        check_param,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="indexSize != null" >
+        index_size,
+      </if>
+      <if test="checkSize != null" >
+        check_size,
+      </if>
+      <if test="matchCnt != null" >
+        match_cnt,
+      </if>
+      <if test="dismatchCnt != null" >
+        dismatch_cnt,
+      </if>
+      <if test="costTime != null" >
+        cost_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="checkNo != null" >
+        #{checkNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bizTag != null" >
+        #{bizTag,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkParam != null" >
+        #{checkParam,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="indexSize != null" >
+        #{indexSize,jdbcType=INTEGER},
+      </if>
+      <if test="checkSize != null" >
+        #{checkSize,jdbcType=INTEGER},
+      </if>
+      <if test="matchCnt != null" >
+        #{matchCnt,jdbcType=INTEGER},
+      </if>
+      <if test="dismatchCnt != null" >
+        #{dismatchCnt,jdbcType=INTEGER},
+      </if>
+      <if test="costTime != null" >
+        #{costTime,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskRecordCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_task_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_task_record
+    <set >
+      <if test="record.checkNo != null" >
+        check_no = #{record.checkNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bizTag != null" >
+        biz_tag = #{record.bizTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkTime != null" >
+        check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkParam != null" >
+        check_param = #{record.checkParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.indexSize != null" >
+        index_size = #{record.indexSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkSize != null" >
+        check_size = #{record.checkSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.matchCnt != null" >
+        match_cnt = #{record.matchCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.dismatchCnt != null" >
+        dismatch_cnt = #{record.dismatchCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.costTime != null" >
+        cost_time = #{record.costTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_task_record
+    set check_no = #{record.checkNo,jdbcType=VARCHAR},
+      biz_tag = #{record.bizTag,jdbcType=VARCHAR},
+      check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      check_param = #{record.checkParam,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      index_size = #{record.indexSize,jdbcType=INTEGER},
+      check_size = #{record.checkSize,jdbcType=INTEGER},
+      match_cnt = #{record.matchCnt,jdbcType=INTEGER},
+      dismatch_cnt = #{record.dismatchCnt,jdbcType=INTEGER},
+      cost_time = #{record.costTime,jdbcType=INTEGER},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskRecord" >
+    update cp_task_record
+    <set >
+      <if test="bizTag != null" >
+        biz_tag = #{bizTag,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkParam != null" >
+        check_param = #{checkParam,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="indexSize != null" >
+        index_size = #{indexSize,jdbcType=INTEGER},
+      </if>
+      <if test="checkSize != null" >
+        check_size = #{checkSize,jdbcType=INTEGER},
+      </if>
+      <if test="matchCnt != null" >
+        match_cnt = #{matchCnt,jdbcType=INTEGER},
+      </if>
+      <if test="dismatchCnt != null" >
+        dismatch_cnt = #{dismatchCnt,jdbcType=INTEGER},
+      </if>
+      <if test="costTime != null" >
+        cost_time = #{costTime,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where check_no = #{checkNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskRecord" >
+    update cp_task_record
+    set biz_tag = #{bizTag,jdbcType=VARCHAR},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      check_param = #{checkParam,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      index_size = #{indexSize,jdbcType=INTEGER},
+      check_size = #{checkSize,jdbcType=INTEGER},
+      match_cnt = #{matchCnt,jdbcType=INTEGER},
+      dismatch_cnt = #{dismatchCnt,jdbcType=INTEGER},
+      cost_time = #{costTime,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where check_no = #{checkNo,jdbcType=VARCHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskRecordCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cp_task_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

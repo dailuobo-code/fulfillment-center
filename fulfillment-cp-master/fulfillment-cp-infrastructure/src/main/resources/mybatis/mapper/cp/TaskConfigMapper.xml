@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.cp.TaskConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.cp.TaskConfig" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="biz_tag" property="bizTag" jdbcType="VARCHAR" />
+    <result column="biz_desc" property="bizDesc" jdbcType="VARCHAR" />
+    <result column="last_check_time" property="lastCheckTime" jdbcType="TIMESTAMP" />
+    <result column="check_intel" property="checkIntel" jdbcType="INTEGER" />
+    <result column="left_loader_bean" property="leftLoaderBean" jdbcType="VARCHAR" />
+    <result column="right_loader_bean" property="rightLoaderBean" jdbcType="VARCHAR" />
+    <result column="load_index_bean" property="loadIndexBean" jdbcType="VARCHAR" />
+    <result column="check_bean" property="checkBean" jdbcType="VARCHAR" />
+    <result column="result_bean" property="resultBean" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, biz_tag, biz_desc, last_check_time, check_intel, left_loader_bean, right_loader_bean, 
+    load_index_bean, check_bean, result_bean, create_by, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskConfigCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cp_task_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cp_task_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cp_task_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskConfigCriteria" >
+    delete from cp_task_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskConfig" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cp_task_config (biz_tag, biz_desc, last_check_time, 
+      check_intel, left_loader_bean, right_loader_bean, 
+      load_index_bean, check_bean, result_bean, 
+      create_by, create_time, update_time
+      )
+    values (#{bizTag,jdbcType=VARCHAR}, #{bizDesc,jdbcType=VARCHAR}, #{lastCheckTime,jdbcType=TIMESTAMP}, 
+      #{checkIntel,jdbcType=INTEGER}, #{leftLoaderBean,jdbcType=VARCHAR}, #{rightLoaderBean,jdbcType=VARCHAR}, 
+      #{loadIndexBean,jdbcType=VARCHAR}, #{checkBean,jdbcType=VARCHAR}, #{resultBean,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskConfig" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cp_task_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bizTag != null" >
+        biz_tag,
+      </if>
+      <if test="bizDesc != null" >
+        biz_desc,
+      </if>
+      <if test="lastCheckTime != null" >
+        last_check_time,
+      </if>
+      <if test="checkIntel != null" >
+        check_intel,
+      </if>
+      <if test="leftLoaderBean != null" >
+        left_loader_bean,
+      </if>
+      <if test="rightLoaderBean != null" >
+        right_loader_bean,
+      </if>
+      <if test="loadIndexBean != null" >
+        load_index_bean,
+      </if>
+      <if test="checkBean != null" >
+        check_bean,
+      </if>
+      <if test="resultBean != null" >
+        result_bean,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bizTag != null" >
+        #{bizTag,jdbcType=VARCHAR},
+      </if>
+      <if test="bizDesc != null" >
+        #{bizDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="lastCheckTime != null" >
+        #{lastCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkIntel != null" >
+        #{checkIntel,jdbcType=INTEGER},
+      </if>
+      <if test="leftLoaderBean != null" >
+        #{leftLoaderBean,jdbcType=VARCHAR},
+      </if>
+      <if test="rightLoaderBean != null" >
+        #{rightLoaderBean,jdbcType=VARCHAR},
+      </if>
+      <if test="loadIndexBean != null" >
+        #{loadIndexBean,jdbcType=VARCHAR},
+      </if>
+      <if test="checkBean != null" >
+        #{checkBean,jdbcType=VARCHAR},
+      </if>
+      <if test="resultBean != null" >
+        #{resultBean,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskConfigCriteria" resultType="java.lang.Integer" >
+    select count(*) from cp_task_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cp_task_config
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.bizTag != null" >
+        biz_tag = #{record.bizTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bizDesc != null" >
+        biz_desc = #{record.bizDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastCheckTime != null" >
+        last_check_time = #{record.lastCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkIntel != null" >
+        check_intel = #{record.checkIntel,jdbcType=INTEGER},
+      </if>
+      <if test="record.leftLoaderBean != null" >
+        left_loader_bean = #{record.leftLoaderBean,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rightLoaderBean != null" >
+        right_loader_bean = #{record.rightLoaderBean,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loadIndexBean != null" >
+        load_index_bean = #{record.loadIndexBean,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkBean != null" >
+        check_bean = #{record.checkBean,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultBean != null" >
+        result_bean = #{record.resultBean,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cp_task_config
+    set id = #{record.id,jdbcType=BIGINT},
+      biz_tag = #{record.bizTag,jdbcType=VARCHAR},
+      biz_desc = #{record.bizDesc,jdbcType=VARCHAR},
+      last_check_time = #{record.lastCheckTime,jdbcType=TIMESTAMP},
+      check_intel = #{record.checkIntel,jdbcType=INTEGER},
+      left_loader_bean = #{record.leftLoaderBean,jdbcType=VARCHAR},
+      right_loader_bean = #{record.rightLoaderBean,jdbcType=VARCHAR},
+      load_index_bean = #{record.loadIndexBean,jdbcType=VARCHAR},
+      check_bean = #{record.checkBean,jdbcType=VARCHAR},
+      result_bean = #{record.resultBean,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskConfig" >
+    update cp_task_config
+    <set >
+      <if test="bizTag != null" >
+        biz_tag = #{bizTag,jdbcType=VARCHAR},
+      </if>
+      <if test="bizDesc != null" >
+        biz_desc = #{bizDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="lastCheckTime != null" >
+        last_check_time = #{lastCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkIntel != null" >
+        check_intel = #{checkIntel,jdbcType=INTEGER},
+      </if>
+      <if test="leftLoaderBean != null" >
+        left_loader_bean = #{leftLoaderBean,jdbcType=VARCHAR},
+      </if>
+      <if test="rightLoaderBean != null" >
+        right_loader_bean = #{rightLoaderBean,jdbcType=VARCHAR},
+      </if>
+      <if test="loadIndexBean != null" >
+        load_index_bean = #{loadIndexBean,jdbcType=VARCHAR},
+      </if>
+      <if test="checkBean != null" >
+        check_bean = #{checkBean,jdbcType=VARCHAR},
+      </if>
+      <if test="resultBean != null" >
+        result_bean = #{resultBean,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskConfig" >
+    update cp_task_config
+    set biz_tag = #{bizTag,jdbcType=VARCHAR},
+      biz_desc = #{bizDesc,jdbcType=VARCHAR},
+      last_check_time = #{lastCheckTime,jdbcType=TIMESTAMP},
+      check_intel = #{checkIntel,jdbcType=INTEGER},
+      left_loader_bean = #{leftLoaderBean,jdbcType=VARCHAR},
+      right_loader_bean = #{rightLoaderBean,jdbcType=VARCHAR},
+      load_index_bean = #{loadIndexBean,jdbcType=VARCHAR},
+      check_bean = #{checkBean,jdbcType=VARCHAR},
+      result_bean = #{resultBean,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.cp.TaskConfigCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cp_task_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

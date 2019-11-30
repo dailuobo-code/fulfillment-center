@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.erp.OmsStandardOrderMapperExtend">
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrder">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+        <result column="pickup_time" property="pickupTime" jdbcType="VARCHAR"/>
+        <result column="recipients" property="recipients" jdbcType="VARCHAR"/>
+        <result column="recipients_phone" property="recipientsPhone" jdbcType="VARCHAR"/>
+        <result column="standard_warehouse_id" property="standardWarehouseId" jdbcType="INTEGER"/>
+        <result column="fresh_warehouse_id" property="freshWarehouseId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="result" property="result" jdbcType="VARCHAR"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_post_back" property="gmtPostBack" jdbcType="TIMESTAMP"/>
+        <result column="creator_id" property="creatorId" jdbcType="INTEGER"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updater_id" property="updaterId" jdbcType="INTEGER"/>
+        <result column="updater" property="updater" jdbcType="VARCHAR"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="order_type" property="orderType" jdbcType="INTEGER"/>
+        <result column="group_type" property="groupType" jdbcType="INTEGER"/>
+        <result column="inventory_status" property="inventoryStatus" jdbcType="BIT"/>
+        <result column="is_delete" property="isDelete" jdbcType="BIT"/>
+        <result column="item_num" property="itemNum" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="BaseExtendResultMap" type="com.mallcai.fulfillment.infrastructure.object.erp.OmsStandardOrderExtend" extends="BaseResultMap">
+        <result column="cal_count" property="calCount" jdbcType="INTEGER"/>
+        <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="omsStandardOrderCriteria.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+    id, invoice_no, store_id, city_id, pickup_time, recipients, recipients_phone, standard_warehouse_id, 
+    fresh_warehouse_id, status, result, gmt_create, gmt_post_back, creator_id, creator, 
+    updater_id, updater, gmt_modified, order_type, group_type, inventory_status, is_delete, 
+    item_num
+  </sql>
+    <select id="calFrozenTotalNumByCondition" resultMap="BaseExtendResultMap">
+        select t.`city_id`,count(1) as cal_count from oms_standard_order t where t.`gmt_create` >= #{beginTime,jdbcType=TIMESTAMP}
+        and t.`gmt_create` &lt; #{endTime,jdbcType=TIMESTAMP}
+        <if test="cities != null">
+            and t.`city_id` in
+            <foreach collection="cities" item="cityId" open="(" separator="," close=")">
+                #{cityId}
+            </foreach>
+        </if>
+        and t.`order_type` = #{orderType,jdbcType=INTEGER} and t.`is_delete`=0 group by t.`city_id`
+    </select>
+
+    <select id="calFreshSortingTotalNumByCondition" resultMap="BaseExtendResultMap">
+        SELECT t.`city_id` as city_id,
+        r.`warehouse_id` as warehouse_id,
+        sum(item_num) AS cal_count
+        FROM oms_standard_order t
+        LEFT JOIN `oms_standard_warehouse` r
+        ON t.`invoice_no` = r.`invoice_no`
+        WHERE (t.`gmt_create` >= #{beginTime,jdbcType=TIMESTAMP} and t.`gmt_create` &lt; #{endTime,jdbcType=TIMESTAMP}
+        <if test="cities != null">
+            and t.`city_id` in
+            <foreach collection="cities" item="cityId" open="(" separator="," close=")">
+                #{cityId}
+            </foreach>
+        </if>
+        AND t.`order_type` = #{orderType,jdbcType=INTEGER} and t.`is_delete`=0)
+        GROUP BY t.`city_id`,r.`warehouse_id`
+    </select>
+
+  <select id="selectPageByExample" resultMap="BaseResultMap" parameterType="map">
+    select invoice_no, store_id, city_id from oms_standard_order
+    <if test="omsStandardOrderCriteria != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+</mapper>

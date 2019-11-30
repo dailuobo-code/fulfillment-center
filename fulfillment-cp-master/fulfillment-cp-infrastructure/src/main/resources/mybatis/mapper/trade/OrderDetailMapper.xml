@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.trade.OrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.trade.OrderDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="CHAR" />
+    <result column="spec_id" property="specId" jdbcType="INTEGER" />
+    <result column="product_num" property="productNum" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="is_pay" property="isPay" jdbcType="CHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="city_product_id" property="cityProductId" jdbcType="INTEGER" />
+    <result column="prod_show_name" property="prodShowName" jdbcType="VARCHAR" />
+    <result column="is_lock" property="isLock" jdbcType="CHAR" />
+    <result column="prod_icon" property="prodIcon" jdbcType="VARCHAR" />
+    <result column="spec_name" property="specName" jdbcType="VARCHAR" />
+    <result column="star_num" property="starNum" jdbcType="BIT" />
+    <result column="change_flag" property="changeFlag" jdbcType="TINYINT" />
+    <result column="min_weight" property="minWeight" jdbcType="DECIMAL" />
+    <result column="max_weight" property="maxWeight" jdbcType="DECIMAL" />
+    <result column="min_num" property="minNum" jdbcType="INTEGER" />
+    <result column="max_num" property="maxNum" jdbcType="INTEGER" />
+    <result column="num_unit" property="numUnit" jdbcType="VARCHAR" />
+    <result column="weight_unit" property="weightUnit" jdbcType="VARCHAR" />
+    <result column="unit_type" property="unitType" jdbcType="BIT" />
+    <result column="package_max_weight" property="packageMaxWeight" jdbcType="INTEGER" />
+    <result column="is_gift" property="isGift" jdbcType="TINYINT" />
+    <result column="original_price" property="originalPrice" jdbcType="DECIMAL" />
+    <result column="coupon_price" property="couponPrice" jdbcType="DECIMAL" />
+    <result column="vip_price" property="vipPrice" jdbcType="DECIMAL" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="full_price" property="fullPrice" jdbcType="INTEGER" />
+    <result column="full_id" property="fullId" jdbcType="INTEGER" />
+    <result column="point_price" property="pointPrice" jdbcType="INTEGER" />
+    <result column="total_discount" property="totalDiscount" jdbcType="DECIMAL" />
+    <result column="remark6" property="remark6" jdbcType="DECIMAL" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+    <result column="product_info" property="productInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, order_id, spec_id, product_num, price, create_time, update_time, user_id, city_id, 
+    store_id, is_pay, pay_time, city_product_id, prod_show_name, is_lock, prod_icon, 
+    spec_name, star_num, change_flag, min_weight, max_weight, min_num, max_num, num_unit, 
+    weight_unit, unit_type, package_max_weight, is_gift, original_price, coupon_price, 
+    vip_price, remark1, remark2, full_price, full_id, point_price, total_discount, remark6, 
+    merchant_id, product_info
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.trade.OrderDetailCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.trade.OrderDetailCriteria" >
+    delete from tbl_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.infrastructure.object.trade.OrderDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_order_detail (order_id, spec_id, product_num, 
+      price, create_time, update_time, 
+      user_id, city_id, store_id, 
+      is_pay, pay_time, city_product_id, 
+      prod_show_name, is_lock, prod_icon, 
+      spec_name, star_num, change_flag, 
+      min_weight, max_weight, min_num, 
+      max_num, num_unit, weight_unit, 
+      unit_type, package_max_weight, is_gift, 
+      original_price, coupon_price, vip_price, 
+      remark1, remark2, full_price, 
+      full_id, point_price, total_discount, 
+      remark6, merchant_id, product_info
+      )
+    values (#{orderId,jdbcType=CHAR}, #{specId,jdbcType=INTEGER}, #{productNum,jdbcType=INTEGER}, 
+      #{price,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, 
+      #{isPay,jdbcType=CHAR}, #{payTime,jdbcType=TIMESTAMP}, #{cityProductId,jdbcType=INTEGER}, 
+      #{prodShowName,jdbcType=VARCHAR}, #{isLock,jdbcType=CHAR}, #{prodIcon,jdbcType=VARCHAR}, 
+      #{specName,jdbcType=VARCHAR}, #{starNum,jdbcType=BIT}, #{changeFlag,jdbcType=TINYINT}, 
+      #{minWeight,jdbcType=DECIMAL}, #{maxWeight,jdbcType=DECIMAL}, #{minNum,jdbcType=INTEGER}, 
+      #{maxNum,jdbcType=INTEGER}, #{numUnit,jdbcType=VARCHAR}, #{weightUnit,jdbcType=VARCHAR}, 
+      #{unitType,jdbcType=BIT}, #{packageMaxWeight,jdbcType=INTEGER}, #{isGift,jdbcType=TINYINT}, 
+      #{originalPrice,jdbcType=DECIMAL}, #{couponPrice,jdbcType=DECIMAL}, #{vipPrice,jdbcType=DECIMAL}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{fullPrice,jdbcType=INTEGER}, 
+      #{fullId,jdbcType=INTEGER}, #{pointPrice,jdbcType=INTEGER}, #{totalDiscount,jdbcType=DECIMAL}, 
+      #{remark6,jdbcType=DECIMAL}, #{merchantId,jdbcType=INTEGER}, #{productInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.infrastructure.object.trade.OrderDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="specId != null" >
+        spec_id,
+      </if>
+      <if test="productNum != null" >
+        product_num,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="isPay != null" >
+        is_pay,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="cityProductId != null" >
+        city_product_id,
+      </if>
+      <if test="prodShowName != null" >
+        prod_show_name,
+      </if>
+      <if test="isLock != null" >
+        is_lock,
+      </if>
+      <if test="prodIcon != null" >
+        prod_icon,
+      </if>
+      <if test="specName != null" >
+        spec_name,
+      </if>
+      <if test="starNum != null" >
+        star_num,
+      </if>
+      <if test="changeFlag != null" >
+        change_flag,
+      </if>
+      <if test="minWeight != null" >
+        min_weight,
+      </if>
+      <if test="maxWeight != null" >
+        max_weight,
+      </if>
+      <if test="minNum != null" >
+        min_num,
+      </if>
+      <if test="maxNum != null" >
+        max_num,
+      </if>
+      <if test="numUnit != null" >
+        num_unit,
+      </if>
+      <if test="weightUnit != null" >
+        weight_unit,
+      </if>
+      <if test="unitType != null" >
+        unit_type,
+      </if>
+      <if test="packageMaxWeight != null" >
+        package_max_weight,
+      </if>
+      <if test="isGift != null" >
+        is_gift,
+      </if>
+      <if test="originalPrice != null" >
+        original_price,
+      </if>
+      <if test="couponPrice != null" >
+        coupon_price,
+      </if>
+      <if test="vipPrice != null" >
+        vip_price,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="fullPrice != null" >
+        full_price,
+      </if>
+      <if test="fullId != null" >
+        full_id,
+      </if>
+      <if test="pointPrice != null" >
+        point_price,
+      </if>
+      <if test="totalDiscount != null" >
+        total_discount,
+      </if>
+      <if test="remark6 != null" >
+        remark6,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="productInfo != null" >
+        product_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="specId != null" >
+        #{specId,jdbcType=INTEGER},
+      </if>
+      <if test="productNum != null" >
+        #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="isPay != null" >
+        #{isPay,jdbcType=CHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityProductId != null" >
+        #{cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="prodShowName != null" >
+        #{prodShowName,jdbcType=VARCHAR},
+      </if>
+      <if test="isLock != null" >
+        #{isLock,jdbcType=CHAR},
+      </if>
+      <if test="prodIcon != null" >
+        #{prodIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="specName != null" >
+        #{specName,jdbcType=VARCHAR},
+      </if>
+      <if test="starNum != null" >
+        #{starNum,jdbcType=BIT},
+      </if>
+      <if test="changeFlag != null" >
+        #{changeFlag,jdbcType=TINYINT},
+      </if>
+      <if test="minWeight != null" >
+        #{minWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="maxWeight != null" >
+        #{maxWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="minNum != null" >
+        #{minNum,jdbcType=INTEGER},
+      </if>
+      <if test="maxNum != null" >
+        #{maxNum,jdbcType=INTEGER},
+      </if>
+      <if test="numUnit != null" >
+        #{numUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="weightUnit != null" >
+        #{weightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        #{unitType,jdbcType=BIT},
+      </if>
+      <if test="packageMaxWeight != null" >
+        #{packageMaxWeight,jdbcType=INTEGER},
+      </if>
+      <if test="isGift != null" >
+        #{isGift,jdbcType=TINYINT},
+      </if>
+      <if test="originalPrice != null" >
+        #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="couponPrice != null" >
+        #{couponPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null" >
+        #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="fullPrice != null" >
+        #{fullPrice,jdbcType=INTEGER},
+      </if>
+      <if test="fullId != null" >
+        #{fullId,jdbcType=INTEGER},
+      </if>
+      <if test="pointPrice != null" >
+        #{pointPrice,jdbcType=INTEGER},
+      </if>
+      <if test="totalDiscount != null" >
+        #{totalDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="remark6 != null" >
+        #{remark6,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="productInfo != null" >
+        #{productInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.trade.OrderDetailCriteria" resultType="java.lang.Integer" >
+    select count(*) from tbl_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_order_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=CHAR},
+      </if>
+      <if test="record.specId != null" >
+        spec_id = #{record.specId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productNum != null" >
+        product_num = #{record.productNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityId != null" >
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isPay != null" >
+        is_pay = #{record.isPay,jdbcType=CHAR},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cityProductId != null" >
+        city_product_id = #{record.cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodShowName != null" >
+        prod_show_name = #{record.prodShowName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isLock != null" >
+        is_lock = #{record.isLock,jdbcType=CHAR},
+      </if>
+      <if test="record.prodIcon != null" >
+        prod_icon = #{record.prodIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specName != null" >
+        spec_name = #{record.specName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starNum != null" >
+        star_num = #{record.starNum,jdbcType=BIT},
+      </if>
+      <if test="record.changeFlag != null" >
+        change_flag = #{record.changeFlag,jdbcType=TINYINT},
+      </if>
+      <if test="record.minWeight != null" >
+        min_weight = #{record.minWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.maxWeight != null" >
+        max_weight = #{record.maxWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.minNum != null" >
+        min_num = #{record.minNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxNum != null" >
+        max_num = #{record.maxNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.numUnit != null" >
+        num_unit = #{record.numUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weightUnit != null" >
+        weight_unit = #{record.weightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitType != null" >
+        unit_type = #{record.unitType,jdbcType=BIT},
+      </if>
+      <if test="record.packageMaxWeight != null" >
+        package_max_weight = #{record.packageMaxWeight,jdbcType=INTEGER},
+      </if>
+      <if test="record.isGift != null" >
+        is_gift = #{record.isGift,jdbcType=TINYINT},
+      </if>
+      <if test="record.originalPrice != null" >
+        original_price = #{record.originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.couponPrice != null" >
+        coupon_price = #{record.couponPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.vipPrice != null" >
+        vip_price = #{record.vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark1 != null" >
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark2 != null" >
+        remark2 = #{record.remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullPrice != null" >
+        full_price = #{record.fullPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.fullId != null" >
+        full_id = #{record.fullId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointPrice != null" >
+        point_price = #{record.pointPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalDiscount != null" >
+        total_discount = #{record.totalDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark6 != null" >
+        remark6 = #{record.remark6,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_id = #{record.merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productInfo != null" >
+        product_info = #{record.productInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_order_detail
+    set id = #{record.id,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=CHAR},
+      spec_id = #{record.specId,jdbcType=INTEGER},
+      product_num = #{record.productNum,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      store_id = #{record.storeId,jdbcType=INTEGER},
+      is_pay = #{record.isPay,jdbcType=CHAR},
+      pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      city_product_id = #{record.cityProductId,jdbcType=INTEGER},
+      prod_show_name = #{record.prodShowName,jdbcType=VARCHAR},
+      is_lock = #{record.isLock,jdbcType=CHAR},
+      prod_icon = #{record.prodIcon,jdbcType=VARCHAR},
+      spec_name = #{record.specName,jdbcType=VARCHAR},
+      star_num = #{record.starNum,jdbcType=BIT},
+      change_flag = #{record.changeFlag,jdbcType=TINYINT},
+      min_weight = #{record.minWeight,jdbcType=DECIMAL},
+      max_weight = #{record.maxWeight,jdbcType=DECIMAL},
+      min_num = #{record.minNum,jdbcType=INTEGER},
+      max_num = #{record.maxNum,jdbcType=INTEGER},
+      num_unit = #{record.numUnit,jdbcType=VARCHAR},
+      weight_unit = #{record.weightUnit,jdbcType=VARCHAR},
+      unit_type = #{record.unitType,jdbcType=BIT},
+      package_max_weight = #{record.packageMaxWeight,jdbcType=INTEGER},
+      is_gift = #{record.isGift,jdbcType=TINYINT},
+      original_price = #{record.originalPrice,jdbcType=DECIMAL},
+      coupon_price = #{record.couponPrice,jdbcType=DECIMAL},
+      vip_price = #{record.vipPrice,jdbcType=DECIMAL},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      remark2 = #{record.remark2,jdbcType=VARCHAR},
+      full_price = #{record.fullPrice,jdbcType=INTEGER},
+      full_id = #{record.fullId,jdbcType=INTEGER},
+      point_price = #{record.pointPrice,jdbcType=INTEGER},
+      total_discount = #{record.totalDiscount,jdbcType=DECIMAL},
+      remark6 = #{record.remark6,jdbcType=DECIMAL},
+      merchant_id = #{record.merchantId,jdbcType=INTEGER},
+      product_info = #{record.productInfo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.infrastructure.object.trade.OrderDetail" >
+    update tbl_order_detail
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="specId != null" >
+        spec_id = #{specId,jdbcType=INTEGER},
+      </if>
+      <if test="productNum != null" >
+        product_num = #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="isPay != null" >
+        is_pay = #{isPay,jdbcType=CHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityProductId != null" >
+        city_product_id = #{cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="prodShowName != null" >
+        prod_show_name = #{prodShowName,jdbcType=VARCHAR},
+      </if>
+      <if test="isLock != null" >
+        is_lock = #{isLock,jdbcType=CHAR},
+      </if>
+      <if test="prodIcon != null" >
+        prod_icon = #{prodIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="specName != null" >
+        spec_name = #{specName,jdbcType=VARCHAR},
+      </if>
+      <if test="starNum != null" >
+        star_num = #{starNum,jdbcType=BIT},
+      </if>
+      <if test="changeFlag != null" >
+        change_flag = #{changeFlag,jdbcType=TINYINT},
+      </if>
+      <if test="minWeight != null" >
+        min_weight = #{minWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="maxWeight != null" >
+        max_weight = #{maxWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="minNum != null" >
+        min_num = #{minNum,jdbcType=INTEGER},
+      </if>
+      <if test="maxNum != null" >
+        max_num = #{maxNum,jdbcType=INTEGER},
+      </if>
+      <if test="numUnit != null" >
+        num_unit = #{numUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="weightUnit != null" >
+        weight_unit = #{weightUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        unit_type = #{unitType,jdbcType=BIT},
+      </if>
+      <if test="packageMaxWeight != null" >
+        package_max_weight = #{packageMaxWeight,jdbcType=INTEGER},
+      </if>
+      <if test="isGift != null" >
+        is_gift = #{isGift,jdbcType=TINYINT},
+      </if>
+      <if test="originalPrice != null" >
+        original_price = #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="couponPrice != null" >
+        coupon_price = #{couponPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null" >
+        vip_price = #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="remark1 != null" >
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="fullPrice != null" >
+        full_price = #{fullPrice,jdbcType=INTEGER},
+      </if>
+      <if test="fullId != null" >
+        full_id = #{fullId,jdbcType=INTEGER},
+      </if>
+      <if test="pointPrice != null" >
+        point_price = #{pointPrice,jdbcType=INTEGER},
+      </if>
+      <if test="totalDiscount != null" >
+        total_discount = #{totalDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="remark6 != null" >
+        remark6 = #{remark6,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="productInfo != null" >
+        product_info = #{productInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.infrastructure.object.trade.OrderDetail" >
+    update tbl_order_detail
+    set order_id = #{orderId,jdbcType=CHAR},
+      spec_id = #{specId,jdbcType=INTEGER},
+      product_num = #{productNum,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=INTEGER},
+      store_id = #{storeId,jdbcType=INTEGER},
+      is_pay = #{isPay,jdbcType=CHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      city_product_id = #{cityProductId,jdbcType=INTEGER},
+      prod_show_name = #{prodShowName,jdbcType=VARCHAR},
+      is_lock = #{isLock,jdbcType=CHAR},
+      prod_icon = #{prodIcon,jdbcType=VARCHAR},
+      spec_name = #{specName,jdbcType=VARCHAR},
+      star_num = #{starNum,jdbcType=BIT},
+      change_flag = #{changeFlag,jdbcType=TINYINT},
+      min_weight = #{minWeight,jdbcType=DECIMAL},
+      max_weight = #{maxWeight,jdbcType=DECIMAL},
+      min_num = #{minNum,jdbcType=INTEGER},
+      max_num = #{maxNum,jdbcType=INTEGER},
+      num_unit = #{numUnit,jdbcType=VARCHAR},
+      weight_unit = #{weightUnit,jdbcType=VARCHAR},
+      unit_type = #{unitType,jdbcType=BIT},
+      package_max_weight = #{packageMaxWeight,jdbcType=INTEGER},
+      is_gift = #{isGift,jdbcType=TINYINT},
+      original_price = #{originalPrice,jdbcType=DECIMAL},
+      coupon_price = #{couponPrice,jdbcType=DECIMAL},
+      vip_price = #{vipPrice,jdbcType=DECIMAL},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR},
+      full_price = #{fullPrice,jdbcType=INTEGER},
+      full_id = #{fullId,jdbcType=INTEGER},
+      point_price = #{pointPrice,jdbcType=INTEGER},
+      total_discount = #{totalDiscount,jdbcType=DECIMAL},
+      remark6 = #{remark6,jdbcType=DECIMAL},
+      merchant_id = #{merchantId,jdbcType=INTEGER},
+      product_info = #{productInfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.infrastructure.object.trade.OrderDetailCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

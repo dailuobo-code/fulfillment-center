@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.cp.RecordResultMapperExtend" >
+
+    <insert id="batchInsertSelective" parameterType="java.util.List" >
+        insert into cp_record_result (check_no, biz_tag, check_key,
+        left_value, right_value, is_pattern,
+        create_time)
+        values
+        <foreach collection ="list" item="item" separator =",">
+        (#{item.checkNo,jdbcType=VARCHAR},
+         #{item.bizTag,jdbcType=VARCHAR},
+         #{item.checkKey,jdbcType=VARCHAR},
+         #{item.leftValue,jdbcType=VARCHAR},
+         #{item.rightValue,jdbcType=VARCHAR},
+         #{item.isPattern,jdbcType=BIT},
+         #{item.createTime,jdbcType=TIMESTAMP})
+        </foreach>
+
+    </insert>
+</mapper>

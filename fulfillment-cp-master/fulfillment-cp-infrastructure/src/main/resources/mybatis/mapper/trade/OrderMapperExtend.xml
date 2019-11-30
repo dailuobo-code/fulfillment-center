@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.trade.OrderMapperExtend" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.trade.Order" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="CHAR" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="order_name" property="orderName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="asyn_pay_status" property="asynPayStatus" jdbcType="CHAR" />
+    <result column="order_pic" property="orderPic" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_complete_time" property="payCompleteTime" jdbcType="TIMESTAMP" />
+    <result column="generate_time" property="generateTime" jdbcType="TIMESTAMP" />
+    <result column="close_time" property="closeTime" jdbcType="TIMESTAMP" />
+    <result column="pickup_time" property="pickupTime" jdbcType="DATE" />
+    <result column="order_price" property="orderPrice" jdbcType="DECIMAL" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_user_id" property="updateUserId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="pickup_start_time" property="pickupStartTime" jdbcType="VARCHAR" />
+    <result column="pickup_end_time" property="pickupEndTime" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="pickup_code" property="pickupCode" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="pickup_type_id" property="pickupTypeId" jdbcType="TINYINT" />
+    <result column="is_willing" property="isWilling" jdbcType="TINYINT" />
+    <result column="balance" property="balance" jdbcType="INTEGER" />
+    <result column="is_del" property="isDel" jdbcType="CHAR" />
+    <result column="extras" property="extras" jdbcType="VARCHAR" />
+    <result column="evaluate_content" property="evaluateContent" jdbcType="VARCHAR" />
+    <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
+    <result column="coupon_desc" property="couponDesc" jdbcType="VARCHAR" />
+    <result column="pickup_time_id" property="pickupTimeId" jdbcType="INTEGER" />
+    <result column="complete_user_id" property="completeUserId" jdbcType="INTEGER" />
+    <result column="complete_time" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="lock_time" property="lockTime" jdbcType="TIMESTAMP" />
+    <result column="cancel_type" property="cancelType" jdbcType="BIT" />
+    <result column="balance_type" property="balanceType" jdbcType="BIT" />
+    <result column="change" property="change" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="TINYINT" />
+    <result column="pay_type" property="payType" jdbcType="TINYINT" />
+    <result column="coupon_value" property="couponValue" jdbcType="INTEGER" />
+    <result column="delivery_mode" property="deliveryMode" jdbcType="TINYINT" />
+    <result column="lock_order_user_id" property="lockOrderUserId" jdbcType="INTEGER" />
+    <result column="recipients" property="recipients" jdbcType="VARCHAR" />
+    <result column="recipients_phone" property="recipientsPhone" jdbcType="VARCHAR" />
+    <result column="recipients_addr" property="recipientsAddr" jdbcType="VARCHAR" />
+    <result column="freight" property="freight" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="residence_id" property="residenceId" jdbcType="INTEGER" />
+    <result column="residence_name" property="residenceName" jdbcType="VARCHAR" />
+    <result column="limit_fee" property="limitFee" jdbcType="INTEGER" />
+    <result column="limit_fee_desc" property="limitFeeDesc" jdbcType="VARCHAR" />
+    <result column="f_flag" property="fFlag" jdbcType="TINYINT" />
+    <result column="order_type" property="orderType" jdbcType="TINYINT" />
+    <result column="presell_id" property="presellId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="total_vip" property="totalVip" jdbcType="INTEGER" />
+    <result column="total_coupon" property="totalCoupon" jdbcType="INTEGER" />
+    <result column="total_full" property="totalFull" jdbcType="INTEGER" />
+    <result column="total_point_price" property="totalPointPrice" jdbcType="INTEGER" />
+    <result column="platform" property="platform" jdbcType="INTEGER" />
+    <result column="split_type" property="splitType" jdbcType="TINYINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, order_id, store_id, city_id, user_id, order_name, status, asyn_pay_status, order_pic, 
+    pay_time, pay_complete_time, generate_time, close_time, pickup_time, order_price, 
+    total_price, create_user_id, create_time, update_user_id, update_time, pickup_start_time, 
+    pickup_end_time, memo, pickup_code, weight, pickup_type_id, is_willing, balance, 
+    is_del, extras, evaluate_content, coupon_id, coupon_desc, pickup_time_id, complete_user_id, 
+    complete_time, lock_time, cancel_type, balance_type, `change`, version, pay_type, coupon_value,
+    delivery_mode, lock_order_user_id, recipients, recipients_phone, recipients_addr, 
+    freight, warehouse_id, residence_id, residence_name, limit_fee, limit_fee_desc, f_flag, 
+    order_type, presell_id, group_id, total_vip, total_coupon, total_full, total_point_price, 
+    platform, split_type
+  </sql>
+
+  <select id="getByCondition" resultMap="BaseResultMap" >
+    select id,order_id,city_id,extras,order_type from tbl_order
+    where create_time >= #{beginTime,jdbcType=TIMESTAMP}
+    and create_time &lt; #{endTime,jdbcType=TIMESTAMP}
+    <if test="cityIdList != null" >
+      and city_id in
+      <foreach collection="cityIdList" item="cityId" open="(" separator="," close=")">
+        #{cityId}
+      </foreach>
+    </if>
+    and delivery_mode = #{deliveryMode,jdbcType=TINYINT}
+    and status = #{status,jdbcType=TINYINT}
+    and asyn_pay_status = #{asyncPayStatus,jdbcType=CHAR}
+    and (order_type in
+    <foreach collection="orderTypeList" item="orderType" open="(" separator="," close=")">
+      #{orderType}
+    </foreach>
+    or extras like #{frozenLikeStr,jdbcType=VARCHAR})
+    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="countByCondition" resultType="java.lang.Integer" >
+    select count(*) from tbl_order
+    where create_time >= #{beginTime,jdbcType=TIMESTAMP}
+    and create_time &lt; #{endTime,jdbcType=TIMESTAMP}
+    <if test="cityIdList != null" >
+      and city_id in
+      <foreach collection="cityIdList" item="cityId" open="(" separator="," close=")">
+        #{cityId}
+      </foreach>
+    </if>
+    and delivery_mode = #{deliveryMode,jdbcType=TINYINT}
+    and status = #{status,jdbcType=TINYINT}
+    and asyn_pay_status = #{asyncPayStatus,jdbcType=CHAR}
+    and (order_type in
+    <foreach collection="orderTypeList" item="orderType" open="(" separator="," close=")">
+    #{orderType}
+  </foreach>
+    or extras like #{frozenLikeStr,jdbcType=VARCHAR})
+  </select>
+
+</mapper>
