@@ -1,0 +1,22 @@
+server:
+  port: 12301
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: fulfillment-gateway
+
+log:
+  path: /data/logs/app
+  level: info
+
+logging:
+  config: classpath:logback.xml
+  path: ${log.path}
+  level:
+    com.mallcai.fulfillment.dc.dao: debug
+
+# 定时写入xls文件路径配置
+aggre.xsl.path: /tmp/fulfillment/
+

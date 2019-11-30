@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.tms.TransportLinePoMapperExtend">
+  <insert id="batchInsertSelective" parameterType="java.util.List" >
+    insert into tms_transport_line (plan_no, order_no,address, org_code, sequence, min_arrive, max_arrive, min_leave, max_leave,
+    real_arrive, real_leave)
+    values
+    <foreach collection ="list" item="item" separator =",">
+      (#{item.planNo,jdbcType=VARCHAR},
+      #{item.orderNo,jdbcType=VARCHAR},
+      #{item.address,jdbcType=VARCHAR},
+      #{item.orgCode,jdbcType=VARCHAR},
+      #{item.sequence,jdbcType=VARCHAR},
+      #{item.minArrive,jdbcType=TIMESTAMP},
+      #{item.maxArrive,jdbcType=TIMESTAMP},
+      #{item.minLeave,jdbcType=TIMESTAMP},
+      #{item.maxLeave,jdbcType=TIMESTAMP},
+      #{item.realArrive,jdbcType=TIMESTAMP},
+      #{item.realLeave,jdbcType=TIMESTAMP})
+    </foreach>
+
+  </insert>
+
+  <update id="updateByPlanNoAndOrgCode" parameterType="map">
+    update tms_transport_line
+    <set>
+      <if test="record.realArrive != null">
+        real_arrive = #{record.realArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.realLeave != null">
+        real_leave = #{record.realLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deliveryAmt != null">
+        delivery_amt = #{record.deliveryAmt,jdbcType=INTEGER},
+      </if>
+      <if test="record.delivery != null">
+        delivery = #{record.delivery,jdbcType=BIT},
+      </if>
+    </set>
+    where order_no = #{record.orderNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

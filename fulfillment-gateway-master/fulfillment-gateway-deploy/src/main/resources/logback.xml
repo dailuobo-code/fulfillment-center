@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+    <!--应用名-->
+    <property name="level" value="${logLevel:-info}" />
+    <property name="the3rdLevel" value="${the3rdLevel:-WARN}" />
+
+    <!-- app log标准接入 -->
+    <appender name="LogPlatformAppender" class="com.mallcai.framework.logback.appender.LogPlatformAppender">
+        <applicationName>fulfillment-gateway</applicationName>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="LogPlatformAppender" />
+    </root>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 固定格式,请勿修改 -->
+            <pattern>%p %d{yyyy-MM-dd HH:mm:ss,SSS} [%X{SOFA-TraceId},%X{SOFA-SpanId}] %t %c:%M:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="${level}">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+    <logger name="org.springframework" level="${level}" />
+    <logger name="com.alibaba" level="${level}" />
+    <logger name="org.apache" level="${level}" />
+
+
+</configuration>

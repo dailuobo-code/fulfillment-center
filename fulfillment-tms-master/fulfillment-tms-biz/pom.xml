@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-tms</artifactId>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <version>1.0.0-RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>fulfillment-tms-biz</artifactId>
+
+    <dependencies>
+    <dependency>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <artifactId>fulfillment-tms-domain</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <artifactId>fulfillment-tms-denpendency</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <artifactId>fulfillment-tms-common</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <artifactId>fulfillment-tms-api</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <artifactId>fulfillment-tms-infrastructure</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.dubbo</groupId>
+        <artifactId>dubbo</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.zookeeper</groupId>
+        <artifactId>zookeeper</artifactId>
+        <exclusions>
+            <exclusion>
+                <artifactId>log4j</artifactId>
+                <groupId>log4j</groupId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+
+    <!-- jjwt，Java Web Token签名工具包 -->
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.mallcai.framework</groupId>
+        <artifactId>mallcai-config-plugin</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>com.mallcai.framework</groupId>
+        <artifactId>mallcai-job-starter</artifactId>
+    </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.shop</groupId>
+            <artifactId>shop-center-api</artifactId>
+        </dependency>
+</dependencies>
+
+</project>

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.tms.StoreDeliveryPoMapper">
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.tms.StoreDeliveryPo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="command_id" jdbcType="VARCHAR" property="commandId" />
+    <result column="waybill_no" jdbcType="VARCHAR" property="waybillNo" />
+    <result column="pickup_date" jdbcType="TIMESTAMP" property="pickupDate" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="warehouse_id" jdbcType="INTEGER" property="warehouseId" />
+    <result column="warehouse_code" jdbcType="VARCHAR" property="warehouseCode" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="store_no" jdbcType="INTEGER" property="storeNo" />
+    <result column="sold_count" jdbcType="DECIMAL" property="soldCount" />
+    <result column="good_type" jdbcType="VARCHAR" property="goodType" />
+    <result column="receiver" jdbcType="VARCHAR" property="receiver" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, command_id, waybill_no, pickup_date, city_id, warehouse_id, warehouse_code, store_id, 
+    store_no, sold_count, good_type, receiver, tel, create_time, create_by
+  </sql>
+  <select id="selectByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.StoreDeliveryPoCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tms_store_delivery
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tms_store_delivery
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tms_store_delivery
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.StoreDeliveryPoCriteria">
+    delete from tms_store_delivery
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.StoreDeliveryPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tms_store_delivery (command_id, waybill_no, pickup_date, 
+      city_id, warehouse_id, warehouse_code, 
+      store_id, store_no, sold_count, 
+      good_type, receiver, tel, 
+      create_time, create_by)
+    values (#{commandId,jdbcType=VARCHAR}, #{waybillNo,jdbcType=VARCHAR}, #{pickupDate,jdbcType=TIMESTAMP}, 
+      #{cityId,jdbcType=INTEGER}, #{warehouseId,jdbcType=INTEGER}, #{warehouseCode,jdbcType=VARCHAR}, 
+      #{storeId,jdbcType=INTEGER}, #{storeNo,jdbcType=INTEGER}, #{soldCount,jdbcType=DECIMAL}, 
+      #{goodType,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.StoreDeliveryPo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tms_store_delivery
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commandId != null">
+        command_id,
+      </if>
+      <if test="waybillNo != null">
+        waybill_no,
+      </if>
+      <if test="pickupDate != null">
+        pickup_date,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="warehouseId != null">
+        warehouse_id,
+      </if>
+      <if test="warehouseCode != null">
+        warehouse_code,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="storeNo != null">
+        store_no,
+      </if>
+      <if test="soldCount != null">
+        sold_count,
+      </if>
+      <if test="goodType != null">
+        good_type,
+      </if>
+      <if test="receiver != null">
+        receiver,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commandId != null">
+        #{commandId,jdbcType=VARCHAR},
+      </if>
+      <if test="waybillNo != null">
+        #{waybillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupDate != null">
+        #{pickupDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null">
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseCode != null">
+        #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="storeNo != null">
+        #{storeNo,jdbcType=INTEGER},
+      </if>
+      <if test="soldCount != null">
+        #{soldCount,jdbcType=DECIMAL},
+      </if>
+      <if test="goodType != null">
+        #{goodType,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null">
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.StoreDeliveryPoCriteria" resultType="java.lang.Long">
+    select count(*) from tms_store_delivery
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tms_store_delivery
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.commandId != null">
+        command_id = #{record.commandId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.waybillNo != null">
+        waybill_no = #{record.waybillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pickupDate != null">
+        pickup_date = #{record.pickupDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cityId != null">
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.warehouseId != null">
+        warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.warehouseCode != null">
+        warehouse_code = #{record.warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null">
+        store_id = #{record.storeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeNo != null">
+        store_no = #{record.storeNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.soldCount != null">
+        sold_count = #{record.soldCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodType != null">
+        good_type = #{record.goodType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiver != null">
+        receiver = #{record.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tms_store_delivery
+    set id = #{record.id,jdbcType=BIGINT},
+      command_id = #{record.commandId,jdbcType=VARCHAR},
+      waybill_no = #{record.waybillNo,jdbcType=VARCHAR},
+      pickup_date = #{record.pickupDate,jdbcType=TIMESTAMP},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      warehouse_code = #{record.warehouseCode,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=INTEGER},
+      store_no = #{record.storeNo,jdbcType=INTEGER},
+      sold_count = #{record.soldCount,jdbcType=DECIMAL},
+      good_type = #{record.goodType,jdbcType=VARCHAR},
+      receiver = #{record.receiver,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.StoreDeliveryPo">
+    update tms_store_delivery
+    <set>
+      <if test="commandId != null">
+        command_id = #{commandId,jdbcType=VARCHAR},
+      </if>
+      <if test="waybillNo != null">
+        waybill_no = #{waybillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupDate != null">
+        pickup_date = #{pickupDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null">
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseCode != null">
+        warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="storeNo != null">
+        store_no = #{storeNo,jdbcType=INTEGER},
+      </if>
+      <if test="soldCount != null">
+        sold_count = #{soldCount,jdbcType=DECIMAL},
+      </if>
+      <if test="goodType != null">
+        good_type = #{goodType,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null">
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.StoreDeliveryPo">
+    update tms_store_delivery
+    set command_id = #{commandId,jdbcType=VARCHAR},
+      waybill_no = #{waybillNo,jdbcType=VARCHAR},
+      pickup_date = #{pickupDate,jdbcType=TIMESTAMP},
+      city_id = #{cityId,jdbcType=INTEGER},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=INTEGER},
+      store_no = #{storeNo,jdbcType=INTEGER},
+      sold_count = #{soldCount,jdbcType=DECIMAL},
+      good_type = #{goodType,jdbcType=VARCHAR},
+      receiver = #{receiver,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.StoreDeliveryPoCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tms_store_delivery
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

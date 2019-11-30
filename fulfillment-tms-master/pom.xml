@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mallcai.fulfillment</groupId>
+    <artifactId>fulfillment-tms</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0-RELEASE</version>
+
+    <parent>
+        <groupId>com.mallcai.backend</groupId>
+        <artifactId>backend-parent</artifactId>
+        <version>1.4.8-RELEASE</version>
+    </parent>
+
+    <properties>
+        <fulfillment.tms.api.version>1.0.0-RELEASE</fulfillment.tms.api.version>
+        <commons.model.version>1.0.0-SNAPSHOT</commons.model.version>
+        <backend.common.version>1.4.0-RELEASE</backend.common.version>
+        <mallcai.common.util.version>1.0.0-SNAPSHOT</mallcai.common.util.version>
+        <org.apache.dubbo.version>2.7.2</org.apache.dubbo.version>
+        <org.apache.zookeeper.version>3.4.6</org.apache.zookeeper.version>
+        <com.101tec.zkclient.version>0.6</com.101tec.zkclient.version>
+        <mybatis-spring-boot-starter.version>1.3.2</mybatis-spring-boot-starter.version>
+        <druid.version>1.1.16</druid.version>
+        <mysql-connector.version>5.1.36</mysql-connector.version>
+        <mallcai-config-plugin.version>1.1.0-RELEASE</mallcai-config-plugin.version>
+        <spring-boot-starter-test.version>2.1.0.RELEASE</spring-boot-starter-test.version>
+        <fastjson.version>1.2.58</fastjson.version>
+        <mallcai-redis-plugin.version>1.0.0-RELEASE</mallcai-redis-plugin.version>
+        <project.default.version>1.0.0-SNAPSHOT</project.default.version>
+        <project.api.version>1.1.2-RELEASE</project.api.version>
+        <mallcai-logback-appender.version>1.2.1-RELEASE</mallcai-logback-appender.version>
+        <mallcai-mq-springboot-client.version>2.0.7-SNAPSHOT</mallcai-mq-springboot-client.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.mallcai.fulfillment</groupId>
+                <artifactId>fulfillment-tms-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcai.fulfillment</groupId>
+                <artifactId>fulfillment-tms-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcai.fulfillment</groupId>
+                <artifactId>fulfillment-tms-biz</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcai.fulfillment</groupId>
+                <artifactId>fulfillment-tms-denpendency</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcai.fulfillment</groupId>
+                <artifactId>fulfillment-tms-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcai.fulfillment</groupId>
+                <artifactId>fulfillment-tms-infrastructure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcai.commons</groupId>
+                <artifactId>commons-model</artifactId>
+                <version>${commons.model.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcai.backend</groupId>
+                <artifactId>backend-common</artifactId>
+                <version>${backend.common.version}</version>
+                <exclusions>
+                    <exclusion>
+                    <groupId>org.mongodb</groupId>
+                    <artifactId>mongo-java-driver</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcai.framework</groupId>
+                <artifactId>mallcai-common-util</artifactId>
+                <version>${mallcai.common.util.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mallcai.framework</groupId>
+                <artifactId>mallcai-config-starter</artifactId>
+                <version>2.0.6-RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mallcai.backend</groupId>
+                <artifactId>backend-common-framework</artifactId>
+                <version>1.3.0-RELEASE</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.101tec</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>${com.101tec.zkclient.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- redis中间件-->
+            <dependency>
+                <groupId>com.mallcai.framework</groupId>
+                <artifactId>spring-boot-starter-redis</artifactId>
+                <version>1.0.7-RELEASE</version>
+            </dependency>
+            <!--RPC框架依赖 end-->
+
+            <!--DB配置 start-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
+
+            <!--DB配置 end-->
+
+            <!-- dubbo rpc接口流控、降级、服务监控 -->
+            <dependency>
+                <groupId>com.mallcai.framework</groupId>
+                <artifactId>mallcai-sentinel-dubbo</artifactId>
+                <version>1.3.2-RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${org.apache.dubbo.version}</version>
+            </dependency>
+            <!-- 中间件 -->
+
+            <dependency>
+                <groupId>com.mallcai.framework</groupId>
+                <artifactId>mallcai-config-plugin</artifactId>
+                <version>${mallcai-config-plugin.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>mallcai-mq-springboot-client</artifactId>
+                <version>${mallcai-mq-springboot-client.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <scope>test</scope>
+                <version>${spring-boot-starter-test.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.mallcai.framework</groupId>
+                <artifactId>mallcai-logback-appender</artifactId>
+                <version>${mallcai-logback-appender.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <!--DUBBO服务依赖 start-->
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${org.apache.zookeeper.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-starter-test.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot-starter-test.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>19.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>6.8.7</version>
+            </dependency>
+
+            <!-- mallcai job相关-->
+            <dependency>
+                <groupId>com.mallcai.framework</groupId>
+                <artifactId>mallcai-job-starter</artifactId>
+                <version>2.1.1-RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>3.14.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mallcai.shop</groupId>
+                <artifactId>shop-center-api</artifactId>
+                <version>1.0.0-RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>project.build.sourceEncoding</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <repo-id>prod</repo-id>
+                <release-repo-name>releases</release-repo-name>
+                <release-repo-url>http://maven.caicaivip.com/nexus/content/repositories/releases/</release-repo-url>
+                <snapshot-repo-name>snapshots</snapshot-repo-name>
+                <snapshot-repo-url>http://maven.caicaivip.com/nexus/content/repositories/snapshots/</snapshot-repo-url>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.0.2</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.7.0</version>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.0.2</version>
+                        <configuration>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <!-- 设置此节点配置作为默认配置 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <repo-id>dev</repo-id>
+                <release-repo-name>releases</release-repo-name>
+                <release-repo-url>http://maven.caicaivip.com/nexus/content/repositories/releases/</release-repo-url>
+                <snapshot-repo-name>snapshots</snapshot-repo-name>
+                <snapshot-repo-url>http://maven.caicaivip.com/nexus/content/repositories/snapshots/</snapshot-repo-url>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.0.2</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.7.0</version>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.0.2</version>
+                        <configuration>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                        </configuration>
+                    </plugin>
+                    <!--<plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-archetype-plugin</artifactId>
+                        <version>3.0.1</version>
+                    </plugin>-->
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <url>http://repo.maven.apache.org/maven2/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring</id>
+            <url>https://repo.spring.io/release/</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <repositories>
+        <repository>
+            <id>releases</id>
+            <url>${release-repo-url}</url>
+        </repository>
+        <repository>
+            <id>snapshots</id>
+            <url>${snapshot-repo-url}</url>
+        </repository>
+    </repositories>
+    <!-- 设置deploy仓库 -->
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://maven.caicaivip.com/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://maven.caicaivip.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+    <modules>
+        <module>fulfillment-tms-api</module>
+        <module>fulfillment-tms-common</module>
+        <module>fulfillment-tms-biz</module>
+        <module>fulfillment-tms-deploy</module>
+        <module>fulfillment-tms-denpendency</module>
+        <module>fulfillment-tms-domain</module>
+        <module>fulfillment-tms-infrastructure</module>
+    </modules>
+
+
+</project>

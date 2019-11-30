@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-tms</artifactId>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <version>1.0.0-RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>fulfillment-tms-deploy</artifactId>
+
+    <dependencies>
+    <dependency>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <artifactId>fulfillment-tms-biz</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.mallcai.framework</groupId>
+        <artifactId>mallcai-config-starter</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.mallcai.framework</groupId>
+        <artifactId>mallcai-logback-appender</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+    <!-- spring boot 相关-->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.framework</groupId>
+            <artifactId>mallcai-job-starter</artifactId>
+        </dependency>
+
+
+    <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <scope>test</scope>
+    </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.mallcai.fulfillment.dc</groupId>-->
+<!--            <artifactId>fulfillment-dc-api</artifactId>-->
+<!--            <version>1.1.1-SNAPSHOT</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+    </dependencies>
+
+<build>
+<plugins>
+    <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+            <executable>true</executable>
+        </configuration>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>repackage</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+            <skip>true</skip>
+        </configuration>
+    </plugin>
+</plugins>
+<finalName>fulfillment-tms</finalName>
+</build>
+</project>

@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.tms.TransportLinePoMapper">
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.infrastructure.object.tms.TransportLinePo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="plan_no" jdbcType="VARCHAR" property="planNo" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="sequence" jdbcType="VARCHAR" property="sequence" />
+    <result column="min_arrive" jdbcType="TIMESTAMP" property="minArrive" />
+    <result column="max_arrive" jdbcType="TIMESTAMP" property="maxArrive" />
+    <result column="min_leave" jdbcType="TIMESTAMP" property="minLeave" />
+    <result column="max_leave" jdbcType="TIMESTAMP" property="maxLeave" />
+    <result column="real_arrive" jdbcType="TIMESTAMP" property="realArrive" />
+    <result column="real_leave" jdbcType="TIMESTAMP" property="realLeave" />
+    <result column="delivery_amt" jdbcType="INTEGER" property="deliveryAmt" />
+    <result column="delivery" jdbcType="BIT" property="delivery" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, plan_no, order_no, address, org_code, sequence, min_arrive, max_arrive, min_leave, 
+    max_leave, real_arrive, real_leave, delivery_amt, delivery, create_time, create_by, 
+    update_time, update_by
+  </sql>
+  <select id="selectByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.TransportLinePoCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tms_transport_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tms_transport_line
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tms_transport_line
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.TransportLinePoCriteria">
+    delete from tms_transport_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.TransportLinePo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tms_transport_line (plan_no, order_no, address, 
+      org_code, sequence, min_arrive, 
+      max_arrive, min_leave, max_leave, 
+      real_arrive, real_leave, delivery_amt, 
+      delivery, create_time, create_by, 
+      update_time, update_by)
+    values (#{planNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{orgCode,jdbcType=VARCHAR}, #{sequence,jdbcType=VARCHAR}, #{minArrive,jdbcType=TIMESTAMP}, 
+      #{maxArrive,jdbcType=TIMESTAMP}, #{minLeave,jdbcType=TIMESTAMP}, #{maxLeave,jdbcType=TIMESTAMP}, 
+      #{realArrive,jdbcType=TIMESTAMP}, #{realLeave,jdbcType=TIMESTAMP}, #{deliveryAmt,jdbcType=INTEGER}, 
+      #{delivery,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.TransportLinePo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tms_transport_line
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planNo != null">
+        plan_no,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="orgCode != null">
+        org_code,
+      </if>
+      <if test="sequence != null">
+        sequence,
+      </if>
+      <if test="minArrive != null">
+        min_arrive,
+      </if>
+      <if test="maxArrive != null">
+        max_arrive,
+      </if>
+      <if test="minLeave != null">
+        min_leave,
+      </if>
+      <if test="maxLeave != null">
+        max_leave,
+      </if>
+      <if test="realArrive != null">
+        real_arrive,
+      </if>
+      <if test="realLeave != null">
+        real_leave,
+      </if>
+      <if test="deliveryAmt != null">
+        delivery_amt,
+      </if>
+      <if test="delivery != null">
+        delivery,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planNo != null">
+        #{planNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=VARCHAR},
+      </if>
+      <if test="minArrive != null">
+        #{minArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maxArrive != null">
+        #{maxArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="minLeave != null">
+        #{minLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maxLeave != null">
+        #{maxLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realArrive != null">
+        #{realArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realLeave != null">
+        #{realLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryAmt != null">
+        #{deliveryAmt,jdbcType=INTEGER},
+      </if>
+      <if test="delivery != null">
+        #{delivery,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.TransportLinePoCriteria" resultType="java.lang.Long">
+    select count(*) from tms_transport_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tms_transport_line
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.planNo != null">
+        plan_no = #{record.planNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNo != null">
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null">
+        org_code = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequence != null">
+        sequence = #{record.sequence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minArrive != null">
+        min_arrive = #{record.minArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.maxArrive != null">
+        max_arrive = #{record.maxArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.minLeave != null">
+        min_leave = #{record.minLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.maxLeave != null">
+        max_leave = #{record.maxLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.realArrive != null">
+        real_arrive = #{record.realArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.realLeave != null">
+        real_leave = #{record.realLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deliveryAmt != null">
+        delivery_amt = #{record.deliveryAmt,jdbcType=INTEGER},
+      </if>
+      <if test="record.delivery != null">
+        delivery = #{record.delivery,jdbcType=BIT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tms_transport_line
+    set id = #{record.id,jdbcType=BIGINT},
+      plan_no = #{record.planNo,jdbcType=VARCHAR},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      org_code = #{record.orgCode,jdbcType=VARCHAR},
+      sequence = #{record.sequence,jdbcType=VARCHAR},
+      min_arrive = #{record.minArrive,jdbcType=TIMESTAMP},
+      max_arrive = #{record.maxArrive,jdbcType=TIMESTAMP},
+      min_leave = #{record.minLeave,jdbcType=TIMESTAMP},
+      max_leave = #{record.maxLeave,jdbcType=TIMESTAMP},
+      real_arrive = #{record.realArrive,jdbcType=TIMESTAMP},
+      real_leave = #{record.realLeave,jdbcType=TIMESTAMP},
+      delivery_amt = #{record.deliveryAmt,jdbcType=INTEGER},
+      delivery = #{record.delivery,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.TransportLinePo">
+    update tms_transport_line
+    <set>
+      <if test="planNo != null">
+        plan_no = #{planNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        sequence = #{sequence,jdbcType=VARCHAR},
+      </if>
+      <if test="minArrive != null">
+        min_arrive = #{minArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maxArrive != null">
+        max_arrive = #{maxArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="minLeave != null">
+        min_leave = #{minLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maxLeave != null">
+        max_leave = #{maxLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realArrive != null">
+        real_arrive = #{realArrive,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realLeave != null">
+        real_leave = #{realLeave,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryAmt != null">
+        delivery_amt = #{deliveryAmt,jdbcType=INTEGER},
+      </if>
+      <if test="delivery != null">
+        delivery = #{delivery,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.TransportLinePo">
+    update tms_transport_line
+    set plan_no = #{planNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      org_code = #{orgCode,jdbcType=VARCHAR},
+      sequence = #{sequence,jdbcType=VARCHAR},
+      min_arrive = #{minArrive,jdbcType=TIMESTAMP},
+      max_arrive = #{maxArrive,jdbcType=TIMESTAMP},
+      min_leave = #{minLeave,jdbcType=TIMESTAMP},
+      max_leave = #{maxLeave,jdbcType=TIMESTAMP},
+      real_arrive = #{realArrive,jdbcType=TIMESTAMP},
+      real_leave = #{realLeave,jdbcType=TIMESTAMP},
+      delivery_amt = #{deliveryAmt,jdbcType=INTEGER},
+      delivery = #{delivery,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.mallcai.fulfillment.infrastructure.object.tms.TransportLinePoCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tms_transport_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

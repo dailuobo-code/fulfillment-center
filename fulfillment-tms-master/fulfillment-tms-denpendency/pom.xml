@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-tms</artifactId>
+        <groupId>com.mallcai.fulfillment</groupId>
+        <version>1.0.0-RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>fulfillment-tms-denpendency</artifactId>
+
+    <dependencies>
+    <dependency>
+        <groupId>com.mallcai</groupId>
+        <artifactId>wms-oub-client</artifactId>
+        <version>0.0.4-SNAPSHOT</version>
+    </dependency>
+        <dependency>
+            <groupId>com.mallcai</groupId>
+            <artifactId>open-api-api</artifactId>
+            <version>1.3.7-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.fulfillment.pe</groupId>
+            <artifactId>fulfillment-pe-api</artifactId>
+            <version>1.1.1-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dc</groupId>
+            <artifactId>fulfillment-dc-api</artifactId>
+            <version>1.1.2-RELEASE</version>
+        </dependency>
+    </dependencies>
+
+</project>

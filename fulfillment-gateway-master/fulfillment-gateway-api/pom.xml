@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-gateway</artifactId>
+        <groupId>com.mallcai.fulfillment.gateway</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mallcai.fulfillment.gateway</groupId>
+    <artifactId>fulfillment-gateway-api</artifactId>
+    <version>${fulfillment.gateway.api.version}</version>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.mallcai.commons</groupId>
+            <artifactId>commons-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.backend</groupId>
+            <artifactId>backend-common-framework</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.backend</groupId>
+            <artifactId>backend-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dp</groupId>
+            <artifactId>fulfillment-dp-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.router</groupId>
+            <artifactId>mallcai-router-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

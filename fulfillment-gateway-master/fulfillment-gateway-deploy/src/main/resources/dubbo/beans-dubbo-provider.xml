@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- 用dubbo协议在20882端口暴露服务
+           备2服务器(qa环境)
+      -->
+    <dubbo:protocol name="dubbo" port="23010" threadpool="fixed" threads="500"/>
+
+    <!-- 注解范围 -->
+    <dubbo:annotation package="com.mallcai.fulfillment.gateway"/>
+
+    <dubbo:provider retries="0" delay="-1" loadbalance="leastactive" cluster="failfast"/>
+    <!-- 应用名称 -->
+    <dubbo:application name="${spring.application.name}"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+
+    <!-- gateway -->
+    <dubbo:registry id="gateway" protocol="zookeeper" address="${dubbo.global.registry.address}" wait="15000"/>
+
+
+    <!-- 声明需要暴露的服务接口 -->
+    <!-- gw -->
+    <!--网关对上游暴露的dubbo服务，请写上对应的注册中心，ref必须为routerService，group请各中台自定义-->
+    <dubbo:service registry="gateway" dynamic="true" interface="com.mallcai.router.api.RouterService" ref="routerService" group="fulfillment" timeout="30000"/>
+    <!--进行多城转发时需要使用到线程池进行并行执行，请在此定义该线程池，id必须为routerThreadPool，也必须使用ThreadPoolTaskExecutor类，线程池大小请根据实际业务情况进行定义-->
+    <bean id="routerThreadPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="30"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="queueCapacity" value="50"/>
+        <property name="waitForTasksToCompleteOnShutdown" value="true"/>
+        <property name="awaitTerminationSeconds" value="100"/>
+        <property name="keepAliveSeconds" value="300"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$AbortPolicy"/>
+        </property>
+    </bean>
+
+    <dubbo:service interface="com.mallcai.fulfillment.gateway.api.service.ExpressCompanyService" ref="expressCompanyService" timeout="30000" registry="gateway"/>
+    <dubbo:service interface="com.mallcai.fulfillment.gateway.api.service.DeliveryOrderDelegationService" ref="deliveryOrderDelegationService" timeout="30000" registry="gateway"/>
+    <dubbo:service interface="com.mallcai.fulfillment.gateway.api.service.DeliveryOrderQueryDelegationService" ref="deliveryOrderQueryDelegationService" timeout="30000" registry="gateway"/>
+    <dubbo:service interface="com.mallcai.fulfillment.gateway.api.service.DeliveryOrderOperateDelegationService" ref="deliveryOrderOperateDelegationService" timeout="30000" registry="gateway"/>
+</beans>

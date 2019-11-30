@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mallcai.fulfillment.infrastructure.mapper.tms.DeliveryRecordPoMapperExtend">
+  <update id="updateTransPlanByWaveNo" parameterType="java.util.List">
+    update tms_delivery_reocrd
+    set `trans_plan_time` = #{date},`status`= 'TRANS_PLAN'
+    where `waybill_no` in
+    <foreach collection="waveNos" index="index" item="no" open="(" separator="," close=")">
+      #{no}
+    </foreach>
+  </update>
+
+  <update id="updateTransCarByWaveNo" parameterType="java.util.List">
+    update tms_delivery_reocrd
+    set `trans_car_time` = #{date},`status`= 'TRANS_CAR'
+    where `waybill_no` in
+    <foreach collection="waveNos" index="index" item="no" open="(" separator="," close=")">
+      #{no}
+    </foreach>
+  </update>
+
+
+  <update id="updateTransResByWaveNo" parameterType="java.util.List">
+    update tms_delivery_reocrd
+    set `trans_res_time` = #{date},`status`= 'TRANS_RES'
+    where `waybill_no` in
+    <foreach collection="waveNos" index="index" item="no" open="(" separator="," close=")">
+      #{no}
+    </foreach>
+  </update>
+
+</mapper>
