@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.pe.infrastructure.mapper.OrderDOMapperExtend" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="trans_order_id" property="transOrderId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER" />
+    <result column="city_product_id" property="cityProductId" jdbcType="INTEGER" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="product_no" property="productNo" jdbcType="VARCHAR" />
+    <result column="order_source" property="orderSource" jdbcType="TINYINT" />
+    <result column="group_type" property="groupType" jdbcType="TINYINT" />
+    <result column="group_value" property="groupValue" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="commodity_info_ext" property="commodityInfoExt" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="expect_push_time" property="expectPushTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="pickup_time" property="pickupTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <insert id="batchInsertSelective" parameterType="java.util.List" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pe_order(
+        trans_order_id,
+        status,
+        order_type,
+        city_product_id,
+        store_id,
+        user_id,
+        city_id,
+        product_no,
+        order_source,
+        group_type,
+        group_value,
+        warehouse_id,
+        commodity_info_ext,
+        pickup_time,
+        expect_push_time)
+
+    values
+    <foreach collection ="list" item="item" separator =",">
+          (#{item.transOrderId,jdbcType=VARCHAR},
+          #{item.status,jdbcType=TINYINT},
+          #{item.orderType,jdbcType=INTEGER},
+          #{item.cityProductId,jdbcType=INTEGER},
+          #{item.storeId,jdbcType=INTEGER},
+          #{item.userId,jdbcType=INTEGER},
+          #{item.cityId,jdbcType=INTEGER},
+          #{item.productNo,jdbcType=VARCHAR},
+          #{item.orderSource,jdbcType=TINYINT},
+          #{item.groupType,jdbcType=TINYINT},
+          #{item.groupValue,jdbcType=VARCHAR},
+          #{item.warehouseId,jdbcType=INTEGER},
+          #{item.commodityInfoExt,jdbcType=VARCHAR},
+          #{item.pickupTime,jdbcType=VARCHAR},
+          #{item.expectPushTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+    <select id="selectIdListByExample" resultType="long" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDOCriteria" >
+        select id from pe_order
+        <if test="_parameter != null" >
+            <include refid="com.mallcai.fulfillment.pe.infrastructure.mapper.OrderDOMapper.Example_Where_Clause" />
+        </if>
+    </select>
+    <select id="selectByIds" resultMap="com.mallcai.fulfillment.pe.infrastructure.mapper.OrderDOMapper.BaseResultMap" parameterType="list">
+        select
+        <include refid="com.mallcai.fulfillment.pe.infrastructure.mapper.OrderDOMapper.Base_Column_List" />
+        from pe_order where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+</mapper>

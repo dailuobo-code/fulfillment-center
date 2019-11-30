@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- 用dubbo协议在20882端口暴露服务
+           备2服务器(qa环境)
+      -->
+    <dubbo:protocol name="dubbo" port="23000"/>
+
+    <!-- 注解范围 -->
+    <dubbo:annotation package="com.mallcai.fulfillment.dp"/>
+
+    <!-- 应用名称 -->
+    <dubbo:application name="${spring.application.name}"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+
+    <!--  public-->
+    <dubbo:registry id="public" protocol="zookeeper" address="${dubbo.public.registry.address}" wait="15000"/>
+    <!--  分城-->
+    <dubbo:registry id="city" protocol="zookeeper" address="${dubbo.city.registry.address}" wait="15000"/>
+
+
+    <!-- 声明需要暴露的服务接口 -->
+    <!-- dp -->
+    <dubbo:service interface="com.mallcai.fulfillment.dp.api.DpOrderQueryService" ref="dpOrderQueryService" timeout="30000"/>
+    <dubbo:service interface="com.mallcai.fulfillment.dp.api.DpOrderOperateService" ref="dpOrderOperateService" timeout="30000"/>
+    <dubbo:service interface="com.mallcai.fulfillment.dp.api.MilkService" ref="milkService" timeout="30000"/>
+    <!--履约 -->
+    <dubbo:service interface="com.mallcai.fulfillment.dp.api.DeliveryOrderService" ref="deliveryOrderService" timeout="30000" registry="city"/>
+    <dubbo:service interface="com.mallcai.fulfillment.dp.api.DeliveryOrderOperateService" ref="deliveryOrderOperateService" timeout="30000" registry="city"/>
+    <dubbo:service interface="com.mallcai.fulfillment.dp.api.DeliveryOrderQueryService" ref="deliveryOrderQueryService" timeout="30000" registry="city"/>
+
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="dpOrderQueryService" class="com.mallcai.fulfillment.dp.biz.service.impl.DpOrderQueryServiceImpl"/>
+    <bean id="dpOrderOperateService" class="com.mallcai.fulfillment.dp.biz.service.impl.DpOrderOperateServiceImpl"/>
+    <bean id="milkService" class="com.mallcai.fulfillment.dp.biz.service.impl.MilkServiceImpl"/>
+    <bean id="deliveryOrderService" class="com.mallcai.fulfillment.dp.biz.service.impl.DeliveryOrderServiceImpl"/>
+    <bean id="deliveryOrderOperateService" class="com.mallcai.fulfillment.dp.biz.service.impl.DeliveryOrderOperateServiceImpl"/>
+    <bean id="deliveryOrderQueryService" class="com.mallcai.fulfillment.dp.biz.service.impl.DeliveryOrderQueryServiceImpl"/>
+</beans>

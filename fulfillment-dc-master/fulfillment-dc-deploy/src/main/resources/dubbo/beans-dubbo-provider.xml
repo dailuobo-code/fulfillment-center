@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- 用dubbo协议在20882端口暴露服务
+           备2服务器(qa环境)
+      -->
+    <dubbo:protocol name="dubbo" port="23002"/>
+
+    <!-- 注解范围 -->
+    <dubbo:annotation package="com.mallcai.fulfillment.dc"/>
+
+    <!-- 应用名称 -->
+    <dubbo:application name="${spring.application.name}">
+        <dubbo:parameter key="qos.enable" value="true"/>
+        <dubbo:parameter key="qos.accept.foreign.ip" value="false"/>
+        <dubbo:parameter key="qos.port" value="22288"/>
+    </dubbo:application>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+
+    <!--  global-->
+    <dubbo:registry id="global" protocol="zookeeper" address="${dubbo.global.registry.address}"
+                    wait="15000" default="false"/>
+    <dubbo:registry id="scm" protocol="zookeeper" address="${dubbo.scm.address}"
+      wait="15000" default="false"/>
+
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.mallcai.fulfillment.dc.api.service.dc.operate.DeliverGoodsService" ref="deliverGoodsService" timeout="30000" registry="global"/>
+    <!--<bean id="offlineOrderService" class="com.mallcai.trade.core.biz.service.offline.impl.OfflineOrderServiceImpl"/>
+    <dubbo:service interface="com.mallcai.trade.core.api.main.offline.OfflineOrderService" ref="offlineOrderService"/>-->
+    <dubbo:service interface="com.mallcai.fulfillment.dc.api.service.dc.operate.WareStoreService" ref="wareStoreService" timeout="30000" registry="global"/>
+    <dubbo:service interface="com.mallcai.fulfillment.dc.biz.service.back.OrderBackDoorService" ref="orderBackDoorService" timeout="30000" registry="global"/>
+
+</beans>

@@ -1,0 +1,18 @@
+server:
+  port: 6001
+
+spring:
+  application:
+    name: fulfillment-dc
+  profiles:
+    active: dev
+
+log:
+  path: /data/logs/app
+  level: info
+
+logging:
+  config: classpath:logback.xml
+  path: ${log.path}
+  level:
+    com.mallcai.fulfillment.dc.dao: debug

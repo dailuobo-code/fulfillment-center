@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-dp</artifactId>
+        <groupId>com.mallcai.fulfillment.dp</groupId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mallcai.fulfillment.dp</groupId>
+    <artifactId>fulfillment-dp-infrastructure</artifactId>
+
+    <dependencies>
+        <!-- spring boot 相关-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- 日志logback -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.framework</groupId>
+            <artifactId>mallcai-logback-appender</artifactId>
+        </dependency>
+
+        <!-- dubbo rpc接口流控、降级、服务监控 -->
+        <dependency>
+            <groupId>com.mallcai.framework</groupId>
+            <artifactId>mallcai-sentinel-dubbo</artifactId>
+        </dependency>
+        <!-- 中间件 -->
+
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dp</groupId>
+            <artifactId>fulfillment-dp-common</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.framework</groupId>
+            <artifactId>mallcai-mongodb-plugin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.trade</groupId>
+            <artifactId>trade-common</artifactId>
+            <version>1.0.0-RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>

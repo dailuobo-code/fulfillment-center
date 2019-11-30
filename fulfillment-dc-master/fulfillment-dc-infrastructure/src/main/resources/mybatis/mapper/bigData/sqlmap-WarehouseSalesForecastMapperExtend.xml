@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.bigData.WarehouseSalesForecastMapperExtend" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.bigData.WarehouseSalesForecastDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="lv1_classify_type" property="lv1ClassifyType" jdbcType="INTEGER" />
+    <result column="city_product_id" property="cityProductId" jdbcType="INTEGER" />
+    <result column="forecast_qty" property="forecastQty" jdbcType="INTEGER" />
+    <result column="forecast_date" property="forecastDate" jdbcType="DATE" />
+    <result column="forecast_type" property="forecastType" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, city_id, warehouse_id, lv1_classify_type, city_product_id, forecast_qty, forecast_date, 
+    forecast_type, create_time, update_time
+  </sql>
+
+  <select id="selectByLimit" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_warehouse_sales_forecast
+    where city_id = #{cityId,jdbcType=INTEGER}
+    and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+    and forecast_date = #{predictDate,jdbcType=DATE}
+    <if test="categoryType != null" >
+    and lv1_classify_type= #{categoryType,jdbcType=INTEGER}
+    </if>
+    and forecast_type= #{forecastType,jdbcType=TINYINT}
+    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+</mapper>

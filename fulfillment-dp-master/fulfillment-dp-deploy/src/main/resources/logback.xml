@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+    <!--应用名-->
+    <property name="APP_NAME" value="fulfillment-dp"/>
+    <springProperty scope="context" name="LOG_PATH" source="log.path"/>
+    <springProperty scope="context" name="LOG_LEVEL" source="log.level"/>
+
+
+    <!--日志文件大小保留天数控制-->
+    <property name="MAX_DAY" value="30"/>
+    <property name="MAX_SIZE" value="256MB"/>
+
+
+    <!--业务日志输出格式-->
+    <property name="SERVICE_OUTPUT_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{INNER_TRACE_ID}] %-5level %logger{15} - %msg%n"/>
+
+
+    <!--控制台日志输出格式-->
+    <property name="FW_OUTPUT_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{56} - %msg%n"/>
+
+    <!--业务日志输出-->
+    <appender name="BUSINESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/dc_service.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_PATH}/%d{yyyy-MM-dd}/dc_service-%d{yyyy-MM-dd}-%i.log.gz
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${MAX_DAY}</maxHistory>
+        </rollingPolicy>
+        <!--只打印info日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${SERVICE_OUTPUT_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <!--错误日志输出-->
+    <appender name="COMMON_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/dc_error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_PATH}/%d{yyyy-MM-dd}/dc_error-%d{yyyy-MM-dd}-%i.log.gz
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${MAX_DAY}</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>${SERVICE_OUTPUT_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="LogPlatformAppender" class="com.mallcai.framework.logback.appender.LogPlatformAppender">
+        <applicationName>${APP_NAME}</applicationName>
+    </appender>
+
+
+    <!--控制台输出-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${FW_OUTPUT_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="com.mallcai.fulfillment.dp" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="BUSINESS"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="COMMON_ERROR"/>
+        <appender-ref ref="LogPlatformAppender"/>
+    </logger>
+
+
+    <logger name="com.mongodb.diagnostics" additivity="false" >
+        <level value="ERROR" />
+        <appender-ref ref="COMMON_ERROR" />
+        <appender-ref ref="LogPlatformAppender"/>
+    </logger>
+
+    <root level="${LOG_LEVEL:-info}">
+        <appender-ref ref="BUSINESS"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="COMMON_ERROR"/>
+        <appender-ref ref="LogPlatformAppender"/>
+    </root>
+
+</configuration>

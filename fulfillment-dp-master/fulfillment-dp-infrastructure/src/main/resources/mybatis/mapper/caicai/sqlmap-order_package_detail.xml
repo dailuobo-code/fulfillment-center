@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dao.OrderPackageDetailDAO" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderPackageDetailDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="package_no" property="packageNo" jdbcType="VARCHAR" />
+    <result column="product_no" property="productNo" jdbcType="INTEGER" />
+    <result column="product_num" property="productNum" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, package_no, product_no, product_num, create_user, create_time, order_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_order_package_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByOrderId"
+    resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderPackageDetailDO">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_order_package_detail
+    where order_id = #{orderId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_order_package_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderPackageDetailDO" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_order_package_detail (package_no, product_no, product_num, 
+      create_user, create_time, order_id
+      )
+    values (#{packageNo,jdbcType=VARCHAR}, #{productNo,jdbcType=INTEGER}, #{productNum,jdbcType=INTEGER}, 
+      #{createUser,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderPackageDetailDO" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_order_package_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="packageNo != null" >
+        package_no,
+      </if>
+      <if test="productNo != null" >
+        product_no,
+      </if>
+      <if test="productNum != null" >
+        product_num,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="packageNo != null" >
+        #{packageNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        #{productNo,jdbcType=INTEGER},
+      </if>
+      <if test="productNum != null" >
+        #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderPackageDetailDO" >
+    update tbl_order_package_detail
+    <set >
+      <if test="packageNo != null" >
+        package_no = #{packageNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        product_no = #{productNo,jdbcType=INTEGER},
+      </if>
+      <if test="productNum != null" >
+        product_num = #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderPackageDetailDO" >
+    update tbl_order_package_detail
+    set package_no = #{packageNo,jdbcType=VARCHAR},
+      product_no = #{productNo,jdbcType=INTEGER},
+      product_num = #{productNum,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

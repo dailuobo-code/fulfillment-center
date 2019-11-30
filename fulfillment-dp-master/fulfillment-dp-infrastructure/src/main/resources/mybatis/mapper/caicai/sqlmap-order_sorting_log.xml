@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dao.OrderSortingLogDAO">
+  <resultMap id="BaseResultMap"
+    type="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderSortingLogDO">
+    <id column="id" property="id" jdbcType="INTEGER"/>
+    <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+    <result column="sorting_user_id" property="sortingUserId" jdbcType="INTEGER"/>
+    <result column="city_product_id" property="cityProductId" jdbcType="INTEGER"/>
+    <result column="order_id" property="orderId" jdbcType="CHAR"/>
+    <result column="scale_type" property="scaleType" jdbcType="VARCHAR"/>
+    <result column="scale_no" property="scaleNo" jdbcType="INTEGER"/>
+    <result column="sorting_date" property="sortingDate" jdbcType="TIMESTAMP"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="sorting_str" property="sortingStr" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, city_id, sorting_user_id, city_product_id, order_id, scale_type, scale_no, sorting_date, 
+    create_time, sorting_str
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_order_sorting_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_order_sorting_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderSortingLogDO">
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_order_sorting_log (city_id, sorting_user_id, city_product_id,
+    order_id, scale_type, scale_no,
+    sorting_date, create_time, sorting_str
+    )
+    values (#{cityId,jdbcType=INTEGER}, #{sortingUserId,jdbcType=INTEGER},
+    #{cityProductId,jdbcType=INTEGER},
+    #{orderId,jdbcType=CHAR}, #{scaleType,jdbcType=VARCHAR}, #{scaleNo,jdbcType=INTEGER},
+    #{sortingDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+    #{sortingStr,jdbcType=VARCHAR}
+    )
+  </insert>
+  
+  <insert id="insertSelective4List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      insert into tbl_order_sorting_log
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="item.cityId != null">
+          city_id,
+        </if>
+        <if test="item.sortingUserId != null">
+          sorting_user_id,
+        </if>
+        <if test="item.cityProductId != null">
+          city_product_id,
+        </if>
+        <if test="item.orderId != null">
+          order_id,
+        </if>
+        <if test="item.scaleType != null">
+          scale_type,
+        </if>
+        <if test="item.scaleNo != null">
+          scale_no,
+        </if>
+        <if test="item.sortingDate != null">
+          sorting_date,
+        </if>
+        <if test="item.createTime != null">
+          create_time,
+        </if>
+        <if test="item.sortingStr != null">
+          sorting_str,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="item.cityId != null">
+          #{item.cityId,jdbcType=INTEGER},
+        </if>
+        <if test="item.sortingUserId != null">
+          #{item.sortingUserId,jdbcType=INTEGER},
+        </if>
+        <if test="item.cityProductId != null">
+          #{item.cityProductId,jdbcType=INTEGER},
+        </if>
+        <if test="item.orderId != null">
+          #{item.orderId,jdbcType=CHAR},
+        </if>
+        <if test="item.scaleType != null">
+          #{item.scaleType,jdbcType=VARCHAR},
+        </if>
+        <if test="item.scaleNo != null">
+          #{item.scaleNo,jdbcType=INTEGER},
+        </if>
+        <if test="item.sortingDate != null">
+          #{item.sortingDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.createTime != null">
+          #{item.createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.sortingStr != null">
+          #{item.sortingStr,jdbcType=VARCHAR},
+        </if>
+      </trim>
+    </foreach>
+
+  </insert>
+  <update id="updateByPrimaryKeySelective"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderSortingLogDO">
+    update tbl_order_sorting_log
+    <set>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="sortingUserId != null">
+        sorting_user_id = #{sortingUserId,jdbcType=INTEGER},
+      </if>
+      <if test="cityProductId != null">
+        city_product_id = #{cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="scaleType != null">
+        scale_type = #{scaleType,jdbcType=VARCHAR},
+      </if>
+      <if test="scaleNo != null">
+        scale_no = #{scaleNo,jdbcType=INTEGER},
+      </if>
+      <if test="sortingDate != null">
+        sorting_date = #{sortingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortingStr != null">
+        sorting_str = #{sortingStr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderSortingLogDO">
+    update tbl_order_sorting_log
+    set city_id = #{cityId,jdbcType=INTEGER},
+      sorting_user_id = #{sortingUserId,jdbcType=INTEGER},
+      city_product_id = #{cityProductId,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=CHAR},
+      scale_type = #{scaleType,jdbcType=VARCHAR},
+      scale_no = #{scaleNo,jdbcType=INTEGER},
+      sorting_date = #{sortingDate,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      sorting_str = #{sortingStr,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

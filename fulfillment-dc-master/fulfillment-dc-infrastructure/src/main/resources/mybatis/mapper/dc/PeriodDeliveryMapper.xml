@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.PeriodDeliveryMapper">
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.dc.PeriodDelivery">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="serial_no" jdbcType="VARCHAR" property="serialNo" />
+    <result column="pdt_id" jdbcType="VARCHAR" property="pdtId" />
+    <result column="prod_amount" jdbcType="INTEGER" property="prodAmount" />
+    <result column="item" jdbcType="INTEGER" property="item" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="delivery_date" jdbcType="TIMESTAMP" property="deliveryDate" />
+    <result column="delivery_man" jdbcType="VARCHAR" property="deliveryMan" />
+    <result column="delivery_man_phone" jdbcType="VARCHAR" property="deliveryManPhone" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_no, serial_no, pdt_id, prod_amount, item, price, delivery_date, delivery_man, 
+    delivery_man_phone, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodDeliveryCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from period_delivery
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from period_delivery
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from period_delivery
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodDeliveryCriteria">
+    delete from period_delivery
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodDelivery">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into period_delivery (order_no, serial_no, pdt_id, 
+      prod_amount, item, price, 
+      delivery_date, delivery_man, delivery_man_phone, 
+      create_time)
+    values (#{orderNo,jdbcType=VARCHAR}, #{serialNo,jdbcType=VARCHAR}, #{pdtId,jdbcType=VARCHAR}, 
+      #{prodAmount,jdbcType=INTEGER}, #{item,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
+      #{deliveryDate,jdbcType=TIMESTAMP}, #{deliveryMan,jdbcType=VARCHAR}, #{deliveryManPhone,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodDelivery">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into period_delivery
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="serialNo != null">
+        serial_no,
+      </if>
+      <if test="pdtId != null">
+        pdt_id,
+      </if>
+      <if test="prodAmount != null">
+        prod_amount,
+      </if>
+      <if test="item != null">
+        item,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="deliveryDate != null">
+        delivery_date,
+      </if>
+      <if test="deliveryMan != null">
+        delivery_man,
+      </if>
+      <if test="deliveryManPhone != null">
+        delivery_man_phone,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNo != null">
+        #{serialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pdtId != null">
+        #{pdtId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodAmount != null">
+        #{prodAmount,jdbcType=INTEGER},
+      </if>
+      <if test="item != null">
+        #{item,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryDate != null">
+        #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryMan != null">
+        #{deliveryMan,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryManPhone != null">
+        #{deliveryManPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodDeliveryCriteria" resultType="java.lang.Long">
+    select count(*) from period_delivery
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update period_delivery
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderNo != null">
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialNo != null">
+        serial_no = #{record.serialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdtId != null">
+        pdt_id = #{record.pdtId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodAmount != null">
+        prod_amount = #{record.prodAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.item != null">
+        item = #{record.item,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deliveryDate != null">
+        delivery_date = #{record.deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deliveryMan != null">
+        delivery_man = #{record.deliveryMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryManPhone != null">
+        delivery_man_phone = #{record.deliveryManPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update period_delivery
+    set id = #{record.id,jdbcType=BIGINT},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      serial_no = #{record.serialNo,jdbcType=VARCHAR},
+      pdt_id = #{record.pdtId,jdbcType=VARCHAR},
+      prod_amount = #{record.prodAmount,jdbcType=INTEGER},
+      item = #{record.item,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL},
+      delivery_date = #{record.deliveryDate,jdbcType=TIMESTAMP},
+      delivery_man = #{record.deliveryMan,jdbcType=VARCHAR},
+      delivery_man_phone = #{record.deliveryManPhone,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodDelivery">
+    update period_delivery
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNo != null">
+        serial_no = #{serialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pdtId != null">
+        pdt_id = #{pdtId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodAmount != null">
+        prod_amount = #{prodAmount,jdbcType=INTEGER},
+      </if>
+      <if test="item != null">
+        item = #{item,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryDate != null">
+        delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryMan != null">
+        delivery_man = #{deliveryMan,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryManPhone != null">
+        delivery_man_phone = #{deliveryManPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodDelivery">
+    update period_delivery
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      serial_no = #{serialNo,jdbcType=VARCHAR},
+      pdt_id = #{pdtId,jdbcType=VARCHAR},
+      prod_amount = #{prodAmount,jdbcType=INTEGER},
+      item = #{item,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      delivery_man = #{deliveryMan,jdbcType=VARCHAR},
+      delivery_man_phone = #{deliveryManPhone,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodDeliveryCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from period_delivery
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

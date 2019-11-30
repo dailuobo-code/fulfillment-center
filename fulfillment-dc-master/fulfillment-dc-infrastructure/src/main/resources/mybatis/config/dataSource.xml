@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+  <description>data-source config</description>
+
+  <bean id="log-filter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+    <property name="resultSetLogEnabled" value="false"/>
+    <property name="dataSourceLogEnabled" value="false"/>
+    <property name="connectionLogEnabled" value="false"/>
+    <property name="statementExecutableSqlLogEnable" value="true"/>
+  </bean>
+
+
+  <bean id="fdcDataSource" primary="true" class="com.alibaba.druid.pool.DruidDataSource"
+        destroy-method="close">
+    <property name="url" value="${fdc.db.url}"/>
+    <property name="username" value="${fdc.db.username}"/>
+    <property name="password" value="${fdc.db.password}"/>
+    <property name="driverClassName" value="${db.driverClassName}"/>
+    <property name="filters" value="${db.filters}"/>
+    <!-- 最大并发连接数 -->
+    <property name="maxActive" value="${db.maxActive}"/>
+    <!-- 初始化连接数量 -->
+    <property name="initialSize" value="${db.initialSize}"/>
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="${db.maxWait}"/>
+    <!-- 最小空闲连接数 -->
+    <property name="minIdle" value="${db.minIdle}"/>
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="${db.timeBetweenEvictionRunsMillis}"/>
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="${db.minEvictableIdleTimeMillis}"/>
+    <property name="validationQuery" value="${db.validationQuery}"/>
+    <property name="testWhileIdle" value="${db.testWhileIdle}"/>
+    <property name="testOnBorrow" value="${db.testOnBorrow}"/>
+    <property name="testOnReturn" value="${db.testOnReturn}"/>
+    <property name="maxOpenPreparedStatements" value="${db.maxOpenPreparedStatements}"/>
+    <!-- 打开removeAbandoned功能 -->
+    <property name="removeAbandoned" value="${db.removeAbandoned}"/>
+    <!-- 1800秒，也就是30分钟 -->
+    <property name="removeAbandonedTimeout" value="${db.removeAbandonedTimeout}"/>
+    <!-- 关闭abanded连接时输出错误日志 -->
+    <property name="logAbandoned" value="${db.logAbandoned}"/>
+  </bean>
+
+  <bean id="fdcSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="fdcDataSource"/>
+    <property name="mapperLocations">
+      <array>
+        <value>classpath*:mybatis/mapper/dc/*.xml</value>
+      </array>
+    </property>
+    <property name="configLocation" value="classpath:mybatis/config/dc-config.xml"/>
+  </bean>
+
+  <bean id="fdcMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="com.mallcai.fulfillment.dc.mapper.dc"/>
+    <property name="sqlSessionFactoryBeanName" value="fdcSqlSessionFactory"/>
+  </bean>
+
+  <bean id="fdcTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="fdcDataSource"/>
+  </bean>
+
+
+  <bean id="fdcTransactionTemplate"
+    class="org.springframework.transaction.support.TransactionTemplate"
+    p:transactionManager-ref="fdcTransactionManager"/>
+
+  <bean id="fdcSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg index="0" ref="fdcSqlSessionFactory"/>
+  </bean>
+
+<!--  大数据的数据源-->
+  <bean id="bigPredictDataSource" primary="false" class="com.alibaba.druid.pool.DruidDataSource"
+    destroy-method="close">
+<!--    <property name="url" value="jdbc:mysql://rm-bp10p2vl5x3c4mum5160.mysql.rds.aliyuncs.com:3306/ladon"/>-->
+<!--    <property name="username" value="ladon"/>-->
+<!--    <property name="password" value="0vsiM1F7XPoLLuUf"/>-->
+
+    <property name="url" value="${big.db.url}"/>
+    <property name="username" value="${big.db.username}"/>
+    <property name="password" value="${big.db.password}"/>
+    <property name="driverClassName" value="${db.driverClassName}"/>
+    <property name="filters" value="${db.filters}"/>
+    <!-- 最大并发连接数 -->
+    <property name="maxActive" value="${db.maxActive}"/>
+    <!-- 初始化连接数量 -->
+    <property name="initialSize" value="${db.initialSize}"/>
+    <!-- 配置获取连接等待超时的时间 -->
+    <property name="maxWait" value="${db.maxWait}"/>
+    <!-- 最小空闲连接数 -->
+    <property name="minIdle" value="${db.minIdle}"/>
+    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <property name="timeBetweenEvictionRunsMillis" value="${db.timeBetweenEvictionRunsMillis}"/>
+    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+    <property name="minEvictableIdleTimeMillis" value="${db.minEvictableIdleTimeMillis}"/>
+    <property name="validationQuery" value="${db.validationQuery}"/>
+    <property name="testWhileIdle" value="${db.testWhileIdle}"/>
+    <property name="testOnBorrow" value="${db.testOnBorrow}"/>
+    <property name="testOnReturn" value="${db.testOnReturn}"/>
+    <property name="maxOpenPreparedStatements" value="${db.maxOpenPreparedStatements}"/>
+    <!-- 打开removeAbandoned功能 -->
+    <property name="removeAbandoned" value="${db.removeAbandoned}"/>
+    <!-- 1800秒，也就是30分钟 -->
+    <property name="removeAbandonedTimeout" value="${db.removeAbandonedTimeout}"/>
+    <!-- 关闭abanded连接时输出错误日志 -->
+    <property name="logAbandoned" value="${db.logAbandoned}"/>
+  </bean>
+
+  <bean id="bigPredictSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="bigPredictDataSource"/>
+    <property name="mapperLocations">
+      <array>
+        <value>classpath*:mybatis/mapper/bigData/sqlmap-*.xml</value>
+      </array>
+    </property>
+    <property name="configLocation" value="classpath:mybatis/config/big-config.xml"/>
+  </bean>
+
+
+  <bean id="bigPredictMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="com.mallcai.fulfillment.dc.mapper.bigData"/>
+    <property name="sqlSessionFactoryBeanName" value="bigPredictSqlSessionFactory"/>
+  </bean>
+
+  <bean id="bigPredictTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="bigPredictDataSource"/>
+  </bean>
+
+
+  <bean id="bigPredictTransactionTemplate"
+    class="org.springframework.transaction.support.TransactionTemplate"
+    p:transactionManager-ref="bigPredictTransactionManager"/>
+
+  <bean id="bigPredictSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg index="0" ref="bigPredictSqlSessionFactory"/>
+  </bean>
+
+
+
+</beans>

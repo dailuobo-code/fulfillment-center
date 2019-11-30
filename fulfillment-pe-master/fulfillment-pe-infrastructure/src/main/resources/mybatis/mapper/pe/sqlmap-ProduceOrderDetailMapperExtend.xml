@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.pe.infrastructure.mapper.ProduceOrderDetailMapperExtend" >
+
+  <insert id="batchInsertSelective" parameterType="java.util.List" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into produce_order_detail(
+      produce_order_id,
+      produce_order_no,
+        order_id)
+
+    values
+    <foreach collection ="list" item="item" separator =",">
+        (#{item.produceOrderId,jdbcType=BIGINT},
+         #{item.produceOrderNo,jdbcType=VARCHAR},
+        #{item.orderId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+
+</mapper>

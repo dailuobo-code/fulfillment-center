@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-dc</artifactId>
+        <groupId>com.mallcai.fulfillment.dc</groupId>
+        <version>1.1.2-RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>fulfillment-dc-biz</artifactId>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- 工程内部依赖 -->
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dc</groupId>
+            <artifactId>fulfillment-dc-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dc</groupId>
+            <artifactId>fulfillment-dc-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dc</groupId>
+            <artifactId>fulfillment-dc-dependency</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dc</groupId>
+            <artifactId>fulfillment-dc-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>app-order-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>erp-purchase-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>erp-oms-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai</groupId>
+            <artifactId>open-api-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.trade.business</groupId>
+            <artifactId>trade-business-api</artifactId>
+        </dependency>
+        <!-- jjwt，Java Web Token签名工具包 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai</groupId>
+            <artifactId>open-api-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.trade.business</groupId>
+            <artifactId>trade-business-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+        </dependency>
+        <!-- mallcai job相关-->
+        <dependency>
+            <groupId>com.mallcai.framework</groupId>
+            <artifactId>mallcai-job-starter</artifactId>
+        </dependency>
+    </dependencies>
+</project>

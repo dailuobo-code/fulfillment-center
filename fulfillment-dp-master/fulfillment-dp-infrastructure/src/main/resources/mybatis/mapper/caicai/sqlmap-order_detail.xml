@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dao.OrderDetailDAO">
+
+    <sql id="Base_Column_List">
+    id, order_id, spec_id, product_num, price, create_time, update_time, user_id, city_id,
+    store_id, is_pay, pay_time, city_product_id, prod_show_name, is_lock, prod_icon,
+    spec_name, star_num, change_flag, min_weight, max_weight, min_num, max_num, num_unit,
+    weight_unit, unit_type, package_max_weight, is_gift, original_price, coupon_price,
+    vip_price, remark1, remark2, full_price, full_id, point_price, remark6, total_discount, merchant_id
+  </sql>
+
+    <update id="updateList">
+        <foreach collection="list" item="item" index="index" open="" close=";" separator=";">
+            update tbl_order_detail
+            <set>
+                order_id=#{item.orderId},
+                spec_id=#{item.specId},
+                product_num =#{item.productNum},
+                price=#{item.price},
+                create_time=#{item.createTime},
+                <if test="item.updateTime!=null">
+                    update_time=#{item.updateTime},
+                </if>
+                user_id=#{item.userId},
+                city_id=#{item.cityId},
+                store_id=#{item.storeId},
+                is_pay=#{item.isPay},
+                <if test="item.payTime!=null">
+                    pay_time=#{item.payTime},
+                </if>
+                city_product_id=#{item.cityProductId},
+                prod_show_name=#{item.prodShowName},
+                is_lock=#{item.isLock},
+                prod_icon=#{item.prodIcon},
+                spec_name=#{item.specName},
+                star_num=#{item.starNum},
+                change_flag=#{item.changeFlag},
+                min_weight=#{item.minWeight},
+                max_weight=#{item.maxWeight},
+                min_num=#{item.minNum},
+                max_num=#{item.maxNum},
+                num_unit=#{item.numUnit},
+                weight_unit=#{item.weightUnit},
+                unit_type=#{item.unitType},
+                package_max_weight=#{item.packageMaxWeight},
+                is_gift=#{item.isGift},
+                original_price=#{item.originalPrice},
+                coupon_price=#{item.couponPrice},
+                vip_price=#{item.vipPrice},
+                remark1=#{item.remark1},
+                remark2=#{item.remark2},
+                full_price=#{item.fullPrice},
+                full_id=#{item.fullId},
+                point_price=#{item.pointPrice},
+                remark6=#{item.remark6},
+                total_discount=#{item.totalDiscount}
+            </set>
+            where order_id =#{item.orderId} and id =#{item.id} limit 1
+        </foreach>
+    </update>
+
+    <select id="selectByOrderId"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDetailDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tbl_order_detail
+        WHERE order_id = #{orderId}
+    </select>
+    <select id="selectOrderDetail"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDetailDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tbl_order_detail
+        WHERE order_id = #{orderId} and city_product_id = #{cityProductId} limit 1
+
+    </select>
+
+    <insert id="insertList" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_order_detail (
+        order_id, spec_id, product_num,
+        price, create_time, update_time,
+        user_id, city_id, store_id,
+        is_pay, pay_time, city_product_id,
+        prod_show_name, is_lock, prod_icon,
+        spec_name, star_num, change_flag,
+        min_weight, max_weight, min_num,
+        max_num, num_unit, weight_unit,
+        unit_type, package_max_weight, is_gift,
+        original_price, coupon_price, vip_price,
+        remark1, remark2, full_price,
+        full_id, point_price,
+        remark6, total_discount)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.orderId}, #{item.specId}, #{item.productNum},
+            #{item.price}, #{item.createTime}, #{item.updateTime},
+            #{item.userId}, #{item.cityId}, #{item.storeId},
+            #{item.isPay}, #{item.payTime}, #{item.cityProductId},
+            #{item.prodShowName}, #{item.isLock}, #{item.prodIcon},
+            #{item.specName}, #{item.starNum}, #{item.changeFlag},
+            #{item.minWeight}, #{item.maxWeight}, #{item.minNum},
+            #{item.maxNum}, #{item.numUnit}, #{item.weightUnit},
+            #{item.unitType}, #{item.packageMaxWeight}, #{item.isGift},
+            #{item.originalPrice}, #{item.couponPrice}, #{item.vipPrice},
+            #{item.remark1}, #{item.remark2}, #{item.fullPrice},
+            #{item.fullId}, #{item.pointPrice},
+            #{item.remark6}, #{item.totalDiscount})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByOrderId" parameterType="java.lang.String">
+    delete from tbl_order_detail
+    where order_id = #{orderId} limit 100
+  </delete>
+
+    <insert id="insertByHisDb"
+            parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.tradehis.dataobject.OrderDetailHisDO">
+        insert into tbl_order_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            order_id,
+            spec_id,
+            product_num,
+            price,
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            user_id,
+            city_id,
+            store_id,
+            is_pay,
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            city_product_id,
+            prod_show_name,
+            is_lock,
+            prod_icon,
+            spec_name,
+            star_num,
+            change_flag,
+            min_weight,
+            max_weight,
+            min_num,
+            max_num,
+            num_unit,
+            weight_unit,
+            unit_type,
+            package_max_weight,
+            is_gift,
+            original_price,
+            coupon_price,
+            vip_price,
+            remark1,
+            remark2,
+            full_price,
+            full_id,
+            point_price,
+            total_discount,
+            remark6,
+            merchant_id,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id},
+            #{orderId},
+            #{specId},
+            #{productNum},
+            #{price},
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            #{userId},
+            #{cityId},
+            #{storeId},
+            #{isPay},
+            <if test="payTime != null">
+                #{payTime},
+            </if>
+            #{cityProductId},
+            #{prodShowName},
+            #{isLock},
+            #{prodIcon},
+            #{specName},
+            #{starNum},
+            #{changeFlag},
+            #{minWeight},
+            #{maxWeight},
+            #{minNum},
+            #{maxNum},
+            #{numUnit},
+            #{weightUnit},
+            #{unitType},
+            #{packageMaxWeight},
+            #{isGift},
+            #{originalPrice},
+            #{couponPrice},
+            #{vipPrice},
+            #{remark1},
+            #{remark2},
+            #{fullPrice},
+            #{fullId},
+            #{pointPrice},
+            #{totalDiscount},
+            #{remark6},
+            #{merchantId},
+        </trim>
+    </insert>
+
+    <select id="selectTotalByMerchantId"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dao.OrderDetailDAO">
+    SELECT
+    city_id,store_id, city_product_id, prod_show_name, package_max_weight, sum(product_num) as product_num, original_price
+    FROM tbl_order_detail
+    WHERE merchant_Id = #{merchantId}
+    AND create_time <![CDATA[ > ]]> #{startDate}
+    AND create_time <![CDATA[ < ]]> #{endDate}
+    AND is_pay = "Y"
+    GROUP BY store_id, city_product_id;
+  </select>
+
+    <select id="selectSalesByProductId"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDetailSalesDO">
+        SELECT city_product_id, sum(product_num) as sales_num
+        FROM tbl_order_detail
+        WHERE city_product_id in
+        <foreach collection="cityProductIds" item="cityProductId" index="index" open="(" close=")"
+                 separator=",">
+            #{cityProductId}
+        </foreach>
+        AND create_time <![CDATA[ > ]]> #{startDate}
+        AND create_time <![CDATA[ < ]]> #{endDate}
+        AND is_pay = "Y"
+        GROUP BY city_product_id;
+    </select>
+
+    <!--暂且 联表查询...  -->
+    <select id="selectSalesAmount"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDetailSalesDO">
+        SELECT od.store_id, od.city_product_id, sum(od.product_num * od.price) as sales_amount
+        FROM tbl_order_detail od
+        LEFT JOIN tbl_order o
+        ON o.order_id = od.order_id WHERE o.status in (11, 99) AND od.city_product_id in
+        <foreach collection="cityProductIds" item="cityProductId" index="index" open="(" close=")"
+                 separator=",">
+            #{cityProductId}
+        </foreach>
+        AND o.create_time <![CDATA[ > ]]> #{startDate}
+        AND o.create_time <![CDATA[ < ]]> #{endDate}
+        GROUP BY od.store_id, od.city_product_id;
+    </select>
+
+
+    <select id="selectDetailByOrderIdList"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDetailDO">
+        SELECT order_id, product_num,city_product_id,prod_show_name
+        FROM tbl_order_detail
+        WHERE order_id in
+        <foreach collection="orderIdList" item="orderId" index="index" open="(" close=")" separator=",">
+            #{orderId}
+        </foreach>
+    </select>
+</mapper>

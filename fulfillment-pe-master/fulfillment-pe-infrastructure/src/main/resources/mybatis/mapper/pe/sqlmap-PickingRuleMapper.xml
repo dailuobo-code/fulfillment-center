@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.pe.infrastructure.mapper.PickingRuleMapper" >
+
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.pe.infrastructure.valueobject.PickingRuleDO" >
+        <result column="product_no" property="productNo" />
+        <result column="warehouse_id" property="warehouseId" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user_id" property="updateUserId" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <sql id="selectField">
+        id, product_no, warehouse_id,
+        create_user_id, create_time, update_user_id, update_time
+    </sql>
+
+    <select id="searchRules" parameterType="com.mallcai.fulfillment.pe.infrastructure.condition.SearchPickingRuleCondition" resultMap="BaseResultMap">
+        SELECT <include refid="selectField" /> FROM picking_rule
+        where is_deleted = 0
+        order by update_time desc
+    </select>
+
+    <insert id="batchInsert" parameterType="list">
+        insert into picking_rule(product_no, warehouse_id,
+        create_user_id, create_time, update_user_id, update_time, is_deleted)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.productNo}, #{item.warehouseId},
+            #{item.createUserId}, now(), #{item.updateUserId}, now(), 0
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateRule" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.PickingRuleDO">
+        update picking_rule
+        <set>
+            <if test="productNo != null">
+                product_no = #{productNo},
+            </if>
+            <if test="warehouseId != null">
+                warehouse_id = #{warehouseId},
+            </if>
+            update_time = now(),
+            update_user_id = #{updateUserId}
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteRule" parameterType="map">
+        update picking_rule
+        set
+        is_deleted = 1 , update_user_id = #{userId}
+        where id = #{id}
+    </update>
+
+    <select id="getById" parameterType="long" resultMap="BaseResultMap">
+        SELECT <include refid="selectField" /> FROM picking_rule
+        WHERE id = #{id} and is_deleted = 0
+    </select>
+
+
+    <select id="selectByProductNoList" resultMap="BaseResultMap" parameterType="list">
+        SELECT <include refid="selectField" /> FROM picking_rule
+        WHERE product_no in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+        and is_deleted = 0
+    </select>
+
+    <select id="getAllProductNos" resultType="string">
+        select distinct(product_no) from picking_rule where is_deleted = 0
+    </select>
+</mapper>

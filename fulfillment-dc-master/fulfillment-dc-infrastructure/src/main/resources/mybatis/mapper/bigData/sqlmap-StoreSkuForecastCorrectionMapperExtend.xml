@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.bigData.StoreSkuForecastCorrectionMapperExtend" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.bigData.StoreSkuForecastCorrectionDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="city_product_id" property="cityProductId" jdbcType="INTEGER" />
+    <result column="product_forecast_num" property="productForecastNum" jdbcType="INTEGER" />
+    <result column="calu_date" property="caluDate" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, city_id, warehouse_id, store_id, city_product_id, product_forecast_num, calu_date, 
+    create_time, update_time
+  </sql>
+
+  <select id="selectByLimit" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_store_sku_forecast_correction
+    where city_id = #{cityId,jdbcType=INTEGER}
+    and warehouse_id = #{warehouseId,jdbcType=INTEGER}
+    and calu_date = #{forecastDate,jdbcType=DATE}
+    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+</mapper>

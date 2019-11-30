@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.PeriodBuyRecordMapperExtend" >
+  <select id="selectByOrderNo" resultMap="com.mallcai.fulfillment.dc.mapper.dc.PeriodBuyRecordMapper.BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="com.mallcai.fulfillment.dc.mapper.dc.PeriodBuyRecordMapper.Base_Column_List" />
+    from period_buy_record
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

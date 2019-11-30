@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-dc</artifactId>
+        <groupId>com.mallcai.fulfillment.dc</groupId>
+        <version>1.1.2-RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>fulfillment-dc-dependency</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.mallcai.fulfillment.pe</groupId>
+            <artifactId>fulfillment-pe-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dailuobo.itemcenter</groupId>
+            <artifactId>ic-product-gateway-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.router</groupId>
+            <artifactId>mallcai-router-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+</project>

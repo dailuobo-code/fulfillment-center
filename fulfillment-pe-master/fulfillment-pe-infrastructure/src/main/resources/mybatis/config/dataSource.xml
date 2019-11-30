@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <description>data-source config</description>
+
+
+    <bean id="log-filter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+        <property name="resultSetLogEnabled" value="false"/>
+        <property name="dataSourceLogEnabled" value="false"/>
+        <property name="connectionLogEnabled" value="false"/>
+        <property name="statementExecutableSqlLogEnable" value="true"/>
+    </bean>
+
+    <!-- fpe 调度中心 配置数据源 -->
+    <bean id="fpeDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${fpe.db.url}" />
+        <property name="username" value="${fpe.db.username}" />
+        <property name="password" value="${fpe.db.password}" />
+        <property name="driverClassName" value="${db.driverClassName}" />
+        <property name="filters" value="${db.filters}" />
+        <!-- 最大并发连接数 -->
+        <property name="maxActive" value="${db.maxActive}" />
+        <!-- 初始化连接数量 -->
+        <property name="initialSize" value="${db.initialSize}" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${db.maxWait}" />
+        <!-- 最小空闲连接数 -->
+        <property name="minIdle" value="${db.minIdle}" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${db.timeBetweenEvictionRunsMillis}" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${db.minEvictableIdleTimeMillis}" />
+        <property name="validationQuery" value="${db.validationQuery}" />
+        <property name="testWhileIdle" value="${db.testWhileIdle}" />
+        <property name="testOnBorrow" value="${db.testOnBorrow}" />
+        <property name="testOnReturn" value="${db.testOnReturn}" />
+        <property name="maxOpenPreparedStatements" value="${db.maxOpenPreparedStatements}" />
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="${db.removeAbandoned}" />
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="${db.removeAbandonedTimeout}" />
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="${db.logAbandoned}" />
+    </bean>
+
+    <bean id="fpeSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="fpeDataSource"/>
+        <property name="mapperLocations">
+            <array>
+                <value>classpath*:mybatis/mapper/pe/sqlmap-*.xml</value>
+            </array>
+        </property>
+        <property name="configLocation" value="classpath:mybatis/config/pe-config.xml"/>
+    </bean>
+
+
+    <bean id="fpeMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.mallcai.fulfillment.pe.infrastructure.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="fpeSqlSessionFactory"/>
+    </bean>
+
+    <bean id="fpeTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="fpeDataSource"/>
+    </bean>
+
+    <bean id="fcpTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="fpeDataSource"/>
+    </bean>
+
+    <bean id="fpeOrderManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="fpeDataSource"/>
+    </bean>
+
+
+    <bean id="fpeTransactionTemplate"
+          class="org.springframework.transaction.support.TransactionTemplate"
+          p:transactionManager-ref="fpeTransactionManager"/>
+
+    <bean id="fpeSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="fpeSqlSessionFactory"/>
+    </bean>
+</beans>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dao.MilkDAO">
+    <sql id="Base_Column_List">
+        eso.id,eso.city_id,eso.supplier_id,eso.store_id,eso.order_id,eso.pickup_date,
+        eso.city_product_id,eso.product_no,eso.cycle_days,eso.product_num,eso.num_unit,
+        eso.weight_unit,eso.unit_type,eso.package_max_weight,eso.create_time,eso.status,
+        eso.update_time,eso.update_user_id,eso.get_status,eso.return_num
+    </sql>
+
+    <select id="queryMilkList"
+            parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dto.MilkQueryParamDTO"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.SupplierOutstockDO">
+        SELECT
+            <include refid="Base_Column_List"/>
+            ,o.user_id
+        FROM
+        erp_supplier_outstock eso
+        inner join tbl_order o on eso.order_id = o.order_id
+        WHERE 1=1
+        <if test="productNo !=null">
+            AND eso.product_no = #{productNo}
+        </if>
+        <choose>
+            <when test="timeType==1">
+                and eso.create_time &lt;= #{endTime}
+                and eso.create_time > #{beginTime}
+            </when>
+            <when test="timeType==2">
+                and eso.update_time &lt;= #{endTime}
+                and eso.update_time > #{beginTime}
+            </when>
+            <otherwise>
+                and eso.pickup_date &lt;= #{endTime}
+                and eso.pickup_date >= #{beginTime}
+            </otherwise>
+        </choose>
+        <if test="storeId !=null">
+            AND eso.store_id = #{storeId}
+        </if>
+        <if test="cityId !=null">
+            AND eso.city_id = #{cityId}
+        </if>
+        <if test="getStatus !=null">
+            AND eso.get_status = #{getStatus}
+        </if>
+        <if test="userId !=null">
+            AND o.user_id = #{userId}
+        </if>
+        ORDER BY eso.get_status
+        <choose>
+            <when test="timeType==1">
+                ,eso.create_time desc
+            </when>
+            <when test="timeType==2">
+                ,eso.update_time desc
+            </when>
+            <otherwise>
+                ,eso.pickup_date desc
+            </otherwise>
+        </choose>
+        <if test="limit!=null">
+            limit #{limit}
+            <if test="offset!=null">
+                offset #{offset}
+            </if>
+        </if>
+    </select>
+
+    <select id="queryMilkListCount"
+            parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dto.MilkQueryParamDTO"
+            resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+        erp_supplier_outstock eso
+        inner join tbl_order o on eso.order_id = o.order_id
+        WHERE 1=1
+        <if test="productNo !=null">
+            AND eso.product_no = #{productNo}
+        </if>
+        <choose>
+            <when test="timeType==1">
+                and eso.create_time &lt;= #{endTime}
+                and eso.create_time > #{beginTime}
+            </when>
+            <when test="timeType==2">
+                and eso.update_time &lt;= #{endTime}
+                and eso.update_time > #{beginTime}
+            </when>
+            <otherwise>
+                and eso.pickup_date &lt;= #{endTime}
+                and eso.pickup_date >= #{beginTime}
+            </otherwise>
+        </choose>
+        <if test="storeId !=null">
+            AND eso.store_id = #{storeId}
+        </if>
+        <if test="cityId !=null">
+            AND eso.city_id = #{cityId}
+        </if>
+        <if test="getStatus !=null">
+            AND eso.get_status = #{getStatus}
+        </if>
+        <if test="userId !=null">
+            AND o.user_id = #{userId}
+        </if>
+    </select>
+
+    <select id="queryOrderAndProductCountList" resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.SupplierOutstockDO">
+        SELECT
+            eso.order_id,eso.city_product_id,
+            SUM(return_num) sumNum,
+            sum((case when pickup_date &lt;=#{endDate} and status = 0 then 1 else 0 end)) getNum
+        FROM
+        erp_supplier_outstock eso
+        where
+        eso.order_id in
+        <foreach collection="orderIds" item="orderId" index="index" open="(" close=")"
+                 separator=",">
+            #{orderId}
+        </foreach>
+        and eso.city_product_id in
+        <foreach collection="cityProductIds" item="cityProductId" index="index" open="(" close=")"
+                 separator=",">
+            #{cityProductId}
+        </foreach>
+        group by eso.order_id,eso.city_product_id
+    </select>
+
+    <select id="queryMilkById" resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.SupplierOutstockDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        erp_supplier_outstock eso
+        where eso.id = #{id}
+    </select>
+
+    <update id="pickup">
+	    UPDATE erp_supplier_outstock
+        SET get_status = 1,update_user_id = #{userId},return_num=#{returnNum}
+        WHERE id = #{id}
+	</update>
+
+    <insert id="insertLog">
+	INSERT INTO erp_supplier_outstock_log (user_id, order_id, product_no, module, modify_before, modify_after,create_time)
+	VALUES
+	(#{userId},#{orderId},#{productNo},#{module},#{modifyBefore},#{modifyAfter},now())
+	</insert>
+
+</mapper>

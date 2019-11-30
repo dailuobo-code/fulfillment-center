@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dao.OrderDAO">
+
+    <sql id="Base_Column_List">
+    id, order_id, store_id, city_id, user_id, order_name, status, asyn_pay_status, order_pic,
+    pay_time, pay_complete_time, generate_time, close_time, pickup_time, order_price,
+    total_price, create_user_id, create_time, update_user_id, update_time, pickup_start_time,
+    pickup_end_time, memo, pickup_code, weight, pickup_type_id, is_willing, balance,
+    is_del, extras, evaluate_content, coupon_id, coupon_desc, pickup_time_id, complete_user_id,
+    complete_time, lock_time, cancel_type, balance_type, `change`, version, pay_type, coupon_value,
+    delivery_mode, lock_order_user_id, recipients, recipients_phone, recipients_addr,
+    freight, warehouse_id, residence_id, residence_name, limit_fee, limit_fee_desc, f_flag,
+    order_type, presell_id, group_id, total_vip, total_coupon, total_full, total_point_price,
+    platform
+  </sql>
+
+
+    <insert id="insert" keyProperty="id"
+            parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO"
+            useGeneratedKeys="true">
+        insert into tbl_order (order_id,
+        store_id,
+        city_id,
+        user_id,
+        order_name,
+        status,
+        asyn_pay_status,
+        order_pic,
+        <if test="payTime!=null">
+            pay_time,
+        </if>
+        <if test="payCompleteTime!=null">
+            pay_complete_time,
+        </if>
+        generate_time,
+
+        <if test="closeTime!=null">
+            close_time,
+        </if>
+        <if test="pickupTime!=null">
+            pickup_time,
+        </if>
+        order_price,
+        total_price,
+        create_user_id,
+        create_time,
+        update_user_id,
+        update_time,
+        <if test="pickupStartTime!=null">
+            pickup_start_time,
+        </if>
+        <if test="pickupEndTime!=null">
+            pickup_end_time,
+        </if>
+        memo,
+        pickup_code,
+        weight,
+        pickup_type_id,
+        is_willing,
+        balance,
+        is_del,
+        extras,
+        evaluate_content,
+        coupon_id,
+        coupon_desc,
+        pickup_time_id,
+        complete_user_id,
+        complete_time,
+        lock_time,
+        cancel_type,
+        balance_type,
+        `change`,
+        version,
+        pay_type,
+        coupon_value,
+        delivery_mode,
+        lock_order_user_id,
+        recipients,
+        recipients_phone,
+        recipients_addr,
+        freight,
+        warehouse_id,
+        residence_id,
+        residence_name,
+        limit_fee,
+        limit_fee_desc,
+        f_flag,
+        order_type,
+        presell_id,
+        group_id,
+        total_vip,
+        total_coupon,
+        total_full,
+        total_point_price,
+        platform
+        )
+        values (#{orderId},
+        #{storeId},
+        #{cityId},
+        #{userId},
+        #{orderName},
+        #{status},
+        #{asynPayStatus},
+        #{orderPic},
+        <if test="payTime!=null">
+            #{payTime},
+        </if>
+        <if test="payCompleteTime!=null">
+            #{payCompleteTime},
+        </if>
+        #{generateTime},
+        <if test="closeTime!=null">
+            #{closeTime},
+        </if>
+        <if test="pickupTime!=null">
+            #{pickupTime},
+        </if>
+        #{orderPrice},
+        #{totalPrice},
+        #{createUserId},
+        #{createTime},
+        #{updateUserId},
+        #{updateTime},
+
+        <if test="pickupStartTime!=null">
+            #{pickupStartTime},
+        </if>
+        <if test="pickupEndTime!=null">
+            #{pickupEndTime},
+        </if>
+
+        #{memo},
+        #{pickupCode},
+        #{weight},
+        #{pickupTypeId},
+        #{isWilling},
+        #{balance},
+        #{isDel},
+        #{extras},
+        #{evaluateContent},
+        #{couponId},
+        #{couponDesc},
+        #{pickupTimeId},
+        #{completeUserId},
+        #{completeTime},
+        #{lockTime},
+        #{cancelType},
+        #{balanceType},
+        #{change},
+        #{version},
+        #{payType},
+        #{couponValue},
+        #{deliveryMode},
+        #{lockOrderUserId},
+        #{recipients},
+        #{recipientsPhone},
+        #{recipientsAddr},
+        #{freight},
+        #{warehouseId},
+        #{residenceId},
+        #{residenceName},
+        #{limitFee},
+        #{limitFeeDesc},
+        #{fFlag},
+        #{orderType},
+        #{presellId},
+        #{groupId},
+        #{totalVip},
+        #{totalCoupon},
+        #{totalFull},
+        #{totalPointPrice},
+        #{platform})
+    </insert>
+
+
+    <update id="update"
+            parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+        update
+        tbl_order
+        set
+        order_id = #{orderId},
+        store_id =#{storeId},
+        city_id=#{cityId},
+        user_id=#{userId},
+        order_name=#{orderName},
+        status=#{status},
+        asyn_pay_status=#{asynPayStatus},
+        order_pic=#{orderPic},
+        <if test="payTime!=null">
+            pay_time=#{payTime},
+        </if>
+        <if test="payCompleteTime!=null">
+            pay_complete_time=#{payCompleteTime},
+        </if>
+        generate_time=#{generateTime},
+        <if test="closeTime!=null">
+            close_time=#{closeTime},
+        </if>
+        <if test="pickupTime!=null">
+            pickup_time=#{pickupTime},
+        </if>
+        order_price=#{orderPrice},
+        total_price=#{totalPrice},
+        create_user_id=#{createUserId},
+        create_time=#{createTime},
+        update_user_id=#{updateUserId},
+        update_time=#{updateTime},
+        <if test="pickupStartTime!=null">
+            pickup_start_time=#{pickupStartTime},
+        </if>
+        <if test="pickupEndTime!=null">
+            pickup_end_time=#{pickupEndTime},
+        </if>
+        memo=#{memo},
+        pickup_code=#{pickupCode},
+        weight=#{weight},
+        pickup_type_id=#{pickupTypeId},
+        is_willing=#{isWilling},
+        balance=#{balance},
+        is_del=#{isDel},
+        extras=#{extras},
+        evaluate_content=#{evaluateContent},
+        coupon_id=#{couponId},
+        coupon_desc=#{couponDesc},
+        pickup_time_id=#{pickupTimeId},
+        complete_user_id=#{completeUserId},
+        <if test="completeTime!=null">
+            complete_time=#{completeTime},
+        </if>
+        lock_time=#{lockTime},
+        cancel_type=#{cancelType},
+        balance_type=#{balanceType},
+        `change`=#{change},
+        version=#{version},
+        pay_type=#{payType},
+        coupon_value=#{couponValue},
+        delivery_mode=#{deliveryMode},
+        lock_order_user_id=#{lockOrderUserId},
+        recipients=#{recipients},
+        recipients_phone=#{recipientsPhone},
+        recipients_addr=#{recipientsAddr},
+        freight=#{freight},
+        warehouse_id=#{warehouseId},
+        residence_id=#{residenceId},
+        residence_name=#{residenceName},
+        limit_fee=#{limitFee},
+        limit_fee_desc=#{limitFeeDesc},
+        f_flag=#{fFlag},
+        order_type=#{orderType},
+        presell_id=#{presellId},
+        group_id=#{groupId},
+        total_vip=#{totalVip},
+        total_coupon=#{totalCoupon},
+        total_full=#{totalFull},
+        total_point_price=#{totalPointPrice},
+        platform=#{platform}
+        where order_id = #{orderId} limit 1;
+    </update>
+
+    <update id="setCharacter">
+    set names utf8mb4
+  </update>
+
+    <select id="selectByOrderId"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tbl_order
+        WHERE order_id = #{orderId} limit 1
+    </select>
+
+    <select id="selectByCreateTimeRange"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tbl_order
+        WHERE create_time &lt;= #{timeEnd}
+        <if test="timeStart != null">
+            and create_time >= #{timeStart}
+        </if>
+        and id > #{lastId}
+        order by id asc limit #{limitNum}
+    </select>
+
+    <select id="selectByOrderQueryParam"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_order
+        where
+        <choose>
+            <when test="timeType==1">
+                create_time &lt;= #{queryEndDate}
+                and create_time > #{queryStartDate}
+            </when>
+            <when test="timeType==2">
+                update_time &lt;= #{queryEndDate}
+                and update_time > #{queryStartDate}
+            </when>
+            <otherwise>
+                pickup_time &lt;= #{queryEndDate}
+                and pickup_time >= #{queryStartDate}
+            </otherwise>
+        </choose>
+        <if test="statusList !=null and statusList.size() > 0">
+            and status in(
+            <foreach collection="statusList" item="item" separator=",">
+                #{item}
+            </foreach>
+            )
+        </if>
+        and asyn_pay_status = 2
+        <if test="userId !=null">
+            and user_id = #{userId}
+        </if>
+        and city_id = #{cityId}
+        <if test="storeId !=null">
+            and store_id = #{storeId}
+        </if>
+
+        <if test="payType !=null and payType != -1">
+            and pay_type = #{payType}
+        </if>
+        <if test="payType ==null">
+            and pay_type not in (3)
+        </if>
+        <choose>
+            <when test="timeType==1">
+                order by create_time desc
+            </when>
+            <when test="timeType==2">
+                order by update_time desc
+            </when>
+            <otherwise>
+                order by pickup_time asc
+            </otherwise>
+        </choose>
+        <if test="limit!=null">
+            limit #{limit}
+            <if test="offset!=null">
+                offset #{offset}
+            </if>
+        </if>
+        -- : selectByOrderQueryParam
+    </select>
+
+    <select id="countByStatusAndCreateTime" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM tbl_order
+        WHERE
+        user_id = #{userId}
+        and create_time >=#{timeStart}
+        <if test="list !=null and list.size >0">
+            and status not in(
+            <foreach collection="list" item="item" separator=",">
+                #{item}
+            </foreach>
+            )
+        </if>
+    </select>
+
+    <select id="selectByOrderIdList"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_order
+        where order_id in(
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </select>
+
+    <select id="countByOrderQueryParam" resultType="java.lang.Integer">
+        select
+        count(1)
+        from tbl_order
+        where
+        <choose>
+            <when test="timeType==1">
+                create_time &lt;= #{queryEndDate}
+                and create_time > #{queryStartDate}
+            </when>
+            <when test="timeType==2">
+                update_time &lt;= #{queryEndDate}
+                and update_time > #{queryStartDate}
+            </when>
+            <otherwise>
+                pickup_time &lt;= #{queryEndDate}
+                and pickup_time >= #{queryStartDate}
+            </otherwise>
+        </choose>
+        <if test="statusList !=null and statusList.size() > 0">
+            and status in(
+            <foreach collection="statusList" item="item" separator=",">
+                #{item}
+            </foreach>
+            )
+        </if>
+        and asyn_pay_status = 2
+        <if test="userId !=null">
+            and user_id = #{userId}
+        </if>
+        and city_id = #{cityId}
+        <if test="storeId !=null">
+            and store_id = #{storeId}
+        </if>
+        <if test="payType !=null and payType != -1">
+            and pay_type = #{payType}
+        </if>
+        <if test="payType ==null">
+            and pay_type not in (3)
+        </if>
+    </select>
+
+    <select id="countFinishOrEvaluateByCompleteTime" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM tbl_order
+    WHERE
+    user_id = #{userId}
+    and complete_time >= #{completeTime}
+    and status in (4, 6)
+  </select>
+
+    <delete id="deleteByOrderId" parameterType="java.lang.String">
+    delete from tbl_order
+    where order_id = #{orderId} limit 1
+  </delete>
+
+    <update id="delOrder">
+        update tbl_order
+        <set>
+            is_del = '1',
+            update_time = #{updateTime}
+        </set>
+        <where>
+            order_id = #{orderId}
+        </where>
+        limit 1
+    </update>
+
+    <update id="updateOrder">
+        <foreach collection="list" index="index" item="item" separator=";">
+            UPDATE tbl_order
+            <set>
+                status = 4,
+                `change` = #{item.change},
+                complete_user_id = #{item.completeUserId},
+                update_time = #{item.updateTime},
+                complete_time = #{item.completeTime}
+            </set>
+            <where>
+                order_id = #{item.orderId}
+            </where>
+        </foreach>
+    </update>
+
+    <insert id="insertByHisDb"
+            parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.tradehis.dataobject.OrderHisDO">
+        insert into tbl_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            order_id,
+            store_id,
+            city_id,
+            user_id,
+            order_name,
+            status,
+            asyn_pay_status,
+            order_pic,
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="payCompleteTime != null">
+                pay_complete_time,
+            </if>
+            <if test="generateTime != null">
+                generate_time,
+            </if>
+            <if test="closeTime != null">
+                close_time,
+            </if>
+            <if test="pickupTime != null">
+                pickup_time,
+            </if>
+            order_price,
+            total_price,
+            create_user_id,
+            <if test="createTime != null">
+                create_time,
+            </if>
+            update_user_id,
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            pickup_start_time,
+            pickup_end_time,
+            memo,
+            pickup_code,
+            weight,
+            pickup_type_id,
+            is_willing,
+            balance,
+            is_del,
+            extras,
+            evaluate_content,
+            coupon_id,
+            coupon_desc,
+            pickup_time_id,
+            complete_user_id,
+            <if test="completeTime != null">
+                complete_time,
+            </if>
+            <if test="lockTime != null">
+                lock_time,
+            </if>
+            cancel_type,
+            balance_type,
+            `change`,
+            version,
+            pay_type,
+            coupon_value,
+            delivery_mode,
+            lock_order_user_id,
+            recipients,
+            recipients_phone,
+            recipients_addr,
+            freight,
+            warehouse_id,
+            residence_id,
+            residence_name,
+            limit_fee,
+            limit_fee_desc,
+            f_flag,
+            order_type,
+            presell_id,
+            group_id,
+            total_vip,
+            total_coupon,
+            total_full,
+            total_point_price,
+            platform,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id},
+            #{orderId},
+            #{storeId},
+            #{cityId},
+            #{userId},
+            #{orderName},
+            #{status},
+            #{asynPayStatus},
+            #{orderPic},
+            <if test="payTime != null">
+                #{payTime},
+            </if>
+            <if test="payCompleteTime != null">
+                #{payCompleteTime},
+            </if>
+            <if test="generateTime != null">
+                #{generateTime},
+            </if>
+            <if test="closeTime != null">
+                #{closeTime},
+            </if>
+            <if test="pickupTime != null">
+                #{pickupTime},
+            </if>
+            #{orderPrice},
+            #{totalPrice},
+            #{createUserId},
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            #{updateUserId},
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            #{pickupStartTime},
+            #{pickupEndTime},
+            #{memo},
+            #{pickupCode},
+            #{weight},
+            #{pickupTypeId},
+            #{isWilling},
+            #{balance},
+            #{isDel},
+            #{extras},
+            #{evaluateContent},
+            #{couponId},
+            #{couponDesc},
+            #{pickupTimeId},
+            #{completeUserId},
+            <if test="completeTime != null">
+                #{completeTime},
+            </if>
+            <if test="lockTime != null">
+                #{lockTime},
+            </if>
+            #{cancelType},
+            #{balanceType},
+            #{change},
+            #{version},
+            #{payType},
+            #{couponValue},
+            #{deliveryMode},
+            #{lockOrderUserId},
+            #{recipients},
+            #{recipientsPhone},
+            #{recipientsAddr},
+            #{freight},
+            #{warehouseId},
+            #{residenceId},
+            #{residenceName},
+            #{limitFee},
+            #{limitFeeDesc},
+            #{fFlag},
+            #{orderType},
+            #{presellId},
+            #{groupId},
+            #{totalVip},
+            #{totalCoupon},
+            #{totalFull},
+            #{totalPointPrice},
+            #{platform},
+        </trim>
+    </insert>
+
+    <select id="selectUserOrders"
+            parameterType="com.mallcai.fulfillment.dp.infrastructure.dto.TradeOrderQueryParamDTO"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tbl_order
+        WHERE user_id = #{userId}
+        and city_id = #{cityId}
+        <if test="createTimeStart != null">
+            and create_time >= #{createTimeStart}
+        </if>
+        <if test="createTimeEnd != null">
+            and create_time &lt;= #{createTimeEnd}
+        </if>
+        <if test="orderId != null">
+            and order_id = #{orderId}
+        </if>
+        <if test="deliveryMode != null">
+            and delivery_mode = #{deliveryMode}
+        </if>
+        <if test="statusesStr != null">
+            and status in (${statusesStr})
+        </if>
+        <if test="storeIdsStr != null">
+            and store_id in (${storeIdsStr})
+        </if>
+    </select>
+
+    <select id="selectByOrderIds"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tbl_order
+        WHERE order_id in (${orderIdsStr})
+    </select>
+
+
+    <update id="updatePointOrderList">
+        <foreach collection="list" index="index" item="item" separator=";">
+            UPDATE tbl_order
+            <set>
+                status = 4,
+                complete_user_id = #{item.completeUserId},
+                update_time = #{item.updateTime},
+                complete_time = #{item.completeTime}
+            </set>
+            <where>
+                order_id = #{item.orderId}
+            </where>
+        </foreach>
+    </update>
+    <update id="completeOrderList">
+        <foreach collection="list" index="index" item="orderId" separator=";">
+            UPDATE tbl_order
+            <set>
+                status = 4,
+                complete_time = now()
+            </set>
+            <where>
+                order_id = #{orderId} limit 1
+            </where>
+        </foreach>
+    </update>
+
+    <update id="lockOrderStatus">
+        UPDATE tbl_order
+        <set>
+            status = 99,
+            update_time = now(),
+        </set>
+        <where>
+            order_id = #{orderId} limit 1
+        </where>
+    </update>
+
+    <update id="updateByOrder">
+        UPDATE tbl_order
+        <set>
+            status = #{status},
+            complete_user_id = #{completeUserId},
+            update_time = #{updateTime},
+            complete_time = #{completeTime}
+        </set>
+        <where>
+            order_id = #{orderId} limit 1
+        </where>
+    </update>
+    <update id="updateByOrderId">
+        UPDATE tbl_order
+        <set>
+            status = #{status},
+            complete_time = #{completeTime}
+        </set>
+        <where>
+            order_id = #{orderId} limit 1
+        </where>
+    </update>
+
+
+    <update id="updateByOrderIdSelective"
+            parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+        update tbl_order
+        <set>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=INTEGER},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="orderName != null">
+                order_name = #{orderName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="asynPayStatus != null">
+                asyn_pay_status = #{asynPayStatus,jdbcType=CHAR},
+            </if>
+            <if test="orderPic != null">
+                order_pic = #{orderPic,jdbcType=VARCHAR},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payCompleteTime != null">
+                pay_complete_time = #{payCompleteTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="generateTime != null">
+                generate_time = #{generateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="closeTime != null">
+                close_time = #{closeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pickupTime != null">
+                pickup_time = #{pickupTime,jdbcType=DATE},
+            </if>
+            <if test="orderPrice != null">
+                order_price = #{orderPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="totalPrice != null">
+                total_price = #{totalPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null">
+                update_user_id = #{updateUserId,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pickupStartTime != null">
+                pickup_start_time = #{pickupStartTime,jdbcType=VARCHAR},
+            </if>
+            <if test="pickupEndTime != null">
+                pickup_end_time = #{pickupEndTime,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="pickupCode != null">
+                pickup_code = #{pickupCode,jdbcType=VARCHAR},
+            </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=DECIMAL},
+            </if>
+            <if test="pickupTypeId != null">
+                pickup_type_id = #{pickupTypeId,jdbcType=TINYINT},
+            </if>
+            <if test="isWilling != null">
+                is_willing = #{isWilling,jdbcType=TINYINT},
+            </if>
+            <if test="balance != null">
+                balance = #{balance,jdbcType=INTEGER},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel,jdbcType=CHAR},
+            </if>
+            <if test="extras != null">
+                extras = #{extras,jdbcType=VARCHAR},
+            </if>
+            <if test="evaluateContent != null">
+                evaluate_content = #{evaluateContent,jdbcType=VARCHAR},
+            </if>
+            <if test="couponId != null">
+                coupon_id = #{couponId,jdbcType=INTEGER},
+            </if>
+            <if test="couponDesc != null">
+                coupon_desc = #{couponDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="pickupTimeId != null">
+                pickup_time_id = #{pickupTimeId,jdbcType=INTEGER},
+            </if>
+            <if test="completeUserId != null">
+                complete_user_id = #{completeUserId,jdbcType=INTEGER},
+            </if>
+            <if test="completeTime != null">
+                complete_time = #{completeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lockTime != null">
+                lock_time = #{lockTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cancelType != null">
+                cancel_type = #{cancelType,jdbcType=BIT},
+            </if>
+            <if test="balanceType != null">
+                balance_type = #{balanceType,jdbcType=BIT},
+            </if>
+            <if test="change != null">
+                `change` = #{change,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=TINYINT},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType,jdbcType=TINYINT},
+            </if>
+            <if test="couponValue != null">
+                coupon_value = #{couponValue,jdbcType=DECIMAL},
+            </if>
+            <if test="deliveryMode != null">
+                delivery_mode = #{deliveryMode,jdbcType=BIT},
+            </if>
+            <if test="lockOrderUserId != null">
+                lock_order_user_id = #{lockOrderUserId,jdbcType=INTEGER},
+            </if>
+            <if test="recipients != null">
+                recipients = #{recipients,jdbcType=VARCHAR},
+            </if>
+            <if test="recipientsPhone != null">
+                recipients_phone = #{recipientsPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="recipientsAddr != null">
+                recipients_addr = #{recipientsAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="freight != null">
+                freight = #{freight,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseId != null">
+                warehouse_id = #{warehouseId,jdbcType=INTEGER},
+            </if>
+            <if test="residenceId != null">
+                residence_id = #{residenceId,jdbcType=INTEGER},
+            </if>
+            <if test="residenceName != null">
+                residence_name = #{residenceName,jdbcType=VARCHAR},
+            </if>
+            <if test="limitFee != null">
+                limit_fee = #{limitFee,jdbcType=INTEGER},
+            </if>
+            <if test="limitFeeDesc != null">
+                limit_fee_desc = #{limitFeeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="fFlag != null">
+                f_flag = #{fFlag,jdbcType=TINYINT},
+            </if>
+            <if test="orderType != null">
+                order_type = #{orderType,jdbcType=TINYINT},
+            </if>
+            <if test="presellId != null">
+                presell_id = #{presellId,jdbcType=INTEGER},
+            </if>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="totalVip != null">
+                total_vip = #{totalVip,jdbcType=INTEGER},
+            </if>
+            <if test="totalCoupon != null">
+                total_coupon = #{totalCoupon,jdbcType=INTEGER},
+            </if>
+            <if test="totalFull != null">
+                total_full = #{totalFull,jdbcType=INTEGER},
+            </if>
+            <if test="totalPointPrice != null">
+                total_point_price = #{totalPointPrice,jdbcType=INTEGER},
+            </if>
+            <if test="platform != null">
+                platform = #{platform,jdbcType=INTEGER},
+            </if>
+        </set>
+        where order_id = #{orderId} LIMIT 1
+    </update>
+
+    <select id="selectSingle4Test"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+    select * from tbl_order
+    limit 1;
+  </select>
+
+    <select id="selectOrder4Invoice"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tbl_order
+        WHERE user_id = #{userId}
+        <if test="orderTableId != null">
+            and id &lt; #{orderTableId}
+        </if>
+        and city_id = #{cityId}
+        and status in(
+        <foreach collection="statusList" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+        order by id desc
+        limit #{limit}
+    </select>
+</mapper>

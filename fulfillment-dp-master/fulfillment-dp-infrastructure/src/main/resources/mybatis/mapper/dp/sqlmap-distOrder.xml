@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.dp.dao.DistOrderDAO">
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dp.infrastructure.dal.dp.dataobject.DistOrderDO">
+        <id column="id" property="id"/>
+        <result column="dist_order_no" property="distOrderNo"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="store_id" property="storeId"/>
+        <result column="user_id" property="userId"/>
+        <result column="status" property="status"/>
+        <result column="confirm_status" property="confirmStatus"/>
+        <result column="dist_type" property="distType"/>
+        <result column="city_id" property="cityId"/>
+        <result column="express_no" property="expressNo"/>
+        <result column="express_name" property="expressName"/>
+        <result column="receiver_address" property="receiverAddress"/>
+        <result column="receiver_name" property="receiverName"/>
+        <result column="receiver_phone" property="receiverPhone"/>
+        <result column="receiver_user_id" property="receiverUserId"/>
+        <result column="extend" property="extend"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="receiver_province" property="receiverProvince"/>
+        <result column="receiver_city" property="receiverCity"/>
+        <result column="receiver_county" property="receiverCounty"/>
+        <result column="modify_times" property="modifyTimes"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,dist_order_no,order_no,store_id,user_id,status,confirm_status,dist_type,city_id,express_no,receiver_address,receiver_name,receiver_phone,receiver_user_id,extend,create_time,update_time,receiver_province,receiver_city,receiver_county,express_name,modify_times,is_deleted
+    </sql>
+
+    <sql id="Without_Id_Values_List">
+        #{distOrderNo},
+        #{orderNo},
+        #{storeId},
+        #{userId},
+        #{status},
+        <choose>
+            <when test="confirmStatus!=null">
+                #{confirmStatus},
+            </when>
+            <otherwise>
+                0,
+            </otherwise>
+        </choose>
+        #{distType},
+        #{cityId},
+        #{expressNo},
+        #{receiverAddress},#{receiverName},#{receiverPhone},#{receiverUserId},
+        <choose>
+            <when test="extend!=null">
+                #{extend},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+        #{createTime},now(),
+        #{receiverProvince},#{receiverCity},#{receiverCounty},#{expressName},#{modifyTimes},
+        <choose>
+            <when test="isDeleted!=null">
+                #{isDeleted}
+            </when>
+            <otherwise>
+                0
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="tableName">
+        dist_order
+    </sql>
+
+    <insert id="insertDistOrder">
+        insert into
+        <include refid="tableName"/>
+        (dist_order_no,order_no,store_id,user_id,status,confirm_status,dist_type,city_id,express_no,receiver_address,receiver_name,receiver_phone,receiver_user_id,extend,create_time,update_time,receiver_province,receiver_city,receiver_county,express_name,modify_times,is_deleted)
+        values
+        (
+        <include refid="Without_Id_Values_List"/>
+        )
+    </insert>
+
+    <update id="updateDistOrderStatus" parameterType="map">
+        update
+        <include refid="tableName"/>
+        set status = #{status} where order_no = #{orderNo} and status = #{preStatus} and is_deleted = 0
+    </update>
+
+    <update id="updateConfirmStatus" parameterType="map">
+        update
+        <include refid="tableName"/>
+        set confirm_status = #{confirmStatus} where order_no = #{orderNo} and is_deleted = 0
+    </update>
+
+    <update id="updateExpressInfo" parameterType="map">
+        update
+        <include refid="tableName"/>
+        set express_name = #{expressName},express_no = #{expressNo},modify_times=modify_times+1
+        where order_no = #{orderNo} and is_deleted = 0
+    </update>
+
+    <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="tableName"/>
+        where order_no = #{orderNo} and is_deleted = 0
+    </select>
+
+    <select id="searchByCreateTime" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="tableName"/>
+        where create_time &lt; #{confirmTime} and confirm_status = 0 and is_deleted = 0
+    </select>
+
+    <insert id="batchInsertDistOrder" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        <include refid="tableName"/>
+        (dist_order_no,order_no,store_id,user_id,status,confirm_status,dist_type,city_id,
+        express_no,receiver_address,receiver_name,receiver_phone,
+        receiver_user_id,extend,create_time,update_time,receiver_province,receiver_city,receiver_county,express_name,modify_times,is_deleted)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.distOrderNo,jdbcType=VARCHAR},
+            #{item.orderNo,jdbcType=VARCHAR},
+            #{item.storeId,jdbcType=INTEGER},
+            #{item.userId,jdbcType=INTEGER},
+            #{item.status,jdbcType=INTEGER},
+            <choose>
+                <when test="item.confirmStatus!=null">
+                    #{item.confirmStatus,jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    0,
+                </otherwise>
+            </choose>
+            #{item.distType,jdbcType=INTEGER},
+            #{item.cityId,jdbcType=INTEGER},
+            #{item.expressNo,jdbcType=VARCHAR},
+            #{item.receiverAddress,jdbcType=VARCHAR},
+            #{item.receiverName,jdbcType=VARCHAR},
+            #{item.receiverPhone,jdbcType=VARCHAR},
+            #{item.receiverUserId,jdbcType=VARCHAR},
+            <choose>
+                <when test="item.extend!=null">
+                    #{item.extend,jdbcType=VARCHAR},
+                </when>
+                <otherwise>
+                    '',
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="item.createTime!=null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </when>
+                <otherwise>
+                    now(),
+                </otherwise>
+            </choose>
+            now(),
+            #{item.receiverProvince,jdbcType=VARCHAR},
+            #{item.receiverCity,jdbcType=VARCHAR},
+            #{item.receiverCounty,jdbcType=VARCHAR},
+            #{item.expressName,jdbcType=VARCHAR},
+            #{item.modifyTimes,jdbcType=INTEGER},
+            <choose>
+                <when test="item.isDeleted!=null">
+                    #{item.isDeleted,jdbcType=TINYINT}
+                </when>
+                <otherwise>
+                    0
+                </otherwise>
+            </choose>
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateIsDeleted" parameterType="java.lang.String">
+        update
+        <include refid="tableName"/>
+        set is_deleted = 1 where order_no = #{orderNo} and is_deleted = 0
+    </update>
+
+    <select id="selectByOrderNos" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="tableName"/>
+        where order_no in
+        <foreach collection="orderNos" item="orderNo" open="(" close=")" separator=",">
+            #{orderNo}
+        </foreach>
+        and is_deleted = 0
+    </select>
+</mapper>

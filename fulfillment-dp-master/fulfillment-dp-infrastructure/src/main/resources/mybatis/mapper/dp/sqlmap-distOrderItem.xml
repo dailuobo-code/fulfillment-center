@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.dp.dao.DistOrderItemDAO">
+
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dp.infrastructure.dal.dp.dataobject.DistOrderItemDO">
+        <id column="id" property="id"/>
+        <result column="dist_order_no" property="distOrderNo"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="store_id" property="storeId"/>
+        <result column="product_no" property="productNo"/>
+        <result column="city_product_id" property="cityProductId"/>
+        <result column="num" property="num"/>
+        <result column="extend" property="extend"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,dist_order_no,order_no,store_id,product_no,city_product_id,num,extend,create_time,update_time
+    </sql>
+
+    <sql id="tableName">
+        dist_order_item
+    </sql>
+
+    <insert id="batchInsertDistOrderItem" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        <include refid="tableName"/>
+        (dist_order_no,order_no,store_id,product_no,city_product_id,num,extend,create_time,update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.distOrderNo,jdbcType=VARCHAR},
+            #{item.orderNo,jdbcType=VARCHAR},
+            #{item.storeId,jdbcType=TINYINT},
+            #{item.productNo,jdbcType=VARCHAR},
+            #{item.cityProductId,jdbcType=INTEGER},
+            #{item.num,jdbcType=INTEGER},
+            <choose>
+                <when test="item.extend!=null">
+                    #{item.extend,jdbcType=VARCHAR},
+                </when>
+                <otherwise>
+                    '',
+                </otherwise>
+            </choose>
+            now(),now())
+        </foreach>
+    </insert>
+</mapper>

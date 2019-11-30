@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.trade.dao.SettlementWarnLogDAO">
+  <resultMap id="BaseResultMap"
+    type="com.mallcai.fulfillment.dp.infrastructure.dal.trade.dataobject.SettlementWarnLogDO">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <result column="order_id" property="orderId" jdbcType="VARCHAR"/>
+    <result column="user_id" property="userId" jdbcType="BIGINT"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    <result column="type" property="type" jdbcType="INTEGER"/>
+    <result column="version" property="version" jdbcType="BIGINT"/>
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+    <result column="operate_id" property="operateId" jdbcType="BIGINT"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_id, user_id, create_time, update_time, type, version, device_id, operate_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from tc_settlement_warn_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tc_settlement_warn_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.trade.dataobject.SettlementWarnLogDO">
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tc_settlement_warn_log (order_id, user_id, create_time,
+    update_time, type, version,
+    device_id, operate_id)
+    values (#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT},
+    #{createTime,jdbcType=TIMESTAMP},
+    #{updateTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, #{version,jdbcType=BIGINT},
+    #{deviceId,jdbcType=VARCHAR}, #{operateId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.trade.dataobject.SettlementWarnLogDO">
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tc_settlement_warn_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="operateId != null">
+        operate_id,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateId != null">
+        #{operateId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.trade.dataobject.SettlementWarnLogDO">
+    update tc_settlement_warn_log
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateId != null">
+        operate_id = #{operateId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.trade.dataobject.SettlementWarnLogDO">
+    update tc_settlement_warn_log
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=INTEGER},
+      version = #{version,jdbcType=BIGINT},
+      device_id = #{deviceId,jdbcType=VARCHAR},
+      operate_id = #{operateId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

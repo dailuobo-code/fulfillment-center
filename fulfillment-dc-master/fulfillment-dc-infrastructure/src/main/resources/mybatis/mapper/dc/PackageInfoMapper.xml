@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.PackageInfoMapper">
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.dc.PackageInfoDO">
+        <id column="id" property="id"/>
+        <result column="package_no" property="packageNo"/>
+        <result column="status" property="status"/>
+        <result column="status_msg" property="statusMsg"/>
+        <result column="produce_order_no" property="produceOrderNo"/>
+        <result column="product_no" property="productNo"/>
+        <result column="product_num" property="productNum"/>
+        <result column="city_id" property="cityId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,package_no,status,status_msg,produce_order_no,product_no,product_num,city_id,create_time,update_time
+    </sql>
+
+
+    <sql id="tableName">
+        package_info
+    </sql>
+
+    <insert id="batchPackageInfo" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        <include refid="tableName"/>
+        (package_no,status,status_msg,produce_order_no,product_no,product_num,city_id,create_time,update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.packageNo,jdbcType=VARCHAR},
+            #{item.status,jdbcType=INTEGER},
+            #{item.statusMsg,jdbcType=VARCHAR},
+            #{item.produceOrderNo,jdbcType=VARCHAR},
+            #{item.productNo,jdbcType=VARCHAR},
+            #{item.productNum,jdbcType=INTEGER},
+            #{item.cityId,jdbcType=INTEGER},
+            now(),now())
+        </foreach>
+    </insert>
+
+</mapper>

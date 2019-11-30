@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.pe.infrastructure.mapper.TimeRuleStoreMapper" >
+
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.pe.infrastructure.valueobject.TimeRuleStoreDO" >
+        <id column="id" property="id" />
+        <result column="time_rule_id" property="timeRuleId"/>
+        <result column="store_id" property="storeId" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <sql id="selectField">
+        id, time_rule_id, store_id,is_deleted
+    </sql>
+
+
+    <insert id="batchInsert" parameterType="list">
+        insert into time_rule_store(time_rule_id, store_id,
+        create_user_id, create_time, update_user_id, update_time, is_deleted) values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.timeRuleId}, #{item.storeId},
+            #{item.createUserId}, now(), #{item.updateUserId}, now(), 0
+            )
+        </foreach>
+    </insert>
+
+    <update id="deleteByStoreId" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        update time_rule_store
+        set is_deleted = #{deleteId}, update_time = now()
+        where id = #{id}
+    </update>
+
+    <select id="getAllStoreIds" resultType="integer">
+        select store_id from time_rule_store where is_deleted = 0
+    </select>
+
+    <select id="getStoreIdsByTimeRuleId" resultType="integer">
+        select store_id from time_rule_store where time_rule_id = #{timeRuleId} and is_deleted = 0
+    </select>
+
+    <select id="getMaxDelete" resultType="integer">
+        select is_deleted from time_rule_store where store_id = #{storeId} order by is_deleted desc limit 1
+    </select>
+
+    <select id="getByStoreId" resultMap="BaseResultMap" parameterType="integer">
+        select <include refid="selectField"/> from time_rule_store
+        where store_id = #{storeId} and is_deleted = 0
+    </select>
+</mapper>

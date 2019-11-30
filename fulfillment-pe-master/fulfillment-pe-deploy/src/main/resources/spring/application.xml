@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-4.2.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+  <import resource="classpath*:dubbo/beans-dubbo-provider.xml"/>
+  <import resource="classpath*:dubbo/beans-dubbo-consumer.xml"/>
+  <import resource="classpath*:mybatis/config/dataSource.xml"/>
+
+  <context:component-scan base-package="com.mallcai.fulfillment.pe"/>
+
+
+  <bean id="storeStorageService" class="com.mallcai.fulfillment.promise.storage.CityStorageService"/>
+  <!--拦截器配置基本配置-->
+  <!--异常处理-->
+  <bean id="exceptionHandler" class="com.mallcai.fulfillment.pe.biz.service.interceptor.handler.ExceptionHandler"/>
+
+  <bean id="defaultInterceptor" class="com.mallcai.fulfillment.pe.biz.service.interceptor.DefaultInterceptor">
+    <!--异常处理器-->
+    <property name="exceptionHandler" ref="exceptionHandler"></property>
+  </bean>
+
+  <!-- 三层分布式任务job -->
+  <!--<bean id="jobProducer" class="com.mallcai.fulfillment.job.task.JobProducer" init-method="start">
+    <property name="srvAddr" value="test"/>
+    <property name="groupName" value="test" />
+  </bean>-->
+
+  <!--<bean id="jobExecutor" class="com.mallcai.fulfillment.job.task.impl.JobExecutorImpl" init-method="start">
+    &lt;!&ndash;异常处理器&ndash;&gt;
+    <property name="producer" ref="jobProducer"/>
+    <property name="jobService">
+      <bean class="com.mallcai.fulfillment.pe.biz.service.job.TestJobServiceImpl"/>
+    </property>
+    <property name="executorLimit" value="100"/>
+    <property name="topicMap">
+      <map>
+        <entry key="SPLITOR" value="testSplite"/>
+        <entry key="LOADER" value="testLoader"/>
+        <entry key="EXECUTOR" value="testExecutor"/>
+      </map>
+    </property>
+    <property name="groupName" value="test"/>
+  </bean>-->
+
+
+
+
+  <!-- 对外服务拦截 -->
+  <aop:config>
+    <aop:aspect id="fpeAspect" ref="defaultInterceptor">
+      <aop:pointcut id="fpePointcut"
+                    expression="execution(* com.mallcai.fulfillment.pe.biz.service.impl..*.*(..))"/>
+      <aop:around method="intercept" pointcut-ref="fpePointcut"/>
+    </aop:aspect>
+  </aop:config>
+
+</beans>

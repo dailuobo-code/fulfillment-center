@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mallcai.fulfillment.pe.infrastructure.mapper.FrozenGoodSumPoMapperExtend">
+
+  <insert id="batchInsertSelective" parameterType="java.util.List" >
+    insert into frozen_good_summary (city_id, store_id, good_id, good_sum, sum_date, create_time, city_product_id,
+    product_sum)
+    values
+    <foreach collection ="list" item="item" separator =",">
+      (#{item.cityId,jdbcType=INTEGER},
+      #{item.storeId,jdbcType=INTEGER},
+      #{item.goodId,jdbcType=INTEGER},
+      #{item.goodSum,jdbcType=DECIMAL},
+      #{item.sumDate,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.cityProductId,jdbcType=INTEGER},
+      #{item.productSum,jdbcType=DECIMAL})
+    </foreach>
+
+  </insert>
+</mapper>

@@ -1,0 +1,8 @@
+nacos:
+  config:
+    server:
+      address: 192.168.1.21:9098
+    namespace: b42690f8-4fb3-4e6e-90b6-ff47d3393685
+
+server:
+  port: 8082

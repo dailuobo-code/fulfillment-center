@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-dp</artifactId>
+        <groupId>com.mallcai.fulfillment.dp</groupId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>fulfillment-dp-dependency</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.mallcai.framework</groupId>
+            <artifactId>mallcai-config-plugin</artifactId>
+            <version>1.1.0-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dp</groupId>
+            <artifactId>fulfillment-dp-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>app-city-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>app-order-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>app-user-api</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

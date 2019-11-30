@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- 用dubbo协议在20882端口暴露服务
+           备2服务器(qa环境)
+      -->
+    <dubbo:protocol name="dubbo" port="23001"/>
+
+    <!-- 注解范围 -->
+    <dubbo:annotation package="com.mallcai.fulfillment.pe"/>
+
+    <!-- 应用名称 -->
+    <dubbo:application name="${spring.application.name}"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+
+    <!--  global-->
+    <dubbo:registry id="global" protocol="zookeeper" address="${dubbo.global.registry.address}"
+                    wait="15000" default="true"/>
+    <dubbo:registry id="city" protocol="zookeeper" address="${dubbo.fulfillment.registry.address}"
+                    wait="15000" default="false"/>
+    <dubbo:registry id="scm" protocol="zookeeper" address="${dubbo.scm.address}"
+                    wait="15000" default="false"/>
+
+
+    <dubbo:service interface="com.mallcai.fulfillment.pe.api.service.query.PickingRuleQueryService" ref="pickingRuleQueryService" registry="global"/>
+    <dubbo:service interface="com.mallcai.fulfillment.pe.api.service.operate.PickingRuleOperateService" ref="pickingRuleOperateService" registry="global"/>
+
+    <dubbo:service interface="com.mallcai.fulfillment.pe.api.service.query.TimeRuleQueryService" ref="timeRuleQueryService" registry="global"/>
+    <dubbo:service interface="com.mallcai.fulfillment.pe.api.service.operate.TimeRuleOperateService" ref="timeRuleOperateService" registry="global"/>
+
+    <dubbo:service interface="com.mallcai.fulfillment.pe.api.service.operate.OrderAcceptService" ref="orderAcceptService" registry="global"/>
+    <dubbo:service interface="com.mallcai.fulfillment.pe.api.service.operate.OrderService" ref="orderService" registry="global"/>
+    <dubbo:service interface="com.mallcai.fulfillment.pe.api.service.operate.PurchaseOperateService" ref="purchaseOperateService" registry="global"/>
+    <dubbo:service interface="com.mallcai.fulfillment.pe.api.service.operate.PeOrderOperateService" ref="peOrderOperateService" registry="global"/>
+
+    <dubbo:service interface="com.mallcai.fulfillment.pe.api.service.query.TransDetailService" ref="transDetailService" registry="global"/>
+
+</beans>

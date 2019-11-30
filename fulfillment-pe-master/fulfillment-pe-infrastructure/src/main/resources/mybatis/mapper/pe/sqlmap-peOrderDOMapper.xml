@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.pe.infrastructure.mapper.OrderDOMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="trans_order_id" property="transOrderId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER" />
+    <result column="city_product_id" property="cityProductId" jdbcType="INTEGER" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="product_no" property="productNo" jdbcType="VARCHAR" />
+    <result column="order_source" property="orderSource" jdbcType="TINYINT" />
+    <result column="group_type" property="groupType" jdbcType="TINYINT" />
+    <result column="group_value" property="groupValue" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="commodity_info_ext" property="commodityInfoExt" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="expect_push_time" property="expectPushTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="pickup_time" property="pickupTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, trans_order_id, status, order_type, city_product_id, store_id, user_id, city_id, 
+    product_no, order_source, group_type, group_value, warehouse_id, commodity_info_ext, 
+    version, expect_push_time, create_time, update_time, pickup_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDOCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pe_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pe_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pe_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDOCriteria" >
+    delete from pe_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDO" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pe_order (trans_order_id, status, order_type, 
+      city_product_id, store_id, user_id, 
+      city_id, product_no, order_source, 
+      group_type, group_value, warehouse_id, 
+      commodity_info_ext, version, expect_push_time, 
+      create_time, update_time, pickup_time
+      )
+    values (#{transOrderId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{orderType,jdbcType=INTEGER}, 
+      #{cityProductId,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{cityId,jdbcType=INTEGER}, #{productNo,jdbcType=VARCHAR}, #{orderSource,jdbcType=TINYINT}, 
+      #{groupType,jdbcType=TINYINT}, #{groupValue,jdbcType=VARCHAR}, #{warehouseId,jdbcType=INTEGER}, 
+      #{commodityInfoExt,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, #{expectPushTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{pickupTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDO" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pe_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="transOrderId != null" >
+        trans_order_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="cityProductId != null" >
+        city_product_id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="productNo != null" >
+        product_no,
+      </if>
+      <if test="orderSource != null" >
+        order_source,
+      </if>
+      <if test="groupType != null" >
+        group_type,
+      </if>
+      <if test="groupValue != null" >
+        group_value,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="commodityInfoExt != null" >
+        commodity_info_ext,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="expectPushTime != null" >
+        expect_push_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="pickupTime != null" >
+        pickup_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="transOrderId != null" >
+        #{transOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="cityProductId != null" >
+        #{cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="productNo != null" >
+        #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSource != null" >
+        #{orderSource,jdbcType=TINYINT},
+      </if>
+      <if test="groupType != null" >
+        #{groupType,jdbcType=TINYINT},
+      </if>
+      <if test="groupValue != null" >
+        #{groupValue,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="commodityInfoExt != null" >
+        #{commodityInfoExt,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="expectPushTime != null" >
+        #{expectPushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pickupTime != null" >
+        #{pickupTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDOCriteria" resultType="java.lang.Integer" >
+    select count(*) from pe_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pe_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.transOrderId != null" >
+        trans_order_id = #{record.transOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderType != null" >
+        order_type = #{record.orderType,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityProductId != null" >
+        city_product_id = #{record.cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityId != null" >
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productNo != null" >
+        product_no = #{record.productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderSource != null" >
+        order_source = #{record.orderSource,jdbcType=TINYINT},
+      </if>
+      <if test="record.groupType != null" >
+        group_type = #{record.groupType,jdbcType=TINYINT},
+      </if>
+      <if test="record.groupValue != null" >
+        group_value = #{record.groupValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warehouseId != null" >
+        warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityInfoExt != null" >
+        commodity_info_ext = #{record.commodityInfoExt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.expectPushTime != null" >
+        expect_push_time = #{record.expectPushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pickupTime != null" >
+        pickup_time = #{record.pickupTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pe_order
+    set id = #{record.id,jdbcType=BIGINT},
+      trans_order_id = #{record.transOrderId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      order_type = #{record.orderType,jdbcType=INTEGER},
+      city_product_id = #{record.cityProductId,jdbcType=INTEGER},
+      store_id = #{record.storeId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      product_no = #{record.productNo,jdbcType=VARCHAR},
+      order_source = #{record.orderSource,jdbcType=TINYINT},
+      group_type = #{record.groupType,jdbcType=TINYINT},
+      group_value = #{record.groupValue,jdbcType=VARCHAR},
+      warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      commodity_info_ext = #{record.commodityInfoExt,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=INTEGER},
+      expect_push_time = #{record.expectPushTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      pickup_time = #{record.pickupTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDO" >
+    update pe_order
+    <set >
+      <if test="transOrderId != null" >
+        trans_order_id = #{transOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="cityProductId != null" >
+        city_product_id = #{cityProductId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="productNo != null" >
+        product_no = #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSource != null" >
+        order_source = #{orderSource,jdbcType=TINYINT},
+      </if>
+      <if test="groupType != null" >
+        group_type = #{groupType,jdbcType=TINYINT},
+      </if>
+      <if test="groupValue != null" >
+        group_value = #{groupValue,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="commodityInfoExt != null" >
+        commodity_info_ext = #{commodityInfoExt,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="expectPushTime != null" >
+        expect_push_time = #{expectPushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pickupTime != null" >
+        pickup_time = #{pickupTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDO" >
+    update pe_order
+    set trans_order_id = #{transOrderId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      order_type = #{orderType,jdbcType=INTEGER},
+      city_product_id = #{cityProductId,jdbcType=INTEGER},
+      store_id = #{storeId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=INTEGER},
+      product_no = #{productNo,jdbcType=VARCHAR},
+      order_source = #{orderSource,jdbcType=TINYINT},
+      group_type = #{groupType,jdbcType=TINYINT},
+      group_value = #{groupValue,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      commodity_info_ext = #{commodityInfoExt,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      expect_push_time = #{expectPushTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      pickup_time = #{pickupTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.OrderDOCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pe_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

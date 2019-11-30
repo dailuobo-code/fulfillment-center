@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.OrderWorkFlowMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.dc.OrderWorkFlowDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="biz_type" property="bizType" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="flow_group" property="flowGroup" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="is_locked" property="isLocked" jdbcType="BIT" />
+    <result column="parent_work_flow_id" property="parentWorkFlowId" jdbcType="BIGINT" />
+    <result column="curr_step" property="currStep" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, biz_type, type, order_no, flow_group, status, is_locked, parent_work_flow_id, 
+    curr_step, version, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.OrderWorkFlowCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_work_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_work_flow
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_work_flow
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.OrderWorkFlowCriteria" >
+    delete from order_work_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.OrderWorkFlowDO" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_work_flow (biz_type, type, order_no, 
+      flow_group, status, is_locked, 
+      parent_work_flow_id, curr_step, version, 
+      create_time, update_time)
+    values (#{bizType,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{orderNo,jdbcType=VARCHAR}, 
+      #{flowGroup,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{isLocked,jdbcType=BIT}, 
+      #{parentWorkFlowId,jdbcType=BIGINT}, #{currStep,jdbcType=VARCHAR}, #{version,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.OrderWorkFlowDO" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_work_flow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bizType != null" >
+        biz_type,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="flowGroup != null" >
+        flow_group,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isLocked != null" >
+        is_locked,
+      </if>
+      <if test="parentWorkFlowId != null" >
+        parent_work_flow_id,
+      </if>
+      <if test="currStep != null" >
+        curr_step,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bizType != null" >
+        #{bizType,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="flowGroup != null" >
+        #{flowGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="isLocked != null" >
+        #{isLocked,jdbcType=BIT},
+      </if>
+      <if test="parentWorkFlowId != null" >
+        #{parentWorkFlowId,jdbcType=BIGINT},
+      </if>
+      <if test="currStep != null" >
+        #{currStep,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.OrderWorkFlowCriteria" resultType="java.lang.Integer" >
+    select count(*) from order_work_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_work_flow
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.bizType != null" >
+        biz_type = #{record.bizType,jdbcType=TINYINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderNo != null" >
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowGroup != null" >
+        flow_group = #{record.flowGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.isLocked != null" >
+        is_locked = #{record.isLocked,jdbcType=BIT},
+      </if>
+      <if test="record.parentWorkFlowId != null" >
+        parent_work_flow_id = #{record.parentWorkFlowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.currStep != null" >
+        curr_step = #{record.currStep,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_work_flow
+    set id = #{record.id,jdbcType=BIGINT},
+      biz_type = #{record.bizType,jdbcType=TINYINT},
+      type = #{record.type,jdbcType=TINYINT},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      flow_group = #{record.flowGroup,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      is_locked = #{record.isLocked,jdbcType=BIT},
+      parent_work_flow_id = #{record.parentWorkFlowId,jdbcType=BIGINT},
+      curr_step = #{record.currStep,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.OrderWorkFlowDO" >
+    update order_work_flow
+    <set >
+      <if test="bizType != null" >
+        biz_type = #{bizType,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="flowGroup != null" >
+        flow_group = #{flowGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="isLocked != null" >
+        is_locked = #{isLocked,jdbcType=BIT},
+      </if>
+      <if test="parentWorkFlowId != null" >
+        parent_work_flow_id = #{parentWorkFlowId,jdbcType=BIGINT},
+      </if>
+      <if test="currStep != null" >
+        curr_step = #{currStep,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.OrderWorkFlowDO" >
+    update order_work_flow
+    set biz_type = #{bizType,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      flow_group = #{flowGroup,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      is_locked = #{isLocked,jdbcType=BIT},
+      parent_work_flow_id = #{parentWorkFlowId,jdbcType=BIGINT},
+      curr_step = #{currStep,jdbcType=VARCHAR},
+      version = #{version,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.OrderWorkFlowCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_work_flow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

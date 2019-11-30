@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.pe.infrastructure.mapper.TimeRuleMapper" >
+
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.pe.infrastructure.valueobject.TimeRuleDO" >
+        <id column="id" property="id" />
+        <result column="city_id" property="cityId"/>
+        <result column="warehouse_id" property="warehouseId" />
+        <result column="delivery_days" property="deliveryDays" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user_id" property="updateUserId" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <sql id="selectField">
+        id, city_id, warehouse_id, delivery_days,
+        create_user_id, create_time, update_user_id, update_time
+    </sql>
+
+    <select id="searchRules" parameterType="com.mallcai.fulfillment.pe.infrastructure.condition.SearchTimeRuleCondition" resultMap="BaseResultMap">
+        SELECT <include refid="selectField" /> FROM time_rule
+        where is_deleted = 0
+        order by update_time desc
+
+    </select>
+
+    <insert id="insert" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.TimeRuleDO" useGeneratedKeys="true" keyProperty="id">
+        insert into time_rule(city_id, warehouse_id, delivery_days,
+        create_user_id, create_time, update_user_id, update_time, is_deleted) values (
+        #{cityId}, #{warehouseId}, #{deliveryDays},
+        #{createUserId}, now(), #{updateUserId}, now(), 0
+        )
+    </insert>
+
+    <update id="update" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProductionRuleDO">
+        update time_rule
+        <set>
+            <if test="deliveryDays != null">
+                delivery_days = #{deliveryDays},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId},
+            </if>
+            <if test="warehouseId != null">
+                warehouse_id = #{warehouseId},
+            </if>
+            update_time = now(),
+            update_user_id = #{updateUserId}
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" parameterType="long" resultMap="BaseResultMap">
+        SELECT <include refid="selectField" /> FROM time_rule
+        WHERE id = #{id} and is_deleted = 0
+    </select>
+</mapper>

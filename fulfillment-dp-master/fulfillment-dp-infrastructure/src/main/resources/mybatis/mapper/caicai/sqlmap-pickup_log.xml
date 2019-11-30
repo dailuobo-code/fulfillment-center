@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dao.PickupLogDAO">
+  <resultMap id="BaseResultMap"
+    type="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.PickupLogDO">
+    <id column="id" property="id" jdbcType="INTEGER"/>
+    <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+    <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+    <result column="pickup_date" property="pickupDate" jdbcType="DATE"/>
+    <result column="operator_id" property="operatorId" jdbcType="INTEGER"/>
+    <result column="app_user_id" property="appUserId" jdbcType="INTEGER"/>
+    <result column="pickup_json" property="pickupJson" jdbcType="VARCHAR"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, city_id, store_id, pickup_date, operator_id, app_user_id, pickup_json, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_pickup_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_pickup_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.PickupLogDO">
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_pickup_log (city_id, store_id, pickup_date,
+    operator_id, app_user_id, pickup_json,
+    create_time)
+    values (#{cityId,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{pickupDate,jdbcType=DATE},
+    #{operatorId,jdbcType=INTEGER}, #{appUserId,jdbcType=INTEGER}, #{pickupJson,jdbcType=VARCHAR},
+    #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.PickupLogDO">
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_pickup_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="pickupDate != null">
+        pickup_date,
+      </if>
+      <if test="operatorId != null">
+        operator_id,
+      </if>
+      <if test="appUserId != null">
+        app_user_id,
+      </if>
+      <if test="pickupJson != null">
+        pickup_json,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupDate != null">
+        #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="operatorId != null">
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="appUserId != null">
+        #{appUserId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupJson != null">
+        #{pickupJson,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.PickupLogDO">
+    update tbl_pickup_log
+    <set>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupDate != null">
+        pickup_date = #{pickupDate,jdbcType=DATE},
+      </if>
+      <if test="operatorId != null">
+        operator_id = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="appUserId != null">
+        app_user_id = #{appUserId,jdbcType=INTEGER},
+      </if>
+      <if test="pickupJson != null">
+        pickup_json = #{pickupJson,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey"
+    parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.PickupLogDO">
+    update tbl_pickup_log
+    set city_id = #{cityId,jdbcType=INTEGER},
+      store_id = #{storeId,jdbcType=INTEGER},
+      pickup_date = #{pickupDate,jdbcType=DATE},
+      operator_id = #{operatorId,jdbcType=INTEGER},
+      app_user_id = #{appUserId,jdbcType=INTEGER},
+      pickup_json = #{pickupJson,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

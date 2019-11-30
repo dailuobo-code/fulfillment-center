@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--
+        <classPathEntry
+            location="/home/evans/.m2/repository/mysql/mysql-connector-java/5.0.5/mysql-connector-java-5.0.5.jar"/>
+    -->
+    <!--<classPathEntry location="./mysql-connector-java-5.0.5.jar"/>-->
+    <classPathEntry
+            location="/Users/zhj/.m2/repository/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar"/>
+    <context id="fulfillment_pe" targetRuntime="MyBatis3">
+
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$"/>
+            <property name="replaceString" value="Criteria"/>
+        </plugin>
+
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!--  关闭自动生成的注释  -->
+              <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://rm-bp10p2vl5x3c4mum5160.mysql.rds.aliyuncs.com:3306/fulfillment-pe" userId="caicai"
+                        password="123!@#qwe">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.mallcai.fulfillment.pe.infrastructure.valueobject" targetProject="src/main/java"><!-- src/generated/java -->
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="useActualColumnNames" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.mallcai.fulfillment.pe.infrastructure.mapper"
+                         targetProject="src/main/resources"> <!-- src/generated/resources -->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+  
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mallcai.fulfillment.pe.infrastructure.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+
+<!--        <table schema="fulfillment-pe" tableName="pe_order" domainObjectName="OrderDO">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+
+<!--        </table>-->
+
+<!--        <table schema="fulfillment-pe" tableName="trans_order" domainObjectName="TransOrderDO">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+
+<!--        </table>-->
+
+        <table schema="fulfillment-pe" tableName="frozen_good_summary" domainObjectName="FrozenGoodSumPo">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+
+        </table>
+
+<!--        <table schema="fulfillment-pe" tableName="purchase_statistics" domainObjectName="PurchaseStatistics">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+
+<!--                <table schema="fulfillment-pe" tableName="purchase" domainObjectName="Purchase">-->
+<!--                    <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--                </table>-->
+
+    </context>
+
+</generatorConfiguration>

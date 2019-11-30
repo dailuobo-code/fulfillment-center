@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.FlowStepDataInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.dc.FlowStepDataInfoDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="work_flow_id" property="workFlowId" jdbcType="BIGINT" />
+    <result column="work_flow_step_id" property="workFlowStepId" jdbcType="BIGINT" />
+    <result column="biz_type" property="bizType" jdbcType="TINYINT" />
+    <result column="flow_group" property="flowGroup" jdbcType="VARCHAR" />
+    <result column="node" property="node" jdbcType="VARCHAR" />
+    <result column="step_name" property="stepName" jdbcType="VARCHAR" />
+    <result column="biz_key" property="bizKey" jdbcType="VARCHAR" />
+    <result column="data" property="data" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, work_flow_id, work_flow_step_id, biz_type, flow_group, node, step_name, biz_key, 
+    data, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.FlowStepDataInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from flow_step_data_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from flow_step_data_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from flow_step_data_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.FlowStepDataInfoCriteria" >
+    delete from flow_step_data_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.FlowStepDataInfoDO" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into flow_step_data_info (work_flow_id, work_flow_step_id, biz_type, 
+      flow_group, node, step_name, 
+      biz_key, data, create_time, 
+      update_time)
+    values (#{workFlowId,jdbcType=BIGINT}, #{workFlowStepId,jdbcType=BIGINT}, #{bizType,jdbcType=TINYINT}, 
+      #{flowGroup,jdbcType=VARCHAR}, #{node,jdbcType=VARCHAR}, #{stepName,jdbcType=VARCHAR}, 
+      #{bizKey,jdbcType=VARCHAR}, #{data,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.FlowStepDataInfoDO" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into flow_step_data_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="workFlowId != null" >
+        work_flow_id,
+      </if>
+      <if test="workFlowStepId != null" >
+        work_flow_step_id,
+      </if>
+      <if test="bizType != null" >
+        biz_type,
+      </if>
+      <if test="flowGroup != null" >
+        flow_group,
+      </if>
+      <if test="node != null" >
+        node,
+      </if>
+      <if test="stepName != null" >
+        step_name,
+      </if>
+      <if test="bizKey != null" >
+        biz_key,
+      </if>
+      <if test="data != null" >
+        data,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="workFlowId != null" >
+        #{workFlowId,jdbcType=BIGINT},
+      </if>
+      <if test="workFlowStepId != null" >
+        #{workFlowStepId,jdbcType=BIGINT},
+      </if>
+      <if test="bizType != null" >
+        #{bizType,jdbcType=TINYINT},
+      </if>
+      <if test="flowGroup != null" >
+        #{flowGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="node != null" >
+        #{node,jdbcType=VARCHAR},
+      </if>
+      <if test="stepName != null" >
+        #{stepName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizKey != null" >
+        #{bizKey,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null" >
+        #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.FlowStepDataInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from flow_step_data_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update flow_step_data_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.workFlowId != null" >
+        work_flow_id = #{record.workFlowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workFlowStepId != null" >
+        work_flow_step_id = #{record.workFlowStepId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bizType != null" >
+        biz_type = #{record.bizType,jdbcType=TINYINT},
+      </if>
+      <if test="record.flowGroup != null" >
+        flow_group = #{record.flowGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.node != null" >
+        node = #{record.node,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepName != null" >
+        step_name = #{record.stepName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bizKey != null" >
+        biz_key = #{record.bizKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.data != null" >
+        data = #{record.data,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update flow_step_data_info
+    set id = #{record.id,jdbcType=BIGINT},
+      work_flow_id = #{record.workFlowId,jdbcType=BIGINT},
+      work_flow_step_id = #{record.workFlowStepId,jdbcType=BIGINT},
+      biz_type = #{record.bizType,jdbcType=TINYINT},
+      flow_group = #{record.flowGroup,jdbcType=VARCHAR},
+      node = #{record.node,jdbcType=VARCHAR},
+      step_name = #{record.stepName,jdbcType=VARCHAR},
+      biz_key = #{record.bizKey,jdbcType=VARCHAR},
+      data = #{record.data,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.FlowStepDataInfoDO" >
+    update flow_step_data_info
+    <set >
+      <if test="workFlowId != null" >
+        work_flow_id = #{workFlowId,jdbcType=BIGINT},
+      </if>
+      <if test="workFlowStepId != null" >
+        work_flow_step_id = #{workFlowStepId,jdbcType=BIGINT},
+      </if>
+      <if test="bizType != null" >
+        biz_type = #{bizType,jdbcType=TINYINT},
+      </if>
+      <if test="flowGroup != null" >
+        flow_group = #{flowGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="node != null" >
+        node = #{node,jdbcType=VARCHAR},
+      </if>
+      <if test="stepName != null" >
+        step_name = #{stepName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizKey != null" >
+        biz_key = #{bizKey,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null" >
+        data = #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.FlowStepDataInfoDO" >
+    update flow_step_data_info
+    set work_flow_id = #{workFlowId,jdbcType=BIGINT},
+      work_flow_step_id = #{workFlowStepId,jdbcType=BIGINT},
+      biz_type = #{bizType,jdbcType=TINYINT},
+      flow_group = #{flowGroup,jdbcType=VARCHAR},
+      node = #{node,jdbcType=VARCHAR},
+      step_name = #{stepName,jdbcType=VARCHAR},
+      biz_key = #{bizKey,jdbcType=VARCHAR},
+      data = #{data,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.FlowStepDataInfoCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from flow_step_data_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

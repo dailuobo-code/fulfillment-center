@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process bizTypeName="produceOrder" group="common" version="1">
+    <node name="produceOrderCreate" isFirst="true" condition="">
+        <step type="callback" name="produceOrderCreate" handler="produceOrderCreateCallbackHandler" expectCompleteTime="" />
+    </node>
+
+    <node name = "carBooking" >
+        <step type="invoke" name="carBooking" handler="tmsCarBookingHandler" />
+    </node>
+
+    <node name = "carAdjust" >
+        <step type="invoke" name="carAdjust" handler="tmsCarAdjustHandler" isNeedDelay="true" intervalHandler="tmsCarAdjustIntervalHandler"/>
+    </node>
+
+    <node name="linePlan">
+        <step type="callback" name="linePlan" handler="" isDrive="false"/>
+    </node>
+
+    <node name="carPlan">
+        <step type="callback" name="carPlan" handler="" isDrive="false"/>
+    </node>
+</process>

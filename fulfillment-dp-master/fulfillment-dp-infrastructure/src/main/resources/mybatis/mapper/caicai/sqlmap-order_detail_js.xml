@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dao.OrderDetailJsDAO">
+
+    <sql id="Base_Column_List">
+    id, order_id, spec_id, user_id, city_id, store_id, city_product_id, prod_show_name,
+    prod_icon, spec_name, weight, price, actual_weight, actual_price, create_time, update_time,
+    create_user_id, change_flag, is_out_stock, sorting_str, remark1, remark2, refund_type,
+    remark4, remark5, remark6, point_price, actual_point_price
+  </sql>
+    <update id="updateList">
+        <foreach collection="list" item="item" index="index" open="" close=";" separator=";">
+            update tbl_order_detail_js
+            <set>
+                order_id=#{item.orderId},
+                spec_id=#{item.specId},
+                user_id=#{item.userId},
+                city_id=#{item.cityId},
+                store_id=#{item.storeId},
+                city_product_id=#{item.cityProductId},
+                prod_show_name=#{item.prodShowName},
+                prod_icon=#{item.prodIcon},
+                spec_name=#{item.specName},
+                weight=#{item.weight},
+                price=#{item.price},
+                actual_weight=#{item.actualWeight},
+                actual_price=#{item.actualPrice},
+                create_time=#{item.createTime},
+                <if test="item.updateTime!=null">
+                    update_time=#{item.updateTime},
+                </if>
+                create_user_id=#{item.createUserId},
+                change_flag=#{item.changeFlag},
+                is_out_stock=#{item.isOutStock},
+                sorting_str=#{item.sortingStr},
+                remark1=#{item.remark1},
+                remark2=#{item.remark2},
+                refund_type=#{item.refundType},
+                remark4=#{item.remark4},
+                remark5=#{item.remark5},
+                remark6=#{item.remark6},
+                point_price=#{item.pointPrice},
+                actual_point_price=#{item.actualPointPrice}
+            </set>
+            where order_id =#{item.orderId} and id =#{item.id} limit 1
+        </foreach>
+    </update>
+
+    <select id="selectByOrderId"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDetailJsDO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tbl_order_detail_js
+        WHERE order_id = #{orderId}
+    </select>
+
+    <select id="countByOrderId" resultType="int">
+    SELECT
+    count(1)
+    FROM tbl_order_detail_js
+    WHERE order_id = #{orderId}
+  </select>
+    <select id="selectByOrderIdList" resultType="java.lang.String">
+        SELECT order_id
+        FROM tbl_order_detail_js
+        <where>
+            order_id in(#{orderIds})
+        </where>
+        GROUP BY order_id
+    </select>
+    <select id="countByOrderIdAndProductId" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM tbl_order_detail_js
+        <where>
+            order_id = #{orderId} and city_product_id=#{cityProductId} and is_out_stock = 1
+        </where>
+    </select>
+
+    <insert id="insertList" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_order_detail_js (order_id, spec_id, user_id,
+        city_id, store_id, city_product_id,
+        prod_show_name, prod_icon, spec_name,
+        weight, price, actual_weight,
+        actual_price, create_time, update_time,
+        create_user_id, change_flag, is_out_stock,
+        sorting_str, remark1, remark2,
+        refund_type, remark4, remark5,
+        remark6, point_price, actual_point_price
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.orderId}, #{item.specId}, #{item.userId},
+            #{item.cityId}, #{item.storeId}, #{item.cityProductId},
+            #{item.prodShowName}, #{item.prodIcon}, #{item.specName},
+            #{item.weight}, #{item.price}, #{item.actualWeight},
+            #{item.actualPrice}, #{item.createTime}, #{item.updateTime},
+            #{item.createUserId}, #{item.changeFlag}, #{item.isOutStock},
+            #{item.sortingStr}, #{item.remark1}, #{item.remark2},
+            #{item.refundType}, #{item.remark4}, #{item.remark5},
+            #{item.remark6}, #{item.pointPrice}, #{item.actualPointPrice})
+        </foreach>
+    </insert>
+
+    <insert id="saveOrderDetailjs">
+        INSERT INTO
+        tbl_order_detail_js(order_id,spec_id,user_id,city_id,store_id,city_product_id,prod_show_name,prod_icon,spec_name,weight,
+        price,actual_weight,actual_price,create_time,create_user_id,change_flag,is_out_stock,sorting_str,refund_type)
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.orderId},#{item.specId},#{item.userId},#{item.cityId},#{item.storeId},#{item.cityProductId},#{item.prodShowName},#{item.prodIcon},#{item.specName},#{item.weight},
+            #{item.price},#{item.actualWeight},#{item.actualPrice},#{item.createTime},#{item.createUserId},#{item.changeFlag},#{item.isOutStock},#{item.sortingStr},#{item.refundType})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByOrderId" parameterType="java.lang.String">
+    delete from tbl_order_detail_js
+    where order_id = #{orderId} limit 1000
+  </delete>
+
+    <insert id="insertByHisDb"
+            parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.tradehis.dataobject.OrderDetailJsHisDO">
+        insert into tbl_order_detail_js
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            order_id,
+            spec_id,
+            user_id,
+            city_id,
+            store_id,
+            city_product_id,
+            prod_show_name,
+            prod_icon,
+            spec_name,
+            weight,
+            price,
+            actual_weight,
+            actual_price,
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            create_user_id,
+            change_flag,
+            is_out_stock,
+            sorting_str,
+            remark1,
+            remark2,
+            refund_type,
+            remark4,
+            remark5,
+            remark6,
+            point_price,
+            actual_point_price,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id},
+            #{orderId},
+            #{specId},
+            #{userId},
+            #{cityId},
+            #{storeId},
+            #{cityProductId},
+            #{prodShowName},
+            #{prodIcon},
+            #{specName},
+            #{weight},
+            #{price},
+            #{actualWeight},
+            #{actualPrice},
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            #{createUserId},
+            #{changeFlag},
+            #{isOutStock},
+            #{sortingStr},
+            #{remark1},
+            #{remark2},
+            #{refundType},
+            #{remark4},
+            #{remark5},
+            #{remark6},
+            #{pointPrice},
+            #{actualPointPrice},
+        </trim>
+    </insert>
+
+    <select id="selectSalesAmount"
+            resultType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.OrderDetailSalesDO">
+        SELECT
+        odj.store_id, odj.city_product_id, sum(odj.actual_price) as sales_amount
+        FROM tbl_order_detail_js odj
+        LEFT JOIN
+        tbl_order o ON o.order_id = odj.order_id
+        WHERE odj.city_product_id in
+        <foreach collection="cityProductIds" item="cityProductId" index="index" open="(" close=")"
+                 separator=",">
+            #{cityProductId}
+        </foreach>
+        AND o.create_time <![CDATA[ > ]]> #{startDate}
+        AND o.create_time <![CDATA[ < ]]> #{endDate}
+        GROUP BY odj.store_id, odj.city_product_id;
+    </select>
+
+    <insert id="saveOrderDetailjs4Point">
+        INSERT INTO
+        tbl_order_detail_js(order_id,spec_id,user_id,city_id,store_id,city_product_id,prod_show_name,prod_icon,spec_name,weight,
+        price,actual_weight,actual_price,create_time,create_user_id,change_flag,is_out_stock,sorting_str,refund_type,point_price,actual_point_price)
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.orderId},#{item.specId},#{item.userId},#{item.cityId},#{item.storeId},#{item.cityProductId},#{item.prodShowName},#{item.prodIcon},#{item.specName},#{item.weight},
+            #{item.price},#{item.actualWeight},#{item.actualPrice},#{item.createTime},#{item.createUserId},#{item.changeFlag},#{item.isOutStock},#{item.sortingStr},#{item.refundType},#{item.pointPrice},#{item.actualPointPrice})
+        </foreach>
+    </insert>
+
+    <select id="queryForcedSettlemenOrderList" resultType="String">
+        select distinct order_id from tbl_order_detail_js
+        where is_out_stock = 0 and actual_price = 0
+        and order_id in
+        <foreach collection="orderIdList" item="orderId" open="(" close=")" separator=",">
+            #{orderId}
+        </foreach>
+    </select>
+</mapper>

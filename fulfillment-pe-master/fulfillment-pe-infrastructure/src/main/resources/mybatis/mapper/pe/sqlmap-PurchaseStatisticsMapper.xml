@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.pe.infrastructure.mapper.PurchaseStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.pe.infrastructure.valueobject.PurchaseStatisticsDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="forecast_type" property="forecastType" jdbcType="TINYINT" />
+    <result column="forecast_date" property="forecastDate" jdbcType="DATE" />
+    <result column="category_type" property="categoryType" jdbcType="TINYINT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, warehouse_id, forecast_type, forecast_date, category_type, count, is_deleted,
+    version, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.PurchaseStatisticsCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from purchase_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from purchase_statistics
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from purchase_statistics
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.PurchaseStatisticsCriteria" >
+    delete from purchase_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.PurchaseStatisticsDO" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into purchase_statistics (warehouse_id, forecast_type, forecast_date,
+    category_type, count, is_deleted,
+    version, create_time, update_time
+    )
+    values (#{warehouseId,jdbcType=INTEGER}, #{forecastType,jdbcType=TINYINT}, #{forecastDate,jdbcType=DATE},
+    #{categoryType,jdbcType=TINYINT}, #{count,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT},
+    #{version,jdbcType=INTEGER}, now(), now()
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.PurchaseStatisticsDO" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into purchase_statistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="forecastType != null" >
+        forecast_type,
+      </if>
+      <if test="forecastDate != null" >
+        forecast_date,
+      </if>
+      <if test="categoryType != null" >
+        category_type,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="forecastType != null" >
+        #{forecastType,jdbcType=TINYINT},
+      </if>
+      <if test="forecastDate != null" >
+        #{forecastDate,jdbcType=DATE},
+      </if>
+      <if test="categoryType != null" >
+        #{categoryType,jdbcType=TINYINT},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.PurchaseStatisticsCriteria" resultType="java.lang.Integer" >
+    select count(*) from purchase_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update purchase_statistics
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.warehouseId != null" >
+        warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.forecastType != null" >
+        forecast_type = #{record.forecastType,jdbcType=TINYINT},
+      </if>
+      <if test="record.forecastDate != null" >
+        forecast_date = #{record.forecastDate,jdbcType=DATE},
+      </if>
+      <if test="record.categoryType != null" >
+        category_type = #{record.categoryType,jdbcType=TINYINT},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDeleted != null" >
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update purchase_statistics
+    set id = #{record.id,jdbcType=BIGINT},
+    warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+    forecast_type = #{record.forecastType,jdbcType=TINYINT},
+    forecast_date = #{record.forecastDate,jdbcType=DATE},
+    category_type = #{record.categoryType,jdbcType=TINYINT},
+    count = #{record.count,jdbcType=INTEGER},
+    is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+    version = #{record.version,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.PurchaseStatisticsDO" >
+    update purchase_statistics
+    <set >
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="forecastType != null" >
+        forecast_type = #{forecastType,jdbcType=TINYINT},
+      </if>
+      <if test="forecastDate != null" >
+        forecast_date = #{forecastDate,jdbcType=DATE},
+      </if>
+      <if test="categoryType != null" >
+        category_type = #{categoryType,jdbcType=TINYINT},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.PurchaseStatisticsDO" >
+    update purchase_statistics
+    set warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      forecast_type = #{forecastType,jdbcType=TINYINT},
+      forecast_date = #{forecastDate,jdbcType=DATE},
+      category_type = #{categoryType,jdbcType=TINYINT},
+      count = #{count,jdbcType=INTEGER},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.PurchaseStatisticsCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from purchase_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

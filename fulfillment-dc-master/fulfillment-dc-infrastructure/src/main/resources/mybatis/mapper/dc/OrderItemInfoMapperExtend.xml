@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.OrderItemInfoMapperExtend">
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.dc.OrderItemInfoDO" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="order_type" property="orderType" jdbcType="TINYINT" />
+        <result column="order_source" property="orderSource" jdbcType="TINYINT" />
+        <result column="city_product_id" property="cityProductId" jdbcType="INTEGER" />
+        <result column="spec_id" property="specId" jdbcType="INTEGER" />
+        <result column="product_num" property="productNum" jdbcType="DECIMAL" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="pickup_time" property="pickupTime" jdbcType="VARCHAR" />
+        <result column="city_id" property="cityId" jdbcType="INTEGER" />
+        <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+        <result column="product_no" property="productNo" jdbcType="VARCHAR" />
+        <result column="item_ext" property="itemExt" jdbcType="VARCHAR" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    id, order_no, order_type, order_source, city_product_id, spec_id, product_num, store_id,
+    user_id, pickup_time, city_id, warehouse_id, product_no, item_ext, version, is_deleted,
+    create_time, update_time
+  </sql>
+
+    <sql id="tableName">
+        order_item_info
+    </sql>
+
+    <update id="deleteByIdList" parameterType="java.util.List">
+        update <include refid="tableName"/>
+        set `is_deleted` = 1
+        where id in
+        <foreach collection="idList" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <update id="deleteByCondition" parameterType="java.util.List">
+        update <include refid="tableName"/>
+        set `is_deleted` = 1
+        where city_id=#{cityId,jdbcType=INTEGER} and warehouse_id=#{warehouseId,jdbcType=INTEGER} and pickup_time=#{pickupTime,jdbcType=VARCHAR}
+    </update>
+
+
+    <insert id="batchItemOrderInfo" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        <include refid="tableName"/>
+        (order_no,order_type,order_source,city_product_id,spec_id,product_num,store_id,user_id,pickup_time,city_id,warehouse_id,product_no,item_ext,version,create_time,update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.orderNo,jdbcType=VARCHAR},
+            #{item.orderType,jdbcType=TINYINT},
+            #{item.orderSource,jdbcType=TINYINT},
+            #{item.cityProductId,jdbcType=INTEGER},
+            #{item.specId,jdbcType=INTEGER},
+            #{item.productNum,jdbcType=DECIMAL},
+            #{item.storeId,jdbcType=INTEGER},
+            #{item.userId,jdbcType=INTEGER},
+            #{item.pickupTime,jdbcType=VARCHAR},
+            #{item.cityId,jdbcType=INTEGER},
+            #{item.warehouseId,jdbcType=INTEGER},
+            #{item.productNo,jdbcType=INTEGER},
+            #{item.itemExt,jdbcType=INTEGER},
+            #{item.version,jdbcType=INTEGER},
+            now(),now())
+        </foreach>
+    </insert>
+
+</mapper>

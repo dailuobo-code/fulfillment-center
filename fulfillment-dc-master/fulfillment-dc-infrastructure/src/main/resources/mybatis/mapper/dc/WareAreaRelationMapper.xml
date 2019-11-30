@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.WareAreaRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.dc.WareAreaRelation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="warehouse_type" property="warehouseType" jdbcType="INTEGER" />
+    <result column="area_list" property="areaList" jdbcType="VARCHAR" />
+    <result column="gps_longitude" property="gpsLongitude" jdbcType="VARCHAR" />
+    <result column="gps_dimension" property="gpsDimension" jdbcType="VARCHAR" />
+    <result column="effect_time" property="effectTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, warehouse_id, warehouse_name, warehouse_type, area_list, gps_longitude, gps_dimension, 
+    effect_time, status, create_by, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.WareAreaRelationCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ware_area_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ware_area_relation
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ware_area_relation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.WareAreaRelationCriteria" >
+    delete from ware_area_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.WareAreaRelation" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ware_area_relation (warehouse_id, warehouse_name, warehouse_type, 
+      area_list, gps_longitude, gps_dimension, 
+      effect_time, status, create_by, 
+      create_time, update_time)
+    values (#{warehouseId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, #{warehouseType,jdbcType=INTEGER}, 
+      #{areaList,jdbcType=VARCHAR}, #{gpsLongitude,jdbcType=VARCHAR}, #{gpsDimension,jdbcType=VARCHAR}, 
+      #{effectTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.WareAreaRelation" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ware_area_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="warehouseType != null" >
+        warehouse_type,
+      </if>
+      <if test="areaList != null" >
+        area_list,
+      </if>
+      <if test="gpsLongitude != null" >
+        gps_longitude,
+      </if>
+      <if test="gpsDimension != null" >
+        gps_dimension,
+      </if>
+      <if test="effectTime != null" >
+        effect_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseType != null" >
+        #{warehouseType,jdbcType=INTEGER},
+      </if>
+      <if test="areaList != null" >
+        #{areaList,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsLongitude != null" >
+        #{gpsLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsDimension != null" >
+        #{gpsDimension,jdbcType=VARCHAR},
+      </if>
+      <if test="effectTime != null" >
+        #{effectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.WareAreaRelationCriteria" resultType="java.lang.Integer" >
+    select count(*) from ware_area_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ware_area_relation
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.warehouseId != null" >
+        warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.warehouseName != null" >
+        warehouse_name = #{record.warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warehouseType != null" >
+        warehouse_type = #{record.warehouseType,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaList != null" >
+        area_list = #{record.areaList,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gpsLongitude != null" >
+        gps_longitude = #{record.gpsLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gpsDimension != null" >
+        gps_dimension = #{record.gpsDimension,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effectTime != null" >
+        effect_time = #{record.effectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ware_area_relation
+    set id = #{record.id,jdbcType=BIGINT},
+      warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{record.warehouseName,jdbcType=VARCHAR},
+      warehouse_type = #{record.warehouseType,jdbcType=INTEGER},
+      area_list = #{record.areaList,jdbcType=VARCHAR},
+      gps_longitude = #{record.gpsLongitude,jdbcType=VARCHAR},
+      gps_dimension = #{record.gpsDimension,jdbcType=VARCHAR},
+      effect_time = #{record.effectTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=TINYINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.WareAreaRelation" >
+    update ware_area_relation
+    <set >
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseType != null" >
+        warehouse_type = #{warehouseType,jdbcType=INTEGER},
+      </if>
+      <if test="areaList != null" >
+        area_list = #{areaList,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsLongitude != null" >
+        gps_longitude = #{gpsLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsDimension != null" >
+        gps_dimension = #{gpsDimension,jdbcType=VARCHAR},
+      </if>
+      <if test="effectTime != null" >
+        effect_time = #{effectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.WareAreaRelation" >
+    update ware_area_relation
+    set warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      warehouse_type = #{warehouseType,jdbcType=INTEGER},
+      area_list = #{areaList,jdbcType=VARCHAR},
+      gps_longitude = #{gpsLongitude,jdbcType=VARCHAR},
+      gps_dimension = #{gpsDimension,jdbcType=VARCHAR},
+      effect_time = #{effectTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.WareAreaRelationCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ware_area_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

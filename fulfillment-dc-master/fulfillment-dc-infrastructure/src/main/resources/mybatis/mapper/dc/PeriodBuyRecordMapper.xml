@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.PeriodBuyRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.dc.PeriodBuyRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="serial_no" property="serialNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="status_msg" property="statusMsg" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_phone1" property="userPhone1" jdbcType="VARCHAR" />
+    <result column="user_phone2" property="userPhone2" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+    <result column="extern_prod_id" property="externProdId" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="product_info" property="productInfo" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="prod_amount" property="prodAmount" jdbcType="INTEGER" />
+    <result column="book_rule" property="bookRule" jdbcType="VARCHAR" />
+    <result column="cancel_time" property="cancelTime" jdbcType="TIMESTAMP" />
+    <result column="real_end_date" property="realEndDate" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, order_no, serial_no, status, status_msg, user_name, user_phone1, user_phone2, 
+    address, city_id, merchant_id, extern_prod_id, pay_time, product_info, start_time, 
+    end_time, prod_amount, book_rule, cancel_time, real_end_date, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodBuyRecordCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from period_buy_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from period_buy_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from period_buy_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodBuyRecordCriteria" >
+    delete from period_buy_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodBuyRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into period_buy_record (order_no, serial_no, status, 
+      status_msg, user_name, user_phone1, 
+      user_phone2, address, city_id, 
+      merchant_id, extern_prod_id, pay_time, 
+      product_info, start_time, end_time, 
+      prod_amount, book_rule, cancel_time, 
+      real_end_date, create_time, update_time
+      )
+    values (#{orderNo,jdbcType=VARCHAR}, #{serialNo,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{statusMsg,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPhone1,jdbcType=VARCHAR}, 
+      #{userPhone2,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
+      #{merchantId,jdbcType=INTEGER}, #{externProdId,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{productInfo,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{prodAmount,jdbcType=INTEGER}, #{bookRule,jdbcType=VARCHAR}, #{cancelTime,jdbcType=TIMESTAMP}, 
+      #{realEndDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodBuyRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into period_buy_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="serialNo != null" >
+        serial_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="statusMsg != null" >
+        status_msg,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPhone1 != null" >
+        user_phone1,
+      </if>
+      <if test="userPhone2 != null" >
+        user_phone2,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="externProdId != null" >
+        extern_prod_id,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="productInfo != null" >
+        product_info,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="prodAmount != null" >
+        prod_amount,
+      </if>
+      <if test="bookRule != null" >
+        book_rule,
+      </if>
+      <if test="cancelTime != null" >
+        cancel_time,
+      </if>
+      <if test="realEndDate != null" >
+        real_end_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNo != null" >
+        #{serialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="statusMsg != null" >
+        #{statusMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone1 != null" >
+        #{userPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone2 != null" >
+        #{userPhone2,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="externProdId != null" >
+        #{externProdId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productInfo != null" >
+        #{productInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prodAmount != null" >
+        #{prodAmount,jdbcType=INTEGER},
+      </if>
+      <if test="bookRule != null" >
+        #{bookRule,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelTime != null" >
+        #{cancelTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realEndDate != null" >
+        #{realEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodBuyRecordCriteria" resultType="java.lang.Integer" >
+    select count(*) from period_buy_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update period_buy_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderNo != null" >
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialNo != null" >
+        serial_no = #{record.serialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.statusMsg != null" >
+        status_msg = #{record.statusMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhone1 != null" >
+        user_phone1 = #{record.userPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhone2 != null" >
+        user_phone2 = #{record.userPhone2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityId != null" >
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_id = #{record.merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="record.externProdId != null" >
+        extern_prod_id = #{record.externProdId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.productInfo != null" >
+        product_info = #{record.productInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.prodAmount != null" >
+        prod_amount = #{record.prodAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookRule != null" >
+        book_rule = #{record.bookRule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cancelTime != null" >
+        cancel_time = #{record.cancelTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.realEndDate != null" >
+        real_end_date = #{record.realEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update period_buy_record
+    set id = #{record.id,jdbcType=BIGINT},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      serial_no = #{record.serialNo,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      status_msg = #{record.statusMsg,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_phone1 = #{record.userPhone1,jdbcType=VARCHAR},
+      user_phone2 = #{record.userPhone2,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      merchant_id = #{record.merchantId,jdbcType=INTEGER},
+      extern_prod_id = #{record.externProdId,jdbcType=VARCHAR},
+      pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      product_info = #{record.productInfo,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      prod_amount = #{record.prodAmount,jdbcType=INTEGER},
+      book_rule = #{record.bookRule,jdbcType=VARCHAR},
+      cancel_time = #{record.cancelTime,jdbcType=TIMESTAMP},
+      real_end_date = #{record.realEndDate,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodBuyRecord" >
+    update period_buy_record
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNo != null" >
+        serial_no = #{serialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="statusMsg != null" >
+        status_msg = #{statusMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone1 != null" >
+        user_phone1 = #{userPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone2 != null" >
+        user_phone2 = #{userPhone2,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="externProdId != null" >
+        extern_prod_id = #{externProdId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productInfo != null" >
+        product_info = #{productInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prodAmount != null" >
+        prod_amount = #{prodAmount,jdbcType=INTEGER},
+      </if>
+      <if test="bookRule != null" >
+        book_rule = #{bookRule,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelTime != null" >
+        cancel_time = #{cancelTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realEndDate != null" >
+        real_end_date = #{realEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodBuyRecord" >
+    update period_buy_record
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      serial_no = #{serialNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      status_msg = #{statusMsg,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_phone1 = #{userPhone1,jdbcType=VARCHAR},
+      user_phone2 = #{userPhone2,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=INTEGER},
+      merchant_id = #{merchantId,jdbcType=INTEGER},
+      extern_prod_id = #{externProdId,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      product_info = #{productInfo,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      prod_amount = #{prodAmount,jdbcType=INTEGER},
+      book_rule = #{bookRule,jdbcType=VARCHAR},
+      cancel_time = #{cancelTime,jdbcType=TIMESTAMP},
+      real_end_date = #{realEndDate,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.dc.valueobject.dc.PeriodBuyRecordCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from period_buy_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

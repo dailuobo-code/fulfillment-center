@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.PackageTravelMapper">
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.dc.PackageTravelDO">
+        <id column="id" property="id"/>
+        <result column="package_no" property="packageNo"/>
+        <result column="status" property="status"/>
+        <result column="status_msg" property="statusMsg"/>
+        <result column="travel_time" property="travelTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,package_no,status,status_msg,travel_time,create_time,update_time
+    </sql>
+
+
+    <sql id="tableName">
+        package_travel
+    </sql>
+
+    <insert id="insertPackageTravel" >
+        insert into
+        <include refid="tableName"/>
+        (package_no,status,status_msg,travel_time,create_time,update_time) values (
+        #{packageNo},#{status},#{statusMsg},#{travelTime},now(),now()
+        )
+    </insert>
+
+</mapper>

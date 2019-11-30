@@ -1,0 +1,47 @@
+server:
+  port: 9199
+
+spring:
+  application:
+    name: fulfillment-dp
+  profiles:
+    active: dev
+  main:
+    web-application-type: none
+
+log:
+  path: /data/logs/app
+  level: info
+
+nacos:
+  config:
+    namespace: app_fulfillment
+    server:
+      address: http://config.dev.caicaivip.com
+#server:
+#  port: 8082
+
+#spring:
+#  application:
+#    name: archetype
+
+#dubbo:
+#  registry:
+#    address: zookeeper://10.111.31.243:2560
+#  protocol:
+#    name: dubbo
+#    port: 20881
+#  scan:
+#    base-packages: com.mallcai.biz.service.impl
+
+#mallcai:
+#  redises:
+#    default:
+#      type: "pool"
+#      host: "r-bp1b3mphqog5ekwkz6.redis.rds.aliyuncs.com:6379"
+#      timeout: 2000
+#      maxActive: 20
+#      maxIdle: 5
+#      password: "Lk%s789$"
+#      masterName:
+

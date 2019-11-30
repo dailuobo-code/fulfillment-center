@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <dubbo:reference id="iUserService" interface="com.mallcai.service.user.api.IUserService"
+                     timeout="2000" check="false" registry="city"></dubbo:reference>
+
+    <dubbo:reference id="balanceOpService"
+                     interface="com.mallcai.trade.global.service.pay.balance.BalanceOpService" timeout="6000"
+                     check="false" retries="0" registry="city"/>
+
+    <dubbo:reference id="iPushService" interface="com.mallcai.support.commun.api.IPushService"
+                     retries="0" timeout="2000" check="false" registry="public">
+        <dubbo:method name="push" async="true"/>
+    </dubbo:reference>
+
+    <dubbo:reference id="iInviteService" interface="com.mallcai.service.user.api.IInviteService"
+                     timeout="2000" check="false" registry="city"/>
+
+    <dubbo:reference id="iOrderService" interface="com.mallcai.service.order.api.IOrderService"
+                     timeout="5000" check="false" retries="0" registry="city"/>
+
+    <dubbo:reference id="iOrderOperateService" interface="com.mallcai.service.order.api.IOrderOperateService"
+                     timeout="5000" check="false" retries="0" registry="city"/>
+
+    <dubbo:reference id="orderQueryService" interface="com.mallcai.trade.business.api.order.OrderQueryService" timeout="2000" check="false" registry="city"/>
+
+    <dubbo:reference id="iGlobalService" interface="com.mallcai.service.api.IGlobalService"
+                     timeout="2000" check="false" registry="city"/>
+
+    <dubbo:reference id="isoaOrderService" interface="com.mallcai.service.code.api.mgr.ISOAOrderService"
+                     timeout="2000" check="false" registry="city"/>
+
+    <dubbo:reference id="IUserCouponService" interface="org.mallcai.ump.mgr.api.coupon.service.IUserCouponService"
+                     timeout="6000" check="false" registry="city"/>
+
+    <dubbo:reference id="iCityGlobalService" interface="com.mallcai.service.api.ICityGlobalService"
+                     timeout="2000" check="false" registry="city"></dubbo:reference>
+</beans>

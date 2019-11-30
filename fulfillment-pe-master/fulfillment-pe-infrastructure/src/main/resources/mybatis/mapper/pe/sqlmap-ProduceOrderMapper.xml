@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.pe.infrastructure.mapper.ProduceOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProduceOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="produce_order_no" property="produceOrderNo" jdbcType="VARCHAR" />
+    <result column="expect_push_time" property="expectPushTime" jdbcType="TIMESTAMP" />
+    <result column="aggregate_type" property="aggregateType" jdbcType="TINYINT" />
+    <result column="aggregate_value" property="aggregateValue" jdbcType="VARCHAR" />
+    <result column="group_type" property="groupType" jdbcType="TINYINT" />
+    <result column="group_value" property="groupValue" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="order_count" property="orderCount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="suc_time" property="sucTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, produce_order_no, expect_push_time, aggregate_type, aggregate_value, group_type,
+    group_value, store_id, city_id, warehouse_id, order_count, status, create_time, update_time,
+    suc_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProduceOrderCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from produce_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from produce_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from produce_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProduceOrderCriteria" >
+    delete from produce_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProduceOrder" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into produce_order (produce_order_no, expect_push_time,
+    aggregate_type, aggregate_value, group_type,
+    group_value, store_id, city_id,
+    warehouse_id, order_count, status,
+    create_time, update_time, suc_time
+    )
+    values (#{produceOrderNo,jdbcType=VARCHAR}, #{expectPushTime,jdbcType=TIMESTAMP},
+    #{aggregateType,jdbcType=TINYINT}, #{aggregateValue,jdbcType=VARCHAR}, #{groupType,jdbcType=TINYINT},
+    #{groupValue,jdbcType=VARCHAR}, #{storeId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER},
+    #{warehouseId,jdbcType=INTEGER}, #{orderCount,jdbcType=INTEGER}, #{status,jdbcType=TINYINT},
+    #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{sucTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProduceOrder" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into produce_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="produceOrderNo != null" >
+        produce_order_no,
+      </if>
+      <if test="expectPushTime != null" >
+        expect_push_time,
+      </if>
+      <if test="aggregateType != null" >
+        aggregate_type,
+      </if>
+      <if test="aggregateValue != null" >
+        aggregate_value,
+      </if>
+      <if test="groupType != null" >
+        group_type,
+      </if>
+      <if test="groupValue != null" >
+        group_value,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="orderCount != null" >
+        order_count,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="sucTime != null" >
+        suc_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="produceOrderNo != null" >
+        #{produceOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="expectPushTime != null" >
+        #{expectPushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aggregateType != null" >
+        #{aggregateType,jdbcType=TINYINT},
+      </if>
+      <if test="aggregateValue != null" >
+        #{aggregateValue,jdbcType=VARCHAR},
+      </if>
+      <if test="groupType != null" >
+        #{groupType,jdbcType=TINYINT},
+      </if>
+      <if test="groupValue != null" >
+        #{groupValue,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCount != null" >
+        #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sucTime != null" >
+        #{sucTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProduceOrderCriteria" resultType="java.lang.Integer" >
+    select count(*) from produce_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update produce_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.produceOrderNo != null" >
+        produce_order_no = #{record.produceOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expectPushTime != null" >
+        expect_push_time = #{record.expectPushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aggregateType != null" >
+        aggregate_type = #{record.aggregateType,jdbcType=TINYINT},
+      </if>
+      <if test="record.aggregateValue != null" >
+        aggregate_value = #{record.aggregateValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupType != null" >
+        group_type = #{record.groupType,jdbcType=TINYINT},
+      </if>
+      <if test="record.groupValue != null" >
+        group_value = #{record.groupValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityId != null" >
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.warehouseId != null" >
+        warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderCount != null" >
+        order_count = #{record.orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sucTime != null" >
+        suc_time = #{record.sucTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update produce_order
+    set id = #{record.id,jdbcType=BIGINT},
+    produce_order_no = #{record.produceOrderNo,jdbcType=VARCHAR},
+    expect_push_time = #{record.expectPushTime,jdbcType=TIMESTAMP},
+    aggregate_type = #{record.aggregateType,jdbcType=TINYINT},
+    aggregate_value = #{record.aggregateValue,jdbcType=VARCHAR},
+    group_type = #{record.groupType,jdbcType=TINYINT},
+    group_value = #{record.groupValue,jdbcType=VARCHAR},
+    store_id = #{record.storeId,jdbcType=INTEGER},
+    city_id = #{record.cityId,jdbcType=INTEGER},
+    warehouse_id = #{record.warehouseId,jdbcType=INTEGER},
+    order_count = #{record.orderCount,jdbcType=INTEGER},
+    status = #{record.status,jdbcType=TINYINT},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    suc_time = #{record.sucTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProduceOrder" >
+    update produce_order
+    <set >
+      <if test="produceOrderNo != null" >
+        produce_order_no = #{produceOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="expectPushTime != null" >
+        expect_push_time = #{expectPushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aggregateType != null" >
+        aggregate_type = #{aggregateType,jdbcType=TINYINT},
+      </if>
+      <if test="aggregateValue != null" >
+        aggregate_value = #{aggregateValue,jdbcType=VARCHAR},
+      </if>
+      <if test="groupType != null" >
+        group_type = #{groupType,jdbcType=TINYINT},
+      </if>
+      <if test="groupValue != null" >
+        group_value = #{groupValue,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCount != null" >
+        order_count = #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sucTime != null" >
+        suc_time = #{sucTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProduceOrder" >
+    update produce_order
+    set produce_order_no = #{produceOrderNo,jdbcType=VARCHAR},
+      expect_push_time = #{expectPushTime,jdbcType=TIMESTAMP},
+      aggregate_type = #{aggregateType,jdbcType=TINYINT},
+      aggregate_value = #{aggregateValue,jdbcType=VARCHAR},
+      group_type = #{groupType,jdbcType=TINYINT},
+      group_value = #{groupValue,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=INTEGER},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      order_count = #{orderCount,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      suc_time = #{sucTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.mallcai.fulfillment.pe.infrastructure.valueobject.ProduceOrderCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from produce_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

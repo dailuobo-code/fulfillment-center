@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.WareAreaRelationMapperExtend" >
+  <select id="selectByWareHouse" resultMap="com.mallcai.fulfillment.dc.mapper.dc.WareAreaRelationMapper.BaseResultMap" >
+    select
+    <include refid="com.mallcai.fulfillment.dc.mapper.dc.WareAreaRelationMapper.Base_Column_List" />
+    from ware_area_relation
+    where warehouse_id = #{wareId}
+    and status = #{status}
+  </select>
+</mapper>

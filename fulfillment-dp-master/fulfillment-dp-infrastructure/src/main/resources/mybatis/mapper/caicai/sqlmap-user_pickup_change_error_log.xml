@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dao.UserPickupChangeErrorLogDAO" >
+  <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.UserPickupChangeErrorLogDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="order_ids" property="orderIds" jdbcType="VARCHAR" />
+    <result column="total_change" property="totalChange" jdbcType="INTEGER" />
+    <result column="msg" property="msg" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, order_ids, total_change, msg, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_user_pickup_change_error_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_user_pickup_change_error_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.UserPickupChangeErrorLogDO" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_user_pickup_change_error_log (user_id, order_ids, total_change, 
+      msg, create_time)
+    values (#{userId,jdbcType=INTEGER}, #{orderIds,jdbcType=VARCHAR}, #{totalChange,jdbcType=INTEGER}, 
+      #{msg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.UserPickupChangeErrorLogDO" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_user_pickup_change_error_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="orderIds != null" >
+        order_ids,
+      </if>
+      <if test="totalChange != null" >
+        total_change,
+      </if>
+      <if test="msg != null" >
+        msg,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderIds != null" >
+        #{orderIds,jdbcType=VARCHAR},
+      </if>
+      <if test="totalChange != null" >
+        #{totalChange,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.UserPickupChangeErrorLogDO" >
+    update tbl_user_pickup_change_error_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderIds != null" >
+        order_ids = #{orderIds,jdbcType=VARCHAR},
+      </if>
+      <if test="totalChange != null" >
+        total_change = #{totalChange,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mallcai.fulfillment.dp.infrastructure.dal.caicai.dataobject.UserPickupChangeErrorLogDO" >
+    update tbl_user_pickup_change_error_log
+    set user_id = #{userId,jdbcType=INTEGER},
+      order_ids = #{orderIds,jdbcType=VARCHAR},
+      total_change = #{totalChange,jdbcType=INTEGER},
+      msg = #{msg,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

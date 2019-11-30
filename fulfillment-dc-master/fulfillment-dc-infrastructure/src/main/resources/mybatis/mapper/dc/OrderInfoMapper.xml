@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallcai.fulfillment.dc.mapper.dc.OrderInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.mallcai.fulfillment.dc.valueobject.dc.OrderInfoDO">
+        <id column="id" property="id"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="city_id" property="cityId"/>
+        <result column="store_id" property="storeId"/>
+        <result column="user_id" property="userId"/>
+        <result column="pickup_time" property="pickupTime"/>
+        <result column="status" property="status"/>
+        <result column="order_type" property="orderType"/>
+        <result column="order_info_ext" property="orderInfoExt"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,order_no,city_id,store_id,user_id,pickup_time,status,order_type,order_info_ext,create_time,update_time
+    </sql>
+
+
+    <sql id="tableName">
+        order_info
+    </sql>
+
+    <insert id="insertOrderInfo" >
+        insert into
+        <include refid="tableName"/>
+        (order_no,city_id,store_id,user_id,pickup_time,status,order_type,order_info_ext,create_time,update_time) values (
+        #{orderNo},#{cityId},#{storeId},#{userId},#{pickupTime},#{status},#{orderType},#{orderInfoExt},now(),now()
+        )
+    </insert>
+
+    <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from
+        <include refid="tableName"/>
+        where order_no = #{orderNo}
+    </select>
+
+    <update id="updateOrderStatusCancle" parameterType="map" >
+        update
+        <include refid="tableName"/>
+        set status = #{status} where order_no = #{orderNo}
+    </update>
+
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fulfillment-dp</artifactId>
+        <groupId>com.mallcai.fulfillment.dp</groupId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>fulfillment-dp-biz</artifactId>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <!-- 工程内部依赖 -->
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dp</groupId>
+            <artifactId>fulfillment-dp-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dp</groupId>
+            <artifactId>fulfillment-dp-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dp</groupId>
+            <artifactId>fulfillment-dp-dependency</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai.fulfillment.dp</groupId>
+            <artifactId>fulfillment-dp-infrastructure</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mallcai</groupId>
+            <artifactId>elastic-job-lite-spring</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- jjwt，Java Web Token签名工具包 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.trade.global</groupId>
+            <artifactId>trade-global-api</artifactId>
+            <version>1.1.5-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>app-mailsms-api</artifactId>
+            <version>1.1.3-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>app-order-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai.ump</groupId>
+            <artifactId>ump-mgr-api</artifactId>
+            <version>1.1.4-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>app-user-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>app-city-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mallcai</groupId>
+            <artifactId>app-code-api</artifactId>
+            <version>1.1.6-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcai.trade.business</groupId>
+            <artifactId>trade-business-api</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
